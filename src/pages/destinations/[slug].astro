@@ -25,6 +25,7 @@ const supportingPosts = pillar ? posts.filter((post) => post.id !== pillar.id) :
   description={`${destination.intro} Explore practical ${destination.name} travel guides, city guides, itineraries and planning advice.`}
   image={destination.image}
   type="webpage"
+  breadcrumbs={[{ label: 'Destinations', href: '/destinations/' }, { label: destination.name, href: `/destinations/${destination.slug}/` }]}
 >
   <div class="bg-[#fffaf3]">
     <section class="container py-8 md:py-12">
@@ -32,36 +33,20 @@ const supportingPosts = pillar ? posts.filter((post) => post.id !== pillar.id) :
 
       <div class="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
         <div class="relative aspect-[16/7] min-h-[220px] w-full overflow-hidden bg-stone-100 sm:min-h-[300px]">
-          <img
-            src={destination.image}
-            alt={`${destination.name} travel guide and destinations`}
-            width="1600"
-            height="700"
-            class="h-full w-full object-cover"
-            loading="eager"
-            decoding="async"
-          />
+          <img src={destination.image} alt={`${destination.name} travel guide and destinations`} width="1600" height="700" class="h-full w-full object-cover" loading="eager" decoding="async" />
         </div>
 
         <div class="grid gap-8 p-6 sm:p-8 md:p-10 lg:grid-cols-[1fr_auto] lg:items-end">
           <div class="max-w-3xl">
             <p class="text-sm font-bold uppercase tracking-[0.16em] text-[#168ac0]">{destination.name} travel hub</p>
-            <h1 class="mt-3 text-4xl font-black leading-[1.08] tracking-tight text-[#18232d] sm:text-5xl md:text-6xl">
-              {destination.primary}
-            </h1>
-            <p class="mt-5 text-lg leading-8 text-slate-600 md:text-xl">
-              {destination.intro}
-            </p>
+            <h1 class="mt-3 text-4xl font-black leading-[1.08] tracking-tight text-[#18232d] sm:text-5xl md:text-6xl">{destination.primary}</h1>
+            <p class="mt-5 text-lg leading-8 text-slate-600 md:text-xl">{destination.intro}</p>
           </div>
 
           <div class="rounded-2xl bg-[#f6f3ed] p-5 lg:min-w-[250px]">
             <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Explore {destination.name}</p>
             <ul class="mt-3 flex flex-wrap gap-2" aria-label={`${destination.name} places`}>
-              {destination.places.map((place: string) => (
-                <li class="rounded-full bg-white px-3 py-2 text-sm font-semibold text-[#18232d] shadow-sm">
-                  {place}
-                </li>
-              ))}
+              {destination.places.map((place: string) => <li class="rounded-full bg-white px-3 py-2 text-sm font-semibold text-[#18232d] shadow-sm">{place}</li>)}
             </ul>
           </div>
         </div>
@@ -72,12 +57,8 @@ const supportingPosts = pillar ? posts.filter((post) => post.id !== pillar.id) :
       <div class="flex flex-col gap-3 border-b border-stone-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p class="text-sm font-bold uppercase tracking-[0.16em] text-[#168ac0]">Plan your trip</p>
-          <h2 id="guides-heading" class="mt-2 text-3xl font-black tracking-tight text-[#18232d] sm:text-4xl">
-            {destination.name} travel guides
-          </h2>
-          <p class="mt-2 max-w-2xl text-slate-600">
-            Start with the main guide, then explore focused city, route and itinerary articles.
-          </p>
+          <h2 id="guides-heading" class="mt-2 text-3xl font-black tracking-tight text-[#18232d] sm:text-4xl">{destination.name} travel guides</h2>
+          <p class="mt-2 max-w-2xl text-slate-600">Start with the main guide, then explore focused city, route and itinerary articles.</p>
         </div>
         <a href="/blog/" class="shrink-0 font-bold text-[#168ac0] hover:underline">View all guides →</a>
       </div>
@@ -88,23 +69,19 @@ const supportingPosts = pillar ? posts.filter((post) => post.id !== pillar.id) :
             <span class="rounded-full bg-[#dff3f7] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#168ac0]">Start here</span>
             <span class="text-sm text-slate-500">Featured guide</span>
           </div>
-          <ArticleCard post={pillar} featured />
+          <ArticleCard post={pillar} />
         </div>
       )}
 
       {supportingPosts.length > 0 && (
         <div class="mt-10">
           <h3 class="text-2xl font-black text-[#18232d]">More {destination.name} guides</h3>
-          <div class="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {supportingPosts.map((post) => <ArticleCard post={post} />)}
-          </div>
+          <div class="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{supportingPosts.map((post) => <ArticleCard post={post} />)}</div>
         </div>
       )}
 
       {posts.length === 0 && (
-        <div class="mt-8 rounded-2xl border border-stone-200 bg-white p-8 text-center">
-          <p class="font-semibold text-slate-700">More {destination.name} guides are coming soon.</p>
-        </div>
+        <div class="mt-8 rounded-2xl border border-stone-200 bg-white p-8 text-center"><p class="font-semibold text-slate-700">More {destination.name} guides are coming soon.</p></div>
       )}
     </section>
 
@@ -113,23 +90,12 @@ const supportingPosts = pillar ? posts.filter((post) => post.id !== pillar.id) :
         <div class="max-w-2xl">
           <p class="text-sm font-bold uppercase tracking-[0.16em] text-[#168ac0]">Travel planning</p>
           <h2 id="planning-heading" class="mt-2 text-3xl font-black text-[#18232d]">Plan with current information</h2>
-          <p class="mt-4 leading-7 text-slate-600">
-            Travel conditions, transport schedules, entry requirements and opening hours can change. Use RoamDawn for planning ideas, then verify time-sensitive details with official sources before booking.
-          </p>
+          <p class="mt-4 leading-7 text-slate-600">Travel conditions, transport schedules, entry requirements and opening hours can change. Use RoamDawn for planning ideas, then verify time-sensitive details with official sources before booking.</p>
         </div>
         <div class="mt-8 grid gap-5 md:grid-cols-3">
-          <div class="rounded-2xl border border-stone-200 bg-[#fffaf3] p-6">
-            <h3 class="font-black text-[#18232d]">Choose the right season</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-600">Compare weather, crowds, daylight and seasonal experiences for your travel dates.</p>
-          </div>
-          <div class="rounded-2xl border border-stone-200 bg-[#fffaf3] p-6">
-            <h3 class="font-black text-[#18232d]">Build a realistic route</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-600">Use city guides and itineraries to avoid packing too many stops into one trip.</p>
-          </div>
-          <div class="rounded-2xl border border-stone-200 bg-[#fffaf3] p-6">
-            <h3 class="font-black text-[#18232d]">Verify before booking</h3>
-            <p class="mt-2 text-sm leading-6 text-slate-600">Check official government, transport, park and attraction sources for current rules.</p>
-          </div>
+          <div class="rounded-2xl border border-stone-200 bg-[#fffaf3] p-6"><h3 class="font-black text-[#18232d]">Choose the right season</h3><p class="mt-2 text-sm leading-6 text-slate-600">Compare weather, crowds, daylight and seasonal experiences for your travel dates.</p></div>
+          <div class="rounded-2xl border border-stone-200 bg-[#fffaf3] p-6"><h3 class="font-black text-[#18232d]">Build a realistic route</h3><p class="mt-2 text-sm leading-6 text-slate-600">Use city guides and itineraries to avoid packing too many stops into one trip.</p></div>
+          <div class="rounded-2xl border border-stone-200 bg-[#fffaf3] p-6"><h3 class="font-black text-[#18232d]">Verify before booking</h3><p class="mt-2 text-sm leading-6 text-slate-600">Check official government, transport, park and attraction sources for current rules.</p></div>
         </div>
       </div>
     </section>
