@@ -1,0 +1,4 @@
+---
+const {items=[]}=Astro.props;
+---
+<nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500"><ol class="flex flex-wrap gap-2"><li><a class="underline-offset-2 hover:underline" href="/">Home</a></li>{items.map((item:any)=><li><span aria-hidden="true">/</span> <a class="underline-offset-2 hover:underline" href={item.href}>{item.label}</a></li>)}</ol></nav>
