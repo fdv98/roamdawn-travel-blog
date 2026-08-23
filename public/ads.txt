@@ -1,0 +1,3 @@
+# RoamDawn AdSense placeholder
+# Add the real Google publisher entry only after receiving it from Google AdSense.
+# Never publish a fabricated publisher ID.
