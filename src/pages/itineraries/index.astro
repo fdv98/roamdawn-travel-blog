@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+const posts=await getCollection('blog',{filter:({data})=>!data.draft&&data.tags.includes('Itineraries')});
+---
+<BaseLayout title="Travel Itineraries | RoamDawn" description="Practical travel itineraries that balance destinations, transit time, sightseeing and flexibility."><section class="container py-14"><p class="font-bold uppercase tracking-wider text-[#168ac0]">Trip planning</p><h1 class="mt-2 text-5xl font-black">Itineraries that leave room to travel</h1><p class="mt-5 max-w-3xl text-lg text-slate-600">Day-by-day frameworks without pretending every traveler moves at the same pace. Use them as a starting point, then verify current schedules before booking.</p><div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{posts.map(post=><ArticleCard post={post}/>)}</div></section></BaseLayout>
