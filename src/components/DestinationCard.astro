@@ -1,4 +1,9 @@
 ---
 const {name,slug,description,image}=Astro.props;
 ---
-<a href={`/destinations/${slug}/`} class="group block overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><div class="aspect-[16/9] overflow-hidden"><img src={image} alt={`${name} travel destination`} width="1200" height="675" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105"/></div><div class="p-5"><h3 class="text-2xl font-black">{name}</h3><p class="mt-2 text-sm leading-6 text-slate-600">{description}</p><span class="mt-4 inline-block font-bold text-[#168ac0]">Explore {name} →</span></div></a>
+<a href={`/destinations/${slug}/`} class="group block overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+  <div class="aspect-[16/9] overflow-hidden bg-slate-100">
+    {image ? <img src={image} alt={`${name} travel destination`} width="1200" height="675" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" /> : <div class="grid h-full place-items-center bg-gradient-to-br from-sky-100 via-amber-50 to-emerald-100 text-4xl font-black text-slate-700" aria-hidden="true">{name}</div>}
+  </div>
+  <div class="p-5"><h3 class="text-2xl font-black">{name}</h3><p class="mt-2 text-sm leading-6 text-slate-600">{description}</p><span class="mt-4 inline-block font-bold text-[#168ac0]">Explore {name} →</span></div>
+</a>
