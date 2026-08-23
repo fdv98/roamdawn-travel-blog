@@ -1,0 +1,4 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'; import DestinationCard from '../../components/DestinationCard.astro'; import {destinations} from '../../data/destinations';
+---
+<BaseLayout title="Travel Destinations | RoamDawn" description="Explore RoamDawn destination hubs for Japan, Spain, Croatia, Ireland, Scotland, Canada and Norway."><section class="container py-14"><p class="font-bold uppercase tracking-wider text-[#168ac0]">Destination hubs</p><h1 class="mt-2 text-5xl font-black">Choose your next place</h1><p class="mt-5 max-w-2xl text-lg text-slate-600">Each hub starts with the destination, then connects you to focused city guides, itineraries and planning articles.</p><div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">{destinations.map(d=><DestinationCard name={d.name} slug={d.slug} description={d.intro} image={d.image}/>)}</div></section></BaseLayout>
