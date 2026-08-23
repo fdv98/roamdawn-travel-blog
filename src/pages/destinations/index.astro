@@ -1,4 +1,26 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import DestinationCard from '../../components/DestinationCard.astro'; import {destinations} from '../../data/destinations';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import DestinationCard from '../../components/DestinationCard.astro';
+import { destinations } from '../../data/destinations';
 ---
-<BaseLayout title="Travel Destinations | RoamDawn" description="Explore RoamDawn destination hubs for Japan, Spain, Croatia, Ireland, Scotland, Canada and Norway."><section class="container py-14"><p class="font-bold uppercase tracking-wider text-[#168ac0]">Destination hubs</p><h1 class="mt-2 text-5xl font-black">Choose your next place</h1><p class="mt-5 max-w-2xl text-lg text-slate-600">Each hub starts with the destination, then connects you to focused city guides, itineraries and planning articles.</p><div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">{destinations.map(d=><DestinationCard name={d.name} slug={d.slug} description={d.intro} image={d.image}/>)}</div></section></BaseLayout>
+<BaseLayout
+  title="Travel Destinations | RoamDawn"
+  description="Explore RoamDawn destination hubs for Japan, Spain, Croatia, Ireland, Scotland, Canada and Norway, with practical travel guides and itineraries."
+  breadcrumbs={[{ label: 'Destinations', href: '/destinations/' }]}
+>
+  <section class="container py-14">
+    <p class="font-bold uppercase tracking-wider text-[#168ac0]">Destination hubs</p>
+    <h1 class="mt-2 text-5xl font-black">Explore travel destinations</h1>
+    <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">Start with a country, then move naturally into city guides, places to visit, itineraries and practical planning advice. As RoamDawn grows, this hub remains the central index for every destination.</p>
+
+    <div class="mt-8 grid gap-4 rounded-2xl border border-stone-200 bg-white p-5 sm:grid-cols-3">
+      <div><b class="text-slate-900">Destination hubs</b><p class="mt-1 text-sm text-slate-600">Country-level planning and travel ideas.</p></div>
+      <div><b class="text-slate-900">City guides</b><p class="mt-1 text-sm text-slate-600">Focused guides for major cities and regions.</p></div>
+      <div><b class="text-slate-900">Planning articles</b><p class="mt-1 text-sm text-slate-600">Best time, routes, itineraries and practical details.</p></div>
+    </div>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {destinations.map((d) => <DestinationCard name={d.name} slug={d.slug} description={d.intro} image={d.image} />)}
+    </div>
+  </section>
+</BaseLayout>
