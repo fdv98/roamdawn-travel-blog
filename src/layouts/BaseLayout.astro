@@ -1,0 +1,10 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+const {title,description,image='/images/og-default.svg',type='website',published,updated}=Astro.props;
+const canonical=new URL(Astro.url.pathname,'https://roamdawn.com').href;
+const ld={"@context":"https://schema.org","@type":type==='article'?'BlogPosting':'WebSite',name:'RoamDawn',url:canonical,description,image:new URL(image,'https://roamdawn.com').href,...(type==='article'?{headline:title,datePublished:published,dateModified:updated||published,author:{"@type":"Organization",name:'RoamDawn Editorial Team'},publisher:{"@type":"Organization",name:'RoamDawn'}}:{})};
+---
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><title>{title}</title><meta name="description" content={description}/><meta name="robots" content="index,follow"/><link rel="canonical" href={canonical}/><meta property="og:type" content={type}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonical}/><meta property="og:image" content={new URL(image,'https://roamdawn.com').href}/><meta property="og:site_name" content="RoamDawn"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/><script type="application/ld+json" set:html={JSON.stringify(ld)}/></head><body><a class="skip-link focus-ring" href="#main">Skip to content</a><Header/><main id="main"><slot/></main><Footer/><CookieBanner/></body></html>
