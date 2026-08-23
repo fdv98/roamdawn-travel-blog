@@ -1,1 +1,31 @@
-<header class="sticky top-0 z-40 border-b border-stone-200/80 bg-[#fffaf3]/95 backdrop-blur"><div class="container flex items-center justify-between py-4"><a href="/" class="focus-ring text-2xl font-black tracking-tight"><span class="text-[#168ac0]">Roam</span><span class="text-[#f27638]">Dawn</span></a><nav class="hidden items-center gap-7 text-sm font-semibold md:flex" aria-label="Primary"><a class="focus-ring" href="/">Home</a><a class="focus-ring" href="/destinations/">Destinations</a><a class="focus-ring" href="/blog/">Travel Guides</a><a class="focus-ring" href="/itineraries/">Itineraries</a><a class="focus-ring" href="/about/">About</a><a class="focus-ring rounded-full bg-[#18232d] px-4 py-2 text-white" href="/search/">Search</a></nav><button id="nav-toggle" class="focus-ring rounded-lg border border-stone-300 px-3 py-2 md:hidden" aria-expanded="false" aria-controls="mobile-nav">Menu</button></div><nav id="mobile-nav" class="hidden border-t border-stone-200 pb-5 md:hidden" aria-label="Mobile"><div class="container grid gap-3 pt-4 font-semibold"><a href="/">Home</a><a href="/destinations/">Destinations</a><a href="/blog/">Travel Guides</a><a href="/itineraries/">Itineraries</a><a href="/about/">About</a><a href="/search/">Search</a></div></nav></header><script is:inline>{`const b=document.getElementById('nav-toggle');const n=document.getElementById('mobile-nav');b?.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!open));n?.classList.toggle('hidden')});`}</script>
+---
+---
+<header class="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf3]/95 backdrop-blur">
+  <div class="container flex items-center justify-between py-4">
+    <a href="/" class="focus-ring text-2xl font-black tracking-tight" aria-label="RoamDawn home"><span class="text-[#168ac0]">Roam</span><span class="text-[#f27638]">Dawn</span></a>
+    <nav class="hidden items-center gap-7 text-sm font-semibold md:flex" aria-label="Primary">
+      <a class="focus-ring" href="/">Home</a><a class="focus-ring" href="/destinations/">Destinations</a><a class="focus-ring" href="/blog/">Travel Guides</a><a class="focus-ring" href="/itineraries/">Itineraries</a><a class="focus-ring" href="/about/">About</a><a class="focus-ring rounded-full bg-[#18232d] px-4 py-2 text-white" href="/search/">Search</a>
+    </nav>
+    <button id="nav-toggle" type="button" class="focus-ring rounded-lg border border-stone-300 px-3 py-2 text-sm font-semibold md:hidden" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation">Menu</button>
+  </div>
+  <div id="mobile-nav" class="hidden border-t border-stone-200 bg-[#fffaf3] md:hidden" aria-hidden="true">
+    <nav class="container grid gap-2 py-4 font-semibold" aria-label="Mobile">
+      <a class="focus-ring rounded-lg px-3 py-2" href="/">Home</a><a class="focus-ring rounded-lg px-3 py-2" href="/destinations/">Destinations</a><a class="focus-ring rounded-lg px-3 py-2" href="/blog/">Travel Guides</a><a class="focus-ring rounded-lg px-3 py-2" href="/itineraries/">Itineraries</a><a class="focus-ring rounded-lg px-3 py-2" href="/about/">About</a><a class="focus-ring rounded-lg px-3 py-2" href="/search/">Search</a>
+    </nav>
+  </div>
+</header>
+<script is:inline>
+  (() => {
+    const button = document.getElementById('nav-toggle');
+    const panel = document.getElementById('mobile-nav');
+    if (!button || !panel) return;
+    const setState = (open) => {
+      button.setAttribute('aria-expanded', String(open));
+      button.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+      panel.classList.toggle('hidden', !open);
+      panel.setAttribute('aria-hidden', String(!open));
+    };
+    button.addEventListener('click', () => setState(button.getAttribute('aria-expanded') !== 'true'));
+    panel.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setState(false)));
+  })();
+</script>
