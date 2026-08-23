@@ -1,5 +1,37 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import ArticleCard from '../../components/ArticleCard.astro'; import {getCollection} from 'astro:content';
-const posts=await getCollection('blog',{filter:({data})=>!data.draft}); const tags=[...new Set(posts.flatMap(p=>p.data.tags))]; export function getStaticPaths(){return tags.map(tag=>({params:{tag:tag.toLowerCase().replace(/[^a-z0-9]+/g,'-')},props:{tag}}))}; const {tag}=Astro.props; const matches=posts.filter(p=>p.data.tags.some(t=>t.toLowerCase().replace(/[^a-z0-9]+/g,'-')===tag));
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+  return tags.map((tag) => ({
+    params: { tag: tag.toLowerCase().replace(/[^a-z0-9]+/g, '-') },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const matches = posts.filter(
+  (post) => post.data.tags.some((item) => item.toLowerCase().replace(/[^a-z0-9]+/g, '-') === Astro.params.tag),
+);
 ---
-<BaseLayout title={`${tag} Travel Guides | RoamDawn`} description={`RoamDawn travel guides about ${tag}, organized for practical trip planning.`}><section class="container py-14"><p class="font-bold uppercase tracking-wider text-[#168ac0]">Topic</p><h1 class="mt-2 text-5xl font-black">{tag}</h1><p class="mt-5 max-w-2xl text-slate-600">Guides related to {tag}, connected to the destination hubs where they belong.</p><div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{matches.map(post=><ArticleCard post={post}/>)}</div></section></BaseLayout>
+
+<BaseLayout
+  title={`${tag} Travel Guides | RoamDawn`}
+  description={`RoamDawn travel guides about ${tag}, organized for practical trip planning.`}
+>
+  <section class="container py-14">
+    <p class="font-bold uppercase tracking-wider text-[#168ac0]">Topic</p>
+    <h1 class="mt-2 text-5xl font-black">{tag}</h1>
+    <p class="mt-5 max-w-2xl text-slate-600">
+      Guides related to {tag}, connected to the destination hubs where they belong.
+    </p>
+    <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {matches.map((post) => <ArticleCard post={post} />)}
+    </div>
+  </section>
+</BaseLayout>
