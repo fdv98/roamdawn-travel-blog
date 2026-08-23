@@ -24,6 +24,10 @@ const categoryToDestination = {
   Scotland: 'scotland', Canada: 'canada', Norway: 'norway'
 };
 
+function slugify(value) {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 async function search(query) {
   const url = new URL('https://pixabay.com/api/');
   url.searchParams.set('key', apiKey);
@@ -53,7 +57,7 @@ async function downloadWebp(imageUrl, target) {
 
 await fs.mkdir(outputDir, { recursive: true });
 const manifest = [];
-const selected = {};
+const mainImages = {};
 
 for (const [destination, terms] of Object.entries(queries)) {
   const destinationDir = path.join(outputDir, destination);
@@ -67,22 +71,16 @@ for (const [destination, terms] of Object.entries(queries)) {
       continue;
     }
 
-    const filename = `${destination}-${selected[destination] ? selected[destination].length + 1 : 1}.webp`;
+    const filename = `${slugify(term)}.webp`;
     const target = path.join(destinationDir, filename);
     await downloadWebp(image.largeImageURL, target);
 
     const file = `/images/destinations/${destination}/${filename}`;
+    mainImages[destination] ??= file;
     manifest.push({ destination, query: term, file, pixabayPage: image.pageURL, author: image.user });
-    selected[destination] ??= [];
-    selected[destination].push(file);
     console.log(`Pixabay OK: ${term} -> ${file}`);
   }
 }
-
-// Use the first successfully downloaded photo as the main image for each destination.
-const mainImages = Object.fromEntries(
-  Object.entries(selected).map(([destination, files]) => [destination, files[0]])
-);
 
 // Replace old SVG/JPG featured-image placeholders in blog frontmatter during every build.
 const files = await fs.readdir(contentDir);
