@@ -37,6 +37,12 @@ const articles = [
       { heading: 'Winter', query: 'Japan winter snow landscape', alt: 'Winter snow landscape in Japan' },
     ],
   },
+  {
+    slug: 'best-time-to-visit-northern-lights', destination: 'northern-lights',
+    images: [
+      { role: 'hero', query: 'Northern Lights aurora borealis night landscape', alt: 'Northern Lights over a dark northern landscape' },
+    ],
+  },
 ];
 
 const selectedArticles = requestedSlug ? articles.filter((a) => a.slug === requestedSlug) : articles;
