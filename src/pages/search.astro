@@ -18,12 +18,12 @@ const index = posts.map((p) => ({
       <h1 class="mt-2 text-4xl font-black tracking-tight text-[#17324d] sm:text-5xl">Find your travel guide</h1>
       <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-600">Search destinations, city guides, itineraries and planning advice.</p>
 
-      <form id="search-form" class="mt-8 flex gap-3" role="search">
+      <form id="search-form" class="mt-8 flex flex-col gap-3 sm:flex-row" role="search">
         <label class="min-w-0 flex-1">
           <span class="sr-only">Search travel guides</span>
           <input id="search" name="q" type="search" autocomplete="off" class="w-full rounded-2xl border border-sky-200 bg-white px-5 py-4 text-lg text-[#17324d] outline-none transition focus:border-[#1596c2] focus:ring-4 focus:ring-sky-100" placeholder="Try Japan, Kyoto, fjords or itinerary…" />
         </label>
-        <button type="submit" class="shrink-0 rounded-2xl bg-[#1596c2] px-6 py-4 font-bold text-white hover:bg-[#117fa5]">Search</button>
+        <button type="submit" class="w-full shrink-0 rounded-2xl bg-[#1596c2] px-6 py-4 font-bold text-white transition hover:bg-[#117fa5] focus-ring sm:w-auto">Search</button>
       </form>
 
       <p id="count" class="mt-4 text-sm text-slate-500" aria-live="polite"></p>
@@ -49,10 +49,7 @@ const index = posts.map((p) => ({
       }
 
       const terms = q.split(/\s+/).filter(Boolean);
-      const hits = index.filter((item) => {
-        const text = searchable(item);
-        return terms.every((term) => text.includes(term));
-      });
+      const hits = index.filter((item) => terms.every((term) => searchable(item).includes(term)));
 
       count.textContent = `${hits.length} ${hits.length === 1 ? 'result' : 'results'}`;
       results.replaceChildren();
@@ -68,22 +65,18 @@ const index = posts.map((p) => ({
       hits.forEach((item) => {
         const article = document.createElement('article');
         article.className = 'rounded-2xl border border-sky-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md';
-
         const category = document.createElement('p');
         category.className = 'text-xs font-bold uppercase tracking-wider text-[#1596c2]';
         category.textContent = item.category;
-
         const heading = document.createElement('h2');
         heading.className = 'mt-1 text-xl font-black text-[#17324d]';
         const link = document.createElement('a');
         link.href = item.url;
         link.textContent = item.title;
         heading.append(link);
-
         const description = document.createElement('p');
         description.className = 'mt-2 text-sm leading-6 text-slate-600';
         description.textContent = item.description;
-
         article.append(category, heading, description);
         results.append(article);
       });
