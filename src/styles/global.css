@@ -52,12 +52,12 @@ button { font: inherit; }
 .prose img { display: block; width: 100%; height: auto; border-radius: 1.25rem; }
 .prose video, .prose iframe, .prose embed, .prose object { display: block; max-width: 100%; }
 
-/* Affiliate / editorial cards inside article Markdown. */
-.prose .rd-cta a { text-decoration: none; }
-.prose .rd-cta .rd-cta-primary { color: #fff !important; text-decoration: none !important; }
-.prose .rd-cta .rd-cta-secondary { color: var(--rd-ink) !important; text-decoration: none !important; }
-.prose .rd-cta p { margin: .75rem 0; }
-.prose .rd-cta h3 { margin-top: .5rem; }
+/* Rich CTA cards inserted inside Markdown articles should keep their intended contrast. */
+.prose .not-prose a { text-decoration: none; }
+.prose .not-prose a.text-white { color: #fff !important; }
+.prose .not-prose a.text-\[\#17324d\] { color: #17324d !important; }
+.prose .not-prose p { margin: .75rem 0; }
+.prose .not-prose h3 { margin-top: .5rem; }
 
 .prose table {
   width: 100%;
@@ -82,7 +82,6 @@ button { font: inherit; }
 .prose th:nth-child(1), .prose td:nth-child(1) { width: 28%; }
 .prose th:nth-child(2), .prose td:nth-child(2) { width: 34%; }
 .prose th:nth-child(3), .prose td:nth-child(3) { width: 38%; }
-.prose th:nth-child(3), .prose td:nth-child(3) { white-space: normal; text-align: left; }
 
 .prose > * { max-width: 100%; }
 .prose pre, .prose code { max-width: 100%; overflow-x: auto; }
@@ -129,24 +128,8 @@ button { font: inherit; }
     border: 0;
   }
   .prose table tbody { display: grid; gap: .7rem; }
-  .prose table tr {
-    display: block;
-    padding: .85rem 1rem;
-    border: 1px solid var(--rd-line);
-    border-radius: .9rem;
-    background: var(--rd-paper);
-    box-shadow: 0 4px 14px rgba(23,35,45,.04);
-  }
-  .prose table td {
-    display: grid;
-    grid-template-columns: 7.1rem minmax(0,1fr);
-    gap: .7rem;
-    align-items: start;
-    padding: .38rem 0;
-    border: 0;
-    text-align: left !important;
-    white-space: normal !important;
-  }
+  .prose table tr { display: block; padding: .85rem 1rem; border: 1px solid var(--rd-line); border-radius: .9rem; background: var(--rd-paper); box-shadow: 0 4px 14px rgba(23,35,45,.04); }
+  .prose table td { display: grid; grid-template-columns: 7.1rem minmax(0,1fr); gap: .7rem; align-items: start; padding: .38rem 0; border: 0; text-align: left !important; white-space: normal !important; }
   .prose table td + td { border-top: 1px solid #f0ebe4; }
   .prose table td::before { color: var(--rd-muted); font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
   .prose table td:nth-child(1)::before { content: "Category"; }
