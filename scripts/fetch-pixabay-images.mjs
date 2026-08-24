@@ -4,6 +4,7 @@ import sharp from 'sharp';
 
 const apiKey = process.env.PIXABAY_API_KEY;
 const allowNetwork = process.env.PIXABAY_FETCH_NEW_IMAGES === 'true';
+const requestedSlug = process.env.PIXABAY_ARTICLE_SLUG?.trim();
 
 const root = new URL('../', import.meta.url).pathname;
 const outputDir = path.join(root, 'public', 'images', 'destinations');
@@ -30,13 +31,17 @@ const articles = [
     destination: 'japan',
     images: [
       { role: 'hero', query: 'Japan autumn travel landscape', alt: 'Autumn landscape in Japan' },
-      { heading: '<h2 id="spring">Spring in Japan</h2>', query: 'Japan spring cherry blossom travel', alt: 'Spring scenery and cherry blossoms in Japan' },
-      { heading: '<h2 id="summer">Summer in Japan</h2>', query: 'Japan summer travel landscape', alt: 'Summer landscape in Japan' },
-      { heading: '<h2 id="autumn">Autumn in Japan</h2>', query: 'Japan autumn foliage travel', alt: 'Autumn foliage in Japan' },
-      { heading: '<h2 id="winter">Winter in Japan</h2>', query: 'Japan winter snow landscape', alt: 'Winter snow landscape in Japan' },
+      { heading: 'Spring', query: 'Japan spring cherry blossom travel', alt: 'Spring scenery and cherry blossoms in Japan' },
+      { heading: 'Summer', query: 'Japan summer travel landscape', alt: 'Summer landscape in Japan' },
+      { heading: 'Autumn', query: 'Japan autumn foliage travel', alt: 'Autumn foliage in Japan' },
+      { heading: 'Winter', query: 'Japan winter snow landscape', alt: 'Winter snow landscape in Japan' },
     ],
   },
 ];
+
+const selectedArticles = requestedSlug
+  ? articles.filter((article) => article.slug === requestedSlug)
+  : articles;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -113,15 +118,32 @@ async function downloadWebp(imageUrl, target) {
 }
 
 function insertImageAfterHeading(markdown, heading, imagePath, alt) {
-  if (markdown.includes(`<!-- pixabay-image:${imagePath} -->`)) return markdown;
-  const marker = `<!-- pixabay-image:${imagePath} -->\n![${alt}](${imagePath})`;
-  const index = markdown.indexOf(heading);
+  const marker = `<!-- pixabay-image:${imagePath} -->`;
+  if (markdown.includes(marker)) return markdown;
+
+  let index = markdown.indexOf(heading);
+  let headingLength = heading.length;
+
+  if (index === -1) {
+    const plain = heading.replace(/<[^>]+>/g, '').replace(/^#+\s*/, '').trim();
+    if (plain) {
+      const escaped = plain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const match = markdown.match(new RegExp(`^#{2,3}\\s+.*${escaped}.*$`, 'mi'));
+      if (match && match.index !== undefined) {
+        index = match.index;
+        headingLength = match[0].length;
+      }
+    }
+  }
+
   if (index === -1) {
     console.warn(`Heading not found; skipped inline image insertion: ${heading}`);
     return markdown;
   }
-  const endOfHeading = index + heading.length;
-  return `${markdown.slice(0, endOfHeading)}\n\n${marker}${markdown.slice(endOfHeading)}`;
+
+  const imageMarkup = `${marker}\n![${alt}](${imagePath})`;
+  const endOfHeading = index + headingLength;
+  return `${markdown.slice(0, endOfHeading)}\n\n${imageMarkup}${markdown.slice(endOfHeading)}`;
 }
 
 async function updateArticle(article, imageResults) {
@@ -135,10 +157,7 @@ async function updateArticle(article, imageResults) {
   const hero = imageResults.find((item) => item.role === 'hero');
 
   if (hero) {
-    markdown = markdown.replace(
-      /^featuredImage:\s*.*$/m,
-      `featuredImage: "${hero.file}"`,
-    );
+    markdown = markdown.replace(/^featuredImage:\s*.*$/m, `featuredImage: "${hero.file}"`);
   }
 
   for (const image of imageResults.filter((item) => item.heading)) {
@@ -159,12 +178,17 @@ if (!apiKey) {
   process.exit(0);
 }
 
+if (requestedSlug && selectedArticles.length === 0) {
+  console.error(`Unknown article slug: ${requestedSlug}`);
+  process.exit(1);
+}
+
 await fs.mkdir(outputDir, { recursive: true });
 const manifestPathExists = await exists(manifestPath);
 const existingManifest = manifestPathExists ? JSON.parse(await fs.readFile(manifestPath, 'utf8')) : [];
 const additions = [];
 
-for (const article of articles) {
+for (const article of selectedArticles) {
   const destinationDir = path.join(outputDir, article.destination);
   await fs.mkdir(destinationDir, { recursive: true });
   const imageResults = [];
