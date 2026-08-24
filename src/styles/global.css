@@ -17,27 +17,15 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
-
 html { scroll-behavior: smooth; background: var(--rd-sand); }
-body {
-  margin: 0;
-  min-width: 320px;
-  background: radial-gradient(circle at 8% 4%, rgba(22,127,169,.055), transparent 25rem), var(--rd-sand);
-  color: var(--rd-ink);
-}
+body { margin: 0; min-width: 320px; background: radial-gradient(circle at 8% 4%, rgba(22,127,169,.055), transparent 25rem), var(--rd-sand); color: var(--rd-ink); }
 ::selection { background: rgba(239,116,64,.2); }
-
-h1,h2,h3,h4 {
-  font-family: Poppins, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  letter-spacing: -0.035em;
-  color: var(--rd-ink);
-}
+h1,h2,h3,h4 { font-family: Poppins, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: -0.035em; color: var(--rd-ink); }
 h1,h2,h3,h4,p { overflow-wrap: break-word; }
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { text-decoration: none; }
 button,a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; }
-
 .container { width: min(1180px, calc(100% - 32px)); margin-inline: auto; }
 
 .prose { max-width: 860px; font-size: 1.08rem; color: #33424d; }
@@ -51,27 +39,12 @@ button { font: inherit; }
 .prose blockquote { margin: 2rem 0; border-left: 4px solid var(--rd-coral); padding: .9rem 1.2rem; background: #fff8f2; color: #465560; border-radius: 0 .9rem .9rem 0; }
 .prose img { display: block; width: 100%; height: auto; border-radius: 1.25rem; }
 .prose video, .prose iframe, .prose embed, .prose object { display: block; max-width: 100%; }
-
 .prose .not-prose a { text-decoration: none; }
 .prose .not-prose a.text-white { color: #fff !important; }
 .prose .not-prose a.text-\[\#17324d\] { color: #17324d !important; }
 .prose .not-prose p { margin: .75rem 0; }
 .prose .not-prose h3 { margin-top: .5rem; }
-
-.prose table {
-  width: 100%;
-  margin: 2rem 0;
-  border: 1px solid var(--rd-line);
-  border-radius: 1rem;
-  border-spacing: 0;
-  border-collapse: separate;
-  overflow: hidden;
-  background: var(--rd-paper);
-  font-size: .94rem;
-  line-height: 1.45;
-  box-shadow: 0 6px 22px rgba(23,35,45,.045);
-  table-layout: fixed;
-}
+.prose table { width: 100%; margin: 2rem 0; border: 1px solid var(--rd-line); border-radius: 1rem; border-spacing: 0; border-collapse: separate; overflow: hidden; background: var(--rd-paper); font-size: .94rem; line-height: 1.45; box-shadow: 0 6px 22px rgba(23,35,45,.045); table-layout: fixed; }
 .prose thead { background: #eef8fb; }
 .prose th { padding: .9rem .85rem; color: var(--rd-ink); font-size: .78rem; font-weight: 800; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--rd-line); }
 .prose td { padding: .85rem; vertical-align: top; border-bottom: 1px solid #eee8df; overflow-wrap: anywhere; word-break: normal; }
@@ -81,101 +54,75 @@ button { font: inherit; }
 .prose th:nth-child(1), .prose td:nth-child(1) { width: 28%; }
 .prose th:nth-child(2), .prose td:nth-child(2) { width: 34%; }
 .prose th:nth-child(3), .prose td:nth-child(3) { width: 38%; }
-
 .prose > * { max-width: 100%; }
 .prose pre, .prose code { max-width: 100%; overflow-x: auto; }
-
 .rd-card { border: 1px solid var(--rd-line); background: var(--rd-paper); box-shadow: 0 8px 28px rgba(23,35,45,.055); }
 .rd-card:hover { box-shadow: 0 16px 38px rgba(23,35,45,.09); }
 .rd-eyebrow { color: var(--rd-ocean); font-size: .72rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
-
 .skip-link { position: fixed; left: -9999px; top: 1rem; z-index: 100; padding: .7rem 1rem; background: #fff; color: var(--rd-ink); border: 1px solid var(--rd-line); border-radius: .75rem; box-shadow: 0 8px 24px rgba(0,0,0,.12); }
 .skip-link:focus { left: 1rem; }
 .focus-ring:focus-visible { outline: 3px solid rgba(239,116,64,.75); outline-offset: 3px; }
 
+/* Homepage magazine polish */
+.magazine-hero { padding-top: 10px !important; padding-bottom: 26px !important; }
+.magazine-kicker { max-width: 1180px; margin-inline: auto; padding: 4px 0 10px !important; font-size: .64rem !important; letter-spacing: .16em !important; opacity: .82; }
+.hero-slider { border-radius: 18px !important; box-shadow: 0 14px 38px rgba(22,61,54,.13) !important; }
+.slide-content { max-width: 660px; }
+.category-inner { scrollbar-width: none; }
+.category-inner::-webkit-scrollbar { display: none; }
+
 @media (max-width: 900px) { .prose { max-width: none; } }
 
 @media (max-width: 640px) {
-  .container { width: min(100% - 24px, 1180px); }
+  .container { width: calc(100% - 24px); }
+  .magazine-hero { padding-top: 4px !important; padding-bottom: 18px !important; }
+  .magazine-kicker { padding: 2px 0 8px !important; font-size: .56rem !important; gap: 8px !important; }
+  .magazine-kicker i { width: 20px !important; }
+  .hero-slider { border-radius: 14px !important; box-shadow: 0 10px 28px rgba(22,61,54,.11) !important; }
+  .slides { min-height: 500px !important; }
+  .slide-content { padding: 28px 20px 74px !important; width: 100% !important; }
+  .slide h1 { font-size: clamp(2.05rem, 10vw, 2.65rem) !important; line-height: 1.02 !important; max-width: 92%; }
+  .slide-category { font-size: .58rem !important; letter-spacing: .13em !important; }
+  .slide-content>p:not(.slide-category) { font-size: .86rem !important; max-width: 94%; line-height: 1.55 !important; }
+  .magazine-button { margin-top: 18px !important; padding: 11px 15px !important; font-size: .78rem !important; }
+  .slide-number { top: 16px !important; right: 16px !important; font-size: .62rem !important; }
+  .slider-controls { right: 12px !important; bottom: 12px !important; }
+  .slider-controls>button { width: 36px !important; height: 36px !important; }
+  .category-rail { overflow: hidden; }
+  .category-inner { gap: 16px !important; padding: 11px 0 !important; }
+  .category-inner a { font-size: .68rem !important; }
+  .magazine-section { padding-top: 44px !important; padding-bottom: 44px !important; }
+  .section-label { margin-bottom: 20px !important; font-size: .6rem !important; }
+  .display-heading { font-size: 2.15rem !important; }
+  .destination-copy { left: 20px !important; right: 20px !important; bottom: 20px !important; }
+  .destination-copy h3 { font-size: 2rem !important; }
+  .tips-panel { padding: 22px !important; }
+}
+
+@media (max-width: 390px) {
+  .container { width: calc(100% - 20px); }
+  .slides { min-height: 470px !important; }
+  .slide h1 { font-size: 1.95rem !important; }
+  .slide-content>p:not(.slide-category) { font-size: .82rem !important; }
+}
+
+@media (max-width: 640px) {
   .prose { font-size: 1rem; line-height: 1.75; }
   .prose h2 { margin-top: 2.35rem; font-size: 1.55rem; line-height: 1.25; }
   .prose h3 { margin-top: 1.55rem; font-size: 1.18rem; line-height: 1.35; }
   .prose p { margin: .95rem 0; }
   .prose blockquote { margin: 1.5rem 0; padding: .8rem 1rem; }
-
-  /* Mobile tables become readable cards. Explicitly reset the desktop percentage
-     widths so cells cannot collapse to a single-character column. */
-  .prose table {
-    display: block;
-    width: 100% !important;
-    max-width: 100%;
-    margin: 1.5rem 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    overflow: visible;
-    table-layout: auto;
-  }
-  .prose table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-    border: 0;
-  }
-  .prose table tbody {
-    display: grid;
-    width: 100%;
-    gap: .8rem;
-  }
-  .prose table tr {
-    display: block;
-    width: 100% !important;
-    min-width: 0;
-    box-sizing: border-box;
-    padding: .85rem 1rem;
-    border: 1px solid var(--rd-line);
-    border-radius: .9rem;
-    background: var(--rd-paper);
-    box-shadow: 0 4px 14px rgba(23,35,45,.04);
-  }
-  .prose table td,
-  .prose table th {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none;
-    box-sizing: border-box;
-  }
-  .prose table td {
-    display: grid;
-    grid-template-columns: minmax(6rem, 34%) minmax(0, 1fr);
-    gap: .75rem;
-    align-items: start;
-    padding: .55rem 0;
-    border: 0;
-    text-align: left !important;
-    white-space: normal !important;
-    overflow-wrap: anywhere;
-    word-break: normal;
-  }
+  .prose table { display: block; width: 100% !important; max-width: 100%; margin: 1.5rem 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; table-layout: auto; }
+  .prose table thead { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .prose table tbody { display: grid; width: 100%; gap: .8rem; }
+  .prose table tr { display: block; width: 100% !important; min-width: 0; box-sizing: border-box; padding: .85rem 1rem; border: 1px solid var(--rd-line); border-radius: .9rem; background: var(--rd-paper); box-shadow: 0 4px 14px rgba(23,35,45,.04); }
+  .prose table td,.prose table th { width: 100% !important; min-width: 0 !important; max-width: none; box-sizing: border-box; }
+  .prose table td { display: grid; grid-template-columns: minmax(6rem,34%) minmax(0,1fr); gap: .75rem; align-items: start; padding: .55rem 0; border: 0; text-align: left !important; white-space: normal !important; overflow-wrap: anywhere; }
   .prose table td + td { border-top: 1px solid #f0ebe4; }
-  .prose table td::before {
-    color: var(--rd-muted);
-    font-size: .72rem;
-    line-height: 1.35;
-    font-weight: 800;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-  }
+  .prose table td::before { color: var(--rd-muted); font-size: .72rem; line-height: 1.35; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
   .prose table td:nth-child(1)::before { content: "Item"; }
   .prose table td:nth-child(2)::before { content: "Value"; }
   .prose table td:nth-child(3)::before { content: "Details"; }
-
   .prose.article-best-time-to-visit-japan table td:nth-child(1)::before { content: "Travel goal"; }
   .prose.article-best-time-to-visit-japan table td:nth-child(2)::before { content: "Best time"; }
   .prose.article-best-time-to-visit-japan table td:nth-child(3)::before { content: "Why"; }
@@ -185,10 +132,9 @@ button { font: inherit; }
 }
 
 @media (max-width: 390px) {
-  .container { width: calc(100% - 20px); }
   .prose { font-size: .98rem; }
   .prose h2 { font-size: 1.45rem; }
-  .prose table td { grid-template-columns: minmax(5.5rem, 36%) minmax(0, 1fr); gap: .55rem; }
+  .prose table td { grid-template-columns: minmax(5.5rem,36%) minmax(0,1fr); gap: .55rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
