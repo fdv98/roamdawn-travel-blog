@@ -3,25 +3,15 @@ import path from 'node:path';
 import sharp from 'sharp';
 
 const apiKey = process.env.PIXABAY_API_KEY;
+const allowNetwork = process.env.PIXABAY_FETCH_NEW_IMAGES === 'true';
 
 const root = new URL('../', import.meta.url).pathname;
 const outputDir = path.join(root, 'public', 'images', 'destinations');
-const contentDir = path.join(root, 'src', 'content', 'blog');
 const manifestPath = path.join(root, 'src', 'data', 'image-sources.json');
 
+// New Pixabay downloads are opt-in. Normal production builds do not call Pixabay.
 const queries = {
   japan: ['Japan Tokyo travel', 'Kyoto Japan travel', 'Mount Fuji Japan'],
-  spain: ['Barcelona Spain travel', 'Madrid Spain travel', 'Seville Spain travel'],
-  croatia: ['Dubrovnik Croatia travel', 'Split Croatia travel', 'Plitvice Croatia'],
-  ireland: ['Dublin Ireland travel', 'Galway Ireland travel', 'Ireland coast travel'],
-  scotland: ['Edinburgh Scotland travel', 'Scottish Highlands travel', 'Isle of Skye Scotland'],
-  canada: ['Vancouver Canada travel', 'Banff Canada travel', 'Toronto Canada travel'],
-  norway: ['Oslo Norway travel', 'Bergen Norway travel', 'Norway fjords travel'],
-};
-
-const categoryToDestination = {
-  Japan: 'japan', Spain: 'spain', Croatia: 'croatia', Ireland: 'ireland',
-  Scotland: 'scotland', Canada: 'canada', Norway: 'norway'
 };
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -30,11 +20,21 @@ function slugify(value) {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
+async function exists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function fetchWithRetry(url, label, { retries = 4, baseDelay = 1500 } = {}) {
   let lastError;
+
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
-      const response = await fetch(url, { headers: { 'user-agent': 'RoamDawn image build' } });
+      const response = await fetch(url, { headers: { 'user-agent': 'RoamDawn image fetch utility' } });
       if (response.ok) return response;
 
       const retryable = response.status === 429 || response.status >= 500;
@@ -46,6 +46,7 @@ async function fetchWithRetry(url, label, { retries = 4, baseDelay = 1500 } = {}
       const delay = Number.isFinite(retryAfter) && retryAfter > 0
         ? retryAfter * 1000
         : baseDelay * (2 ** attempt) + Math.floor(Math.random() * 500);
+
       console.warn(`${label}: HTTP ${response.status}; retrying in ${Math.round(delay / 100) / 10}s.`);
       await sleep(delay);
     } catch (error) {
@@ -56,11 +57,13 @@ async function fetchWithRetry(url, label, { retries = 4, baseDelay = 1500 } = {}
       await sleep(delay);
     }
   }
+
   throw lastError || new Error(`${label}: request failed`);
 }
 
 async function search(query) {
   if (!apiKey) throw new Error('PIXABAY_API_KEY is not configured');
+
   const url = new URL('https://pixabay.com/api/');
   url.searchParams.set('key', apiKey);
   url.searchParams.set('q', query);
@@ -85,17 +88,20 @@ async function downloadWebp(imageUrl, target) {
     .toFile(target);
 }
 
-async function exists(filePath) {
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
+if (!allowNetwork) {
+  console.log('Pixabay fetch utility is offline. Set PIXABAY_FETCH_NEW_IMAGES=true to allow new downloads.');
+  process.exit(0);
+}
+
+if (!apiKey) {
+  console.error('PIXABAY_FETCH_NEW_IMAGES=true but PIXABAY_API_KEY is missing. No images downloaded.');
+  process.exit(0);
 }
 
 await fs.mkdir(outputDir, { recursive: true });
-const manifest = [];
+const manifestPathExists = await exists(manifestPath);
+const existingManifest = manifestPathExists ? JSON.parse(await fs.readFile(manifestPath, 'utf8')) : [];
+const additions = [];
 
 for (const [destination, terms] of Object.entries(queries)) {
   const destinationDir = path.join(outputDir, destination);
@@ -106,15 +112,8 @@ for (const [destination, terms] of Object.entries(queries)) {
     const target = path.join(destinationDir, filename);
     const file = `/images/destinations/${destination}/${filename}`;
 
-    // Existing optimized images are part of the site source and must survive rebuilds.
     if (await exists(target)) {
-      manifest.push({ destination, query: term, file, existing: true });
       console.log(`Pixabay cached: ${file}`);
-      continue;
-    }
-
-    if (!apiKey) {
-      console.warn(`Missing PIXABAY_API_KEY; keeping build offline. No image generated for: ${term}`);
       continue;
     }
 
@@ -127,40 +126,19 @@ for (const [destination, terms] of Object.entries(queries)) {
       }
 
       await downloadWebp(image.largeImageURL, target);
-      manifest.push({ destination, query: term, file, pixabayPage: image.pageURL, author: image.user });
+      additions.push({ destination, query: term, file, pixabayPage: image.pageURL, author: image.user });
       console.log(`Pixabay downloaded: ${term} -> ${file}`);
     } catch (error) {
-      // Image acquisition is an enhancement, never a reason to break a production build.
+      // Image acquisition is optional and must never make the build fail.
       console.warn(`Pixabay skipped for ${term}: ${error.message}`);
     }
   }
 }
 
-// Only repair frontmatter when the referenced local image actually exists.
-const files = await fs.readdir(contentDir);
-for (const filename of files.filter((name) => name.endsWith('.md') || name.endsWith('.mdx'))) {
-  const filePath = path.join(contentDir, filename);
-  let text = await fs.readFile(filePath, 'utf8');
-  const category = text.match(/^category:\s*["']?([^"'\n]+)["']?\s*$/m)?.[1]?.trim();
-  const destination = categoryToDestination[category];
-  if (!destination) continue;
-
-  const mainFilename = `${queries[destination][0] ? slugify(queries[destination][0]) : destination}.webp`;
-  const mainTarget = path.join(outputDir, destination, mainFilename);
-  const image = `/images/destinations/${destination}/${mainFilename}`;
-  if (!(await exists(mainTarget))) continue;
-
-  if (!/^featuredImage:\s*.*$/m.test(text)) continue;
-  text = text.replace(/^featuredImage:\s*.*$/m, `featuredImage: "${image}"`);
-  await fs.writeFile(filePath, text);
-}
-
-const existingManifest = await exists(manifestPath)
-  ? JSON.parse(await fs.readFile(manifestPath, 'utf8'))
-  : [];
-const mergedManifest = [...existingManifest, ...manifest].filter((item, index, items) =>
-  index === items.findIndex((candidate) => candidate.file === item.file)
+const mergedManifest = [...existingManifest, ...additions].filter(
+  (item, index, items) => index === items.findIndex((candidate) => candidate.file === item.file),
 );
+
 await fs.mkdir(path.dirname(manifestPath), { recursive: true });
 await fs.writeFile(manifestPath, JSON.stringify(mergedManifest, null, 2));
-console.log(`Image preparation complete. Cached: ${manifest.filter((item) => item.existing).length}; downloaded: ${manifest.filter((item) => !item.existing).length}.`);
+console.log(`Pixabay fetch complete. Cached on disk: ${mergedManifest.length}; new downloads: ${additions.length}.`);
