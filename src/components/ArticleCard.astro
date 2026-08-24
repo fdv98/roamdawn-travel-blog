@@ -1,10 +1,7 @@
 ---
 const { post, featured = false } = Astro.props;
-const fallback = '/images/og-default.svg';
+const fallback = '/images/japan-travel-hero.svg';
 
-// Keep article cards focused on recognizable destination/city photography.
-// This is intentionally separate from the article body so inline article images
-// never affect the homepage/blog-card presentation.
 const cityImages: Record<string, { src: string; alt: string }> = {
   'best-cities-to-visit-in-japan': {
     src: '/images/destinations/japan/best-cities-to-visit-in-japan-tokyo-japan-travel-skyline.webp',
@@ -23,7 +20,7 @@ const imageAlt = cityImage?.alt || post.data.title;
 <article class={`group flex h-full flex-col overflow-hidden rounded-[1.35rem] border border-stone-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl ${featured ? 'md:col-span-2' : ''}`}>
   <a href={`/blog/${post.id}/`} class="focus-ring flex h-full flex-col">
     <div class={`relative overflow-hidden bg-stone-100 ${featured ? 'aspect-[16/8]' : 'aspect-[16/9]'}`}>
-      <img src={image} alt={imageAlt} width="1200" height="675" loading={featured ? 'eager' : 'lazy'} decoding="async" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" onerror={`this.onerror=null;this.src='${fallback}'`} />
+      <img src={image} alt={imageAlt} width="1200" height="675" loading={featured ? 'eager' : 'lazy"} decoding="async" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" onerror={`this.onerror=null;this.src='${fallback}'`} />
       <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
       <span class="absolute bottom-4 left-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#18232d]">{post.data.category}</span>
     </div>
