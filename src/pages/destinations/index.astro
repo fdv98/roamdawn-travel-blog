@@ -1,24 +1,43 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import DestinationCard from '../../components/DestinationCard.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
 import { destinations } from '../../data/destinations';
+const posts = (await getCollection('blog', { filter: ({ data }) => !data.draft && data.category === 'Japan' }))
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 <BaseLayout
   title="Japan Travel Destination Guide | RoamDawn"
   description="Explore the RoamDawn Japan destination hub with practical seasonal planning, city guides and trip ideas."
   breadcrumbs={[{ label: 'Destinations', href: '/destinations/' }]}
 >
-  <section class="container py-14 md:py-16">
+  <section class="container py-12 sm:py-14 md:py-16">
     <p class="font-bold uppercase tracking-wider text-[#168ac0]">Destination hub</p>
-    <h1 class="mt-2 text-5xl font-black tracking-tight text-[#17324d] sm:text-6xl">Explore Japan</h1>
+    <h1 class="mt-2 text-4xl font-black tracking-tight text-[#17324d] sm:text-6xl">Explore Japan</h1>
     <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-600">Start with Japan, then move naturally into seasonal planning, city guides and practical trip advice. More destination hubs will be added only when their supporting content is ready.</p>
-    <div class="mt-8 grid gap-4 rounded-2xl border border-sky-100 bg-white p-5 sm:grid-cols-3">
-      <div><b class="text-slate-900">Seasonal planning</b><p class="mt-1 text-sm text-slate-600">Choose dates around weather, scenery and travel style.</p></div>
-      <div><b class="text-slate-900">City guides</b><p class="mt-1 text-sm text-slate-600">Compare Tokyo, Kyoto, Osaka and other Japanese cities.</p></div>
-      <div><b class="text-slate-900">Practical trips</b><p class="mt-1 text-sm text-slate-600">Build realistic routes without overloading your itinerary.</p></div>
+
+    <div class="mt-8 grid gap-4 rounded-2xl border border-sky-100 bg-white p-5 sm:grid-cols-3 sm:p-6">
+      <div><b class="text-slate-900">Seasonal planning</b><p class="mt-1 text-sm leading-6 text-slate-600">Choose dates around weather, scenery and travel style.</p></div>
+      <div><b class="text-slate-900">City guides</b><p class="mt-1 text-sm leading-6 text-slate-600">Compare Tokyo, Kyoto, Osaka and other Japanese cities.</p></div>
+      <div><b class="text-slate-900">Practical trips</b><p class="mt-1 text-sm leading-6 text-slate-600">Build realistic routes without overloading your itinerary.</p></div>
     </div>
-    <div class="mt-10 grid gap-6 md:max-w-2xl">
+
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {destinations.map((d) => <DestinationCard name={d.name} slug={d.slug} description={d.intro} image={d.image} />)}
     </div>
+
+    <section class="mt-14" aria-labelledby="japan-guides">
+      <div class="flex flex-col gap-3 border-b border-stone-200 pb-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="text-sm font-bold uppercase tracking-[0.16em] text-[#168ac0]">Latest from Japan</p>
+          <h2 id="japan-guides" class="mt-2 text-3xl font-black tracking-tight text-[#18232d] sm:text-4xl">Japan travel guides</h2>
+        </div>
+        <a href="/blog/" class="font-bold text-[#168ac0] hover:underline">View all guides →</a>
+      </div>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        {posts.map((post) => <ArticleCard post={post} featured={post.id === 'best-time-to-visit-japan'} />)}
+      </div>
+    </section>
   </section>
 </BaseLayout>
