@@ -1,1 +1,31 @@
-<footer class="mt-20 border-t border-stone-200 bg-[#18232d] text-white"><div class="container grid gap-10 py-12 md:grid-cols-4"><div><div class="text-2xl font-black"><span class="text-sky-300">Roam</span><span class="text-orange-300">Dawn</span></div><p class="mt-3 max-w-xs text-sm text-white/70">Travel guides, destination ideas and practical planning for better journeys.</p></div><div><h2 class="font-bold">Explore</h2><div class="mt-3 grid gap-2 text-sm text-white/75"><a href="/destinations/">Destinations</a><a href="/blog/">Travel Guides</a><a href="/itineraries/">Itineraries</a><a href="/search/">Search</a></div></div><div><h2 class="font-bold">Company</h2><div class="mt-3 grid gap-2 text-sm text-white/75"><a href="/about/">About</a><a href="/contact/">Contact</a></div></div><div><h2 class="font-bold">Legal</h2><div class="mt-3 grid gap-2 text-sm text-white/75"><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-service/">Terms</a><a href="/disclaimer/">Disclaimer</a><button id="cookie-settings" class="text-left">Cookie Preferences</button></div></div></div><div class="border-t border-white/10 py-5 text-center text-xs text-white/55">© {new Date().getFullYear()} RoamDawn. Travel information can change; verify important details with official sources.</div></footer>
+<footer class="site-footer mt-20 border-t border-stone-200 bg-[#18232d] text-white">
+  <div class="container footer-grid py-12">
+    <div class="footer-brand">
+      <a href="/" class="inline-block text-2xl font-black tracking-tight" aria-label="RoamDawn home"><span class="text-sky-300">Roam</span><span class="text-orange-300">Dawn</span></a>
+      <p class="mt-3 max-w-xs text-sm leading-6 text-white/70">Travel guides, destination ideas and practical planning for better journeys.</p>
+    </div>
+    <div class="footer-column"><h2>Explore</h2><nav aria-label="Explore links"><a href="/destinations/">Destinations</a><a href="/blog/">Travel Guides</a><a href="/itineraries/">Itineraries</a><a href="/search/">Search</a></nav></div>
+    <div class="footer-column"><h2>Company</h2><nav aria-label="Company links"><a href="/about/">About</a><a href="/contact/">Contact</a></nav></div>
+    <div class="footer-column"><h2>Legal</h2><nav aria-label="Legal links"><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-of-service/">Terms of Service</a><a href="/disclaimer/">Disclaimer</a><button id="cookie-settings" type="button">Cookie Preferences</button></nav></div>
+  </div>
+  <div class="footer-bottom"><div class="container"><p>© {new Date().getFullYear()} RoamDawn. Travel information can change; verify important details with official sources.</p></div></div>
+</footer>
+
+<style>
+  .site-footer a,.site-footer button{color:rgba(255,255,255,.72);text-decoration:none;transition:color .2s ease}
+  .site-footer a:hover,.site-footer button:hover{color:#fff}
+  .footer-grid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:42px}
+  .footer-column h2{margin:0;color:#fff;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .footer-column nav{display:grid;gap:9px;margin-top:14px;font-size:.85rem}
+  .footer-column button{padding:0;text-align:left;background:none;border:0;cursor:pointer}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:18px 0}
+  .footer-bottom p{margin:0;text-align:center;color:rgba(255,255,255,.5);font-size:.72rem;line-height:1.6}
+  @media(max-width:700px){
+    .site-footer{margin-top:56px}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:30px 20px;padding-top:38px;padding-bottom:34px}
+    .footer-brand{grid-column:1/-1;padding-bottom:4px}
+    .footer-column nav{gap:10px;margin-top:11px}
+    .footer-bottom{padding:16px 12px}
+  }
+  @media(max-width:420px){.footer-grid{grid-template-columns:1fr;gap:24px}.footer-brand{grid-column:auto}.footer-column{padding-top:1px}}
+</style>
