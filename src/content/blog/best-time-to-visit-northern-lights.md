@@ -9,7 +9,7 @@ readingTime: 14
 author: "RoamDawn Editorial Team"
 tags: ["Northern Lights", "Travel Planning", "Seasons", "Weather", "Aurora"]
 draft: false
-featuredImage: "/images/destinations/northern-lights/best-time-to-visit-northern-lights.webp"
+featuredImage: "/images/destinations/northern-lights/northern-lights-guide.svg"
 ---
 
 If you are wondering about the **best time to visit northern lights** destinations, the short answer is usually **late September through late March**. This is when nights are long enough across many northern regions for the aurora to be visible.
