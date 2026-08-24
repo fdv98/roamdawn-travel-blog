@@ -1,6 +1,6 @@
 ---
 import { destinations } from '../data/destinations';
-const featuredDestinations = destinations.slice(0, 6);
+const featuredDestinations = destinations;
 ---
 <header class="sticky top-0 z-50 border-b border-sky-100/80 bg-white/95 backdrop-blur">
   <div class="container flex items-center justify-between py-4">
@@ -9,28 +9,28 @@ const featuredDestinations = destinations.slice(0, 6);
     <nav class="hidden items-center gap-7 text-sm font-semibold text-[#17324d] md:flex" aria-label="Primary navigation">
       <a class="focus-ring hover:text-[#1596c2]" href="/">Home</a>
 
-      <div class="relative group">
+      <div class="relative">
         <button type="button" class="focus-ring inline-flex items-center gap-1 py-2 hover:text-[#1596c2]" aria-expanded="false" aria-controls="destinations-menu" data-menu-button="destinations-menu">
           Destinations <span aria-hidden="true">⌄</span>
         </button>
-        <div id="destinations-menu" class="absolute left-1/2 top-full hidden w-[620px] -translate-x-1/2 rounded-2xl border border-sky-100 bg-white p-5 shadow-xl" data-menu-panel>
-          <div class="grid grid-cols-[1.1fr_1fr] gap-6">
+        <div id="destinations-menu" class="absolute left-1/2 top-full hidden w-[500px] -translate-x-1/2 rounded-2xl border border-sky-100 bg-white p-5 shadow-xl" data-menu-panel>
+          <div class="grid gap-5 sm:grid-cols-[1.1fr_.9fr]">
             <div>
               <p class="text-xs font-bold uppercase tracking-[.16em] text-[#1596c2]">Explore destinations</p>
-              <h2 class="mt-2 text-xl font-black text-slate-900">Where will you go next?</h2>
-              <p class="mt-2 text-sm font-normal leading-6 text-slate-600">Browse destination hubs that connect country guides, city guides and practical planning articles.</p>
-              <a href="/destinations/" class="mt-4 inline-flex rounded-full bg-[#1596c2] px-4 py-2 text-sm font-bold text-white hover:bg-[#117fa5]">View all destinations →</a>
+              <h2 class="mt-2 text-xl font-black text-slate-900">Start with Japan</h2>
+              <p class="mt-2 text-sm font-normal leading-6 text-slate-600">Browse the active destination hub and follow its guides into seasons, cities and trip planning.</p>
+              <a href="/destinations/" class="mt-4 inline-flex rounded-full bg-[#1596c2] px-4 py-2 text-sm font-bold text-white hover:bg-[#117fa5]">Open destinations →</a>
             </div>
-            <div class="grid grid-cols-2 gap-x-5 gap-y-2">
+            <div class="grid gap-2 content-start">
               {featuredDestinations.map((destination) => (
-                <a href={`/destinations/${destination.slug}/`} class="focus-ring rounded-lg px-2 py-2 text-sm font-semibold hover:bg-sky-50">{destination.name}</a>
+                <a href={`/destinations/${destination.slug}/`} class="focus-ring rounded-lg px-3 py-3 text-sm font-semibold hover:bg-sky-50">{destination.name}</a>
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      <div class="relative group">
+      <div class="relative">
         <button type="button" class="focus-ring inline-flex items-center gap-1 py-2 hover:text-[#1596c2]" aria-expanded="false" aria-controls="guides-menu" data-menu-button="guides-menu">
           Travel Guides <span aria-hidden="true">⌄</span>
         </button>
@@ -38,8 +38,8 @@ const featuredDestinations = destinations.slice(0, 6);
           <p class="text-xs font-bold uppercase tracking-[.16em] text-[#1596c2]">Travel library</p>
           <div class="mt-3 grid grid-cols-2 gap-2">
             <a href="/blog/" class="focus-ring rounded-lg p-3 hover:bg-sky-50"><b>All Travel Guides</b><span class="mt-1 block text-xs font-normal text-slate-500">Browse every guide</span></a>
-            <a href="/tags/city-guides/" class="focus-ring rounded-lg p-3 hover:bg-sky-50"><b>City Guides</b><span class="mt-1 block text-xs font-normal text-slate-500">Cities and neighborhoods</span></a>
-            <a href="/tags/itineraries/" class="focus-ring rounded-lg p-3 hover:bg-sky-50"><b>Itineraries</b><span class="mt-1 block text-xs font-normal text-slate-500">Plan your route</span></a>
+            <a href="/tags/cities/" class="focus-ring rounded-lg p-3 hover:bg-sky-50"><b>Cities</b><span class="mt-1 block text-xs font-normal text-slate-500">City-focused guides</span></a>
+            <a href="/itineraries/" class="focus-ring rounded-lg p-3 hover:bg-sky-50"><b>Trip Planning</b><span class="mt-1 block text-xs font-normal text-slate-500">Routes and schedules</span></a>
             <a href="/tags/travel-planning/" class="focus-ring rounded-lg p-3 hover:bg-sky-50"><b>Travel Planning</b><span class="mt-1 block text-xs font-normal text-slate-500">Timing and practical tips</span></a>
           </div>
         </div>
@@ -64,8 +64,8 @@ const featuredDestinations = destinations.slice(0, 6);
       <button type="button" class="focus-ring flex w-full items-center justify-between rounded-lg px-3 py-2 text-left" aria-expanded="false" aria-controls="mobile-guides" data-mobile-toggle="mobile-guides">Travel Guides <span aria-hidden="true">+</span></button>
       <div id="mobile-guides" class="hidden border-l-2 border-sky-100 pl-3" data-mobile-panel>
         <a class="focus-ring block rounded-lg px-3 py-2 text-sm" href="/blog/">All Travel Guides</a>
-        <a class="focus-ring block rounded-lg px-3 py-2 text-sm" href="/tags/city-guides/">City Guides</a>
-        <a class="focus-ring block rounded-lg px-3 py-2 text-sm" href="/tags/itineraries/">Itineraries</a>
+        <a class="focus-ring block rounded-lg px-3 py-2 text-sm" href="/tags/cities/">Cities</a>
+        <a class="focus-ring block rounded-lg px-3 py-2 text-sm" href="/itineraries/">Trip Planning</a>
         <a class="focus-ring block rounded-lg px-3 py-2 text-sm" href="/tags/travel-planning/">Travel Planning</a>
       </div>
       <a class="focus-ring rounded-lg px-3 py-2" href="/itineraries/">Itineraries</a>
@@ -106,10 +106,6 @@ const featuredDestinations = destinations.slice(0, 6);
       const targetId = menuButton.getAttribute('aria-controls');
       const target = targetId ? document.getElementById(targetId) : null;
       if (!target) return;
-      const close = () => {
-        menuButton.setAttribute('aria-expanded', 'false');
-        target.classList.add('hidden');
-      };
       menuButton.addEventListener('click', (event) => {
         event.stopPropagation();
         const open = menuButton.getAttribute('aria-expanded') !== 'true';
@@ -122,7 +118,13 @@ const featuredDestinations = destinations.slice(0, 6);
         target.classList.toggle('hidden', !open);
       });
       target.addEventListener('click', (event) => event.stopPropagation());
-      document.addEventListener('click', close);
+    });
+
+    document.addEventListener('click', () => {
+      document.querySelectorAll('[data-menu-button]').forEach((menuButton) => {
+        menuButton.setAttribute('aria-expanded', 'false');
+        document.getElementById(menuButton.getAttribute('aria-controls'))?.classList.add('hidden');
+      });
     });
   })();
 </script>
