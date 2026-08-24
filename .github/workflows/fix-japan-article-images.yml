@@ -1,0 +1,61 @@
+name: Fix Japan article images
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-japan-article-images.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-article:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Remove inline article images and set hero image
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('src/content/blog/best-time-to-visit-japan.md')
+          text = path.read_text(encoding='utf-8')
+
+          # Keep only the article's featured/hero image. Remove all Pixabay image
+          # comments and Markdown image elements from the article body.
+          text = re.sub(r'\n?<!-- pixabay-image:[^>]+ -->\n?!\[[^\]]*\]\([^)]*\)', '', text)
+
+          # The previous inline-image insertion split these words across lines.
+          text = text.replace('**Winter\n\n scenery**', '**Winter scenery**')
+          text = text.replace('**Autumn\n\n leaves**', '**Autumn leaves**')
+          text = text.replace('trip. Spring\n\n', 'trip. Spring ')
+          text = text.replace('periods. Summer\n\n', 'periods. Summer ')
+
+          # Use the existing Mount Fuji image already cached in the repository.
+          text = re.sub(
+              r'(?m)^featuredImage: .*$',
+              'featuredImage: "/images/destinations/japan/best-cities-to-visit-in-japan-japan-mount-fuji-travel.webp"',
+              text,
+              count=1,
+          )
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Verify no inline images remain
+        run: |
+          ! grep -nE '<!-- pixabay-image:|!\[[^]]*\]\(/images/' src/content/blog/best-time-to-visit-japan.md
+
+      - name: Commit article fix and remove temporary workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/content/blog/best-time-to-visit-japan.md .github/workflows/fix-japan-article-images.yml
+          git rm .github/workflows/fix-japan-article-images.yml
+          git commit -m 'fix: update Japan article hero image'
+          git push
