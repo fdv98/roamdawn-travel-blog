@@ -1,8 +1,23 @@
 {
-  "name":"roamdawn-travel-blog",
-  "private":true,
-  "type":"module",
-  "version":"1.0.0",
-  "scripts":{"dev":"astro dev","prebuild":"node scripts/fetch-pixabay-images.mjs","build":"astro build","preview":"astro preview","check":"astro check"},
-  "dependencies":{"astro":"latest","@astrojs/mdx":"latest","@astrojs/sitemap":"latest","@astrojs/rss":"latest","tailwindcss":"latest","@tailwindcss/vite":"latest","typescript":"latest","sharp":"latest"}
+  "name": "roamdawn-travel-blog",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "fetch:pixabay": "PIXABAY_FETCH_NEW_IMAGES=true node scripts/fetch-pixabay-images.mjs",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "latest",
+    "@astrojs/mdx": "latest",
+    "@astrojs/sitemap": "latest",
+    "@astrojs/rss": "latest",
+    "tailwindcss": "latest",
+    "@tailwindcss/vite": "latest",
+    "typescript": "latest",
+    "sharp": "latest"
+  }
 }
