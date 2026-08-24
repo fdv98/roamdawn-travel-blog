@@ -51,6 +51,9 @@ button { font: inherit; }
 .prose blockquote { margin: 2rem 0; border-left: 4px solid var(--rd-coral); padding: .9rem 1.2rem; background: #fff8f2; color: #465560; border-radius: 0 .9rem .9rem 0; }
 .prose img { display: block; width: 100%; height: auto; border-radius: 1.25rem; }
 
+/* Prevent embedded media from creating horizontal overflow on small screens. */
+.prose video, .prose iframe, .prose embed, .prose object { display: block; max-width: 100%; }
+
 /* Article tables: clean desktop table + card layout on phones. */
 .prose table {
   width: 100%;
@@ -64,6 +67,7 @@ button { font: inherit; }
   font-size: .96rem;
   line-height: 1.45;
   box-shadow: 0 6px 22px rgba(23,35,45,.045);
+  table-layout: fixed;
 }
 .prose thead { background: #eef8fb; }
 .prose th {
