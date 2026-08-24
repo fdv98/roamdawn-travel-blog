@@ -9,7 +9,7 @@ readingTime: 16
 author: "RoamDawn Editorial Team"
 tags: ["Japan", "Cities", "Travel Planning", "Japan Itinerary"]
 draft: false
-featuredImage: "/images/japan.svg"
+featuredImage: "/images/japan-travel-hero.svg"
 ---
 
 Planning a trip to Japan can be exciting—and surprisingly difficult. The country has huge modern cities, peaceful gardens, historic neighborhoods, mountain scenery, excellent food and four very different seasons. With so many choices, the hardest question is often simple: **which city should you visit?**
@@ -22,35 +22,37 @@ This guide compares 10 cities so you can choose the right places for your time, 
 
 ## Best Cities to Visit in Japan at a Glance
 
-| City | Best for | Suggested stay | Great for first trip? |
-|---|---|---:|:---:|
-| **Tokyo** | First-time visitors, shopping, modern attractions | 4–5 days | ⭐⭐⭐⭐⭐ |
-| **Kyoto** | Gardens, traditional streets, architecture | 3–4 days | ⭐⭐⭐⭐⭐ |
-| **Osaka** | Food, shopping, family attractions | 2–3 days | ⭐⭐⭐⭐⭐ |
-| **Hiroshima** | History, museums, peaceful city walks | 2 days | ⭐⭐⭐⭐ |
-| **Kanazawa** | Gardens, crafts, traditional neighborhoods | 2 days | ⭐⭐⭐⭐ |
-| **Sapporo** | Winter, snow, nature and food | 3–4 days | ⭐⭐⭐⭐ |
-| **Nara** | Parks, nature and a relaxed day trip | 1 day | ⭐⭐⭐⭐ |
-| **Fukuoka** | Food, parks and southern Japan | 2–3 days | ⭐⭐⭐ |
-| **Nagoya** | Technology, history and families | 2 days | ⭐⭐⭐ |
-| **Yokohama** | Waterfront scenery, museums and families | 1–2 days | ⭐⭐⭐ |
+| City | Best for | Suggested stay |
+|---|---|---:|
+| **Tokyo** | First-time visitors, shopping, modern attractions | 4–5 days |
+| **Kyoto** | Gardens, traditional streets, architecture | 3–4 days |
+| **Osaka** | Food, shopping, family attractions | 2–3 days |
+| **Hiroshima** | History, museums, peaceful city walks | 2 days |
+| **Kanazawa** | Gardens, crafts, traditional neighborhoods | 2 days |
+| **Sapporo** | Winter, snow, nature and food | 3–4 days |
+| **Nara** | Parks, nature and a relaxed day trip | 1 day |
+| **Fukuoka** | Food, parks and southern Japan | 2–3 days |
+| **Nagoya** | Technology, history and families | 2 days |
+| **Yokohama** | Waterfront scenery, museums and families | 1–2 days |
 
 ### Which Japanese city should you choose?
 
-- **First trip:** Tokyo
-- **Traditional scenery:** Kyoto
-- **Food and shopping:** Osaka
-- **Winter:** Sapporo
-- **Gardens and crafts:** Kanazawa
-- **History:** Hiroshima
-- **Nature and an easy day trip:** Nara
-- **Waterfront city break:** Yokohama
-- **Southern Japan:** Fukuoka
-- **Technology and family attractions:** Nagoya
+Use the links below to jump directly to the full explanation for each city:
 
-<div class="my-8 rounded-2xl border border-sky-100 bg-[#f4fbfd] p-6 sm:p-8"><p class="text-sm font-bold uppercase tracking-wider text-[#1596c2]">Planning your Japan trip?</p><h3 class="mt-2 text-2xl font-black text-[#17324d]">Find tours, day trips and experiences</h3><p class="mt-2 text-slate-600">Compare activities in Japan and choose experiences that fit your itinerary.</p><a href="https://www.getyourguide.com/japan-l169034/?adults=1&amp;searchSource=7&amp;partner_id=I2IX6UW&amp;utm_medium=online_publisher" rel="sponsored nofollow" target="_blank" class="mt-4 inline-flex rounded-full bg-[#1596c2] px-5 py-3 font-bold text-white no-underline hover:bg-[#117fa5]">Explore Japan Experiences →</a><p class="mt-3 text-xs text-slate-500">Disclosure: This is an affiliate link. We may earn a commission at no extra cost to you.</p></div>
+- [**Tokyo — First trip and maximum variety**](#tokyo)
+- [**Kyoto — Traditional scenery and gardens**](#kyoto)
+- [**Osaka — Food, shopping and family attractions**](#osaka)
+- [**Hiroshima — History and meaningful sightseeing**](#hiroshima)
+- [**Kanazawa — Gardens, crafts and a quieter experience**](#kanazawa)
+- [**Sapporo — Winter travel and snow**](#sapporo)
+- [**Nara — Parks, nature and an easy day trip**](#nara)
+- [**Fukuoka — Southern Japan**](#fukuoka)
+- [**Nagoya — Technology, history and families**](#nagoya)
+- [**Yokohama — Waterfront city break**](#yokohama)
 
-## 1. Tokyo — Best City for First-Time Visitors
+<div class="not-prose my-8 rounded-2xl border border-sky-100 bg-[#f4fbfd] p-6 shadow-sm sm:p-8"><p class="text-sm font-bold uppercase tracking-wider text-[#1596c2]">Planning your Japan trip?</p><h3 class="mt-2 text-2xl font-black text-[#17324d]">Find tours, day trips and experiences</h3><p class="mt-2 leading-7 text-slate-600">Browse Japan activities and choose experiences that fit naturally around your city itinerary.</p><a href="https://www.getyourguide.com/japan-l169034/?adults=1&amp;searchSource=7&amp;partner_id=I2IX6UW&amp;utm_medium=online_publisher" rel="sponsored nofollow" target="_blank" class="mt-5 inline-flex items-center rounded-full bg-[#1596c2] px-6 py-3 font-bold text-white no-underline shadow-sm transition hover:bg-[#117fa5]">Explore Japan Experiences <span class="ml-2" aria-hidden="true">→</span></a><p class="mt-4 text-xs leading-5 text-slate-500">Affiliate disclosure: RoamDawn may earn a commission if you book through this link, at no extra cost to you.</p></div>
+
+<h2 id="tokyo">1. Tokyo — Best City for First-Time Visitors</h2>
 
 If you are visiting Japan for the first time, **Tokyo is the best city to visit in Japan for variety**. It combines modern architecture, famous neighborhoods, museums, parks, shopping, observation decks and excellent public transportation.
 
@@ -65,7 +67,7 @@ Tokyo works especially well for first-time visitors because almost every travel 
 - Explore Asakusa and its traditional streets.
 - Visit Tokyo's major museums and art spaces.
 - Walk through large parks and landscaped gardens.
-- Explore Shibuya, Harajuku and other famous shopping areas.
+- Explore famous shopping areas.
 - See the city from an observation deck.
 - Visit interactive museums and family attractions.
 - Explore Tokyo's waterfront districts.
@@ -79,7 +81,7 @@ Tokyo works especially well for first-time visitors because almost every travel 
 
 > **Tokyo tip:** Choose accommodation near a convenient train or metro connection. A good transport location can save more time than choosing a hotel simply because it is close to a famous landmark.
 
-## 2. Kyoto — Best for Traditional Scenery and Gardens
+<h2 id="kyoto">2. Kyoto — Best for Traditional Scenery and Gardens</h2>
 
 Kyoto is one of the **best cities in Japan to visit** if you want traditional architecture, beautiful gardens, historic streets, crafts and a slower sightseeing rhythm.
 
@@ -108,7 +110,7 @@ Plan for **three to four days** if you want to explore without rushing. Two days
 
 > **Kyoto tip:** Avoid building a schedule packed with attractions. Two major stops plus a neighborhood walk can make a better day than trying to check off eight locations.
 
-## 3. Osaka — Best for Food, Shopping and Family Attractions
+<h2 id="osaka">3. Osaka — Best for Food, Shopping and Family Attractions</h2>
 
 Osaka is one of the **best cities to visit in Japan** when food, shopping and easy sightseeing are high on your list. It is also a practical base for exploring the wider Kansai region.
 
@@ -134,9 +136,7 @@ Osaka is particularly useful when your trip includes Kyoto and Nara. Its strong 
 
 **Best for:** food, shopping, families, museums and convenient regional travel.
 
-<div class="my-8 rounded-2xl border border-orange-100 bg-[#fff8ed] p-6 sm:p-8"><p class="text-sm font-bold uppercase tracking-wider text-[#e8752b]">Ready to plan activities?</p><h3 class="mt-2 text-2xl font-black text-[#17324d]">Compare Japan tours and day trips</h3><p class="mt-2 text-slate-600">Browse experiences in Tokyo, Kyoto, Osaka and other Japanese destinations.</p><a href="https://www.getyourguide.com/japan-l169034/?adults=1&amp;searchSource=7&amp;partner_id=I2IX6UW&amp;utm_medium=online_publisher" rel="sponsored nofollow" target="_blank" class="mt-4 inline-flex rounded-full bg-[#e8752b] px-5 py-3 font-bold text-white no-underline hover:bg-[#d8611d]">Browse Japan Tours &amp; Activities →</a></div>
-
-## 4. Hiroshima — Best for History and Meaningful Sightseeing
+<h2 id="hiroshima">4. Hiroshima — Best for History and Meaningful Sightseeing</h2>
 
 Hiroshima is a strong choice for travelers interested in modern history, museums and peaceful public spaces. The city has a different pace from Tokyo and Osaka, making it a good addition to a longer itinerary.
 
@@ -151,7 +151,7 @@ Hiroshima can be explored thoughtfully rather than rushed. The city's museums an
 - See the Atomic Bomb Dome from public viewing areas.
 - Explore waterfront areas.
 - Discover local food and regional specialties.
-- Add a nearby day trip if your schedule allows.
+- Add a nearby scenic day trip if your schedule allows.
 
 ### How many days in Hiroshima?
 
@@ -159,9 +159,9 @@ Hiroshima can be explored thoughtfully rather than rushed. The city's museums an
 
 **Best for:** history, museums, reflective travel and peaceful walks.
 
-## 5. Kanazawa — Best for Gardens, Crafts and a Quieter Experience
+<h2 id="kanazawa">5. Kanazawa — Best for Gardens, Crafts and a Quieter Experience</h2>
 
-Kanazawa is an excellent alternative for travelers who want traditional Japanese scenery without the scale of Tokyo or the crowds of the busiest parts of Kyoto.
+Kanazawa is an excellent alternative for travelers who want traditional Japanese scenery without the scale of Tokyo or the busiest parts of Kyoto.
 
 Its combination of gardens, historic neighborhoods, crafts, museums and food makes it one of the most rewarding additions to a longer Japan itinerary.
 
@@ -181,7 +181,7 @@ Its combination of gardens, historic neighborhoods, crafts, museums and food mak
 
 **Best for:** gardens, architecture, crafts, photography and travelers seeking a quieter city.
 
-## 6. Sapporo — Best City to Visit in Japan in Winter
+<h2 id="sapporo">6. Sapporo — Best City to Visit in Japan in Winter</h2>
 
 If you are specifically searching for the **best cities to visit in Japan in winter**, Sapporo deserves a place near the top of your list.
 
@@ -205,7 +205,7 @@ Plan for **three to four days**. If winter scenery is the main reason for your v
 
 > **Winter tip:** Build some flexibility into your schedule. Snow and weather can affect transport and walking times, so avoid planning every hour of the day.
 
-## 7. Nara — Best for Parks, Nature and a Relaxed Day Trip
+<h2 id="nara">7. Nara — Best for Parks, Nature and a Relaxed Day Trip</h2>
 
 Nara is smaller and calmer than Japan's biggest cities, making it a natural choice for travelers who enjoy parks, open spaces, traditional streets and a slower pace.
 
@@ -226,7 +226,7 @@ It is also one of the easiest additions to a Kyoto or Osaka itinerary.
 
 **Best for:** parks, nature, photography, families and slow travel.
 
-## 8. Fukuoka — Best for Southern Japan
+<h2 id="fukuoka">8. Fukuoka — Best for Southern Japan</h2>
 
 Fukuoka is a useful choice if you want to explore Kyushu. It has a compact city center, parks, waterfront areas, shopping and a strong food culture.
 
@@ -247,7 +247,7 @@ Plan for **two to three days** for a first visit, with additional time if Fukuok
 
 **Best for:** food, parks, shopping and exploring southern Japan.
 
-## 9. Nagoya — Best for Technology, History and Families
+<h2 id="nagoya">9. Nagoya — Best for Technology, History and Families</h2>
 
 Nagoya is often skipped by first-time visitors, but it can be a smart choice if you want museums, technology, history and family-friendly attractions.
 
@@ -268,7 +268,7 @@ Its position between Tokyo and Kyoto also makes it convenient to include in a lo
 
 **Best for:** families, technology, history and travelers looking beyond the classic Tokyo–Kyoto–Osaka route.
 
-## 10. Yokohama — Best for a Waterfront City Break
+<h2 id="yokohama">10. Yokohama — Best for a Waterfront City Break</h2>
 
 Yokohama is close to Tokyo but has enough personality to justify a day trip or overnight stay. It is especially good for travelers who enjoy waterfront walks, museums, modern architecture and family attractions.
 
@@ -294,7 +294,7 @@ There is no single answer for every traveler. The best city depends on your prio
 
 ### Choose Tokyo if you want the most variety
 
-Tokyo is the safest recommendation for a first-time visitor who wants modern Japan, shopping, museums, parks, family attractions and easy connections.
+Tokyo is the strongest all-round recommendation for a first-time visitor who wants modern Japan, shopping, museums, parks, family attractions and easy connections.
 
 ### Choose Kyoto if scenery matters most
 
@@ -370,7 +370,7 @@ Choose Hiroshima if history is important to you. Otherwise, use the final day to
 
 If you have only five to seven days, simplify the route rather than trying to fit everything in.
 
-<div class="my-10 rounded-3xl bg-[#17324d] p-7 text-white sm:p-9"><p class="font-bold uppercase tracking-wider text-[#ffd36a]">Make the most of your itinerary</p><h3 class="mt-2 text-2xl font-black sm:text-3xl">Compare Japan experiences before you go</h3><p class="mt-3 max-w-2xl leading-7 text-white/80">Find guided tours, day trips and activities in Japan that can fit around your city-to-city itinerary.</p><a href="https://www.getyourguide.com/japan-l169034/?adults=1&amp;searchSource=7&amp;partner_id=I2IX6UW&amp;utm_medium=online_publisher" rel="sponsored nofollow" target="_blank" class="mt-5 inline-flex rounded-full bg-[#1596c2] px-6 py-3 font-bold text-white no-underline hover:bg-[#55b8d5]">Explore Japan Tours &amp; Experiences →</a><p class="mt-3 text-xs text-white/60">Affiliate disclosure: RoamDawn may earn a commission if you book through this link, at no extra cost to you.</p></div>
+<div class="not-prose my-10 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"><div class="border-l-4 border-[#1596c2] p-7 sm:p-9"><p class="text-sm font-bold uppercase tracking-[0.14em] text-[#e8752b]">Make the most of your itinerary</p><h3 class="mt-2 text-2xl font-black leading-tight text-[#17324d] sm:text-3xl">Compare Japan experiences before you go</h3><p class="mt-3 max-w-2xl leading-7 text-slate-600">Find guided tours, day trips and activities in Japan that can fit naturally around your city-to-city itinerary.</p><a href="https://www.getyourguide.com/japan-l169034/?adults=1&amp;searchSource=7&amp;partner_id=I2IX6UW&amp;utm_medium=online_publisher" rel="sponsored nofollow" target="_blank" class="mt-5 inline-flex items-center rounded-full bg-[#1596c2] px-6 py-3 font-bold text-white no-underline shadow-sm transition hover:bg-[#117fa5]">Explore Japan Tours &amp; Experiences <span class="ml-2" aria-hidden="true">→</span></a><p class="mt-4 text-xs leading-5 text-slate-500">Affiliate disclosure: RoamDawn may earn a commission if you book through this link, at no extra cost to you.</p></div></div>
 
 ## How to Choose the Right Japanese City
 
