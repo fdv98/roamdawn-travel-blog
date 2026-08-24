@@ -1,0 +1,23 @@
+[
+  {
+    "destination": "japan",
+    "query": "Japan Tokyo travel",
+    "file": "/images/destinations/japan/japan-tokyo-travel.webp",
+    "pixabayPage": "https://pixabay.com/photos/tokyo-woman-market-city-people-4436914/",
+    "author": "thepoorphotographer"
+  },
+  {
+    "destination": "japan",
+    "query": "Kyoto Japan travel",
+    "file": "/images/destinations/japan/kyoto-japan-travel.webp",
+    "pixabayPage": "https://pixabay.com/photos/kyoto-japan-statue-jizo-japanese-1976538/",
+    "author": "JordyMeow"
+  },
+  {
+    "destination": "japan",
+    "query": "Mount Fuji Japan",
+    "file": "/images/destinations/japan/mount-fuji-japan.webp",
+    "pixabayPage": "https://pixabay.com/photos/mount-fuji-japan-volcano-mountain-2297961/",
+    "author": "Kanenori"
+  }
+]
