@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Japan travel illustration</title><desc id="desc">A bright travel scene of Mount Fuji, a modern Japanese city skyline, a bullet train and spring blossoms.</desc>
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfeaf4"/><stop offset="1" stop-color="#fff7e8"/></linearGradient>
+<linearGradient id="mountain" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a9fb6"/><stop offset="1" stop-color="#17617b"/></linearGradient>
+</defs>
+<rect width="1600" height="900" fill="url(#sky)"/>
+<circle cx="1230" cy="190" r="105" fill="#f28a4b"/>
+<path d="M0 620 L300 420 L520 610 L800 290 L1090 610 L1340 450 L1600 650 V900 H0Z" fill="url(#mountain)"/>
+<path d="M800 290 L690 450 L765 420 L800 455 L835 420 L910 450Z" fill="#fffdf8"/>
+<path d="M0 650 C300 600 480 700 760 650 C1040 600 1280 690 1600 630 V900 H0Z" fill="#75b7a1"/>
+<path d="M0 735 C340 680 620 780 930 720 C1200 670 1400 760 1600 710 V900 H0Z" fill="#dff3f2" opacity=".9"/>
+<g fill="#244253"><rect x="1030" y="505" width="95" height="245" rx="3"/><rect x="1140" y="450" width="120" height="300" rx="3"/><rect x="1275" y="535" width="80" height="215" rx="3"/><rect x="1370" y="475" width="145" height="275" rx="3"/><rect x="1530" y="555" width="70" height="195" rx="3"/></g>
+<g fill="#ffd36a"><rect x="1050" y="535" width="18" height="28"/><rect x="1090" y="535" width="18" height="28"/><rect x="1170" y="485" width="20" height="30"/><rect x="1210" y="485" width="20" height="30"/><rect x="1295" y="565" width="18" height="28"/><rect x="1400" y="510" width="20" height="30"/><rect x="1440" y="510" width="20" height="30"/><rect x="1480" y="510" width="20" height="30"/></g>
+<g transform="translate(170 665)"><path d="M0 85 C170 30 340 30 520 85" fill="none" stroke="#ffffff" stroke-width="10" opacity=".9"/><path d="M40 78 L520 78" stroke="#244253" stroke-width="9"/><path d="M90 20 Q270 -35 450 20 L500 78 H40Z" fill="#f6f8fa"/><path d="M70 25 Q270 -20 470 25" fill="none" stroke="#1596c2" stroke-width="20"/><circle cx="125" cy="72" r="12" fill="#244253"/><circle cx="420" cy="72" r="12" fill="#244253"/></g>
+<g fill="#f28a9a" opacity=".95"><circle cx="130" cy="270" r="13"/><circle cx="170" cy="245" r="10"/><circle cx="205" cy="285" r="12"/><circle cx="145" cy="315" r="9"/><circle cx="235" cy="245" r="8"/></g>
+</svg>
