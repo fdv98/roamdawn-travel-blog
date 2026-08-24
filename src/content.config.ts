@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
@@ -14,7 +15,8 @@ const blog = defineCollection({
     author: z.string().default('RoamDawn Editorial Team'),
     tags: z.array(z.string()),
     draft: z.boolean().default(false),
-    featuredImage: z.string()
+    featuredImage: z.string(),
+    featuredImageAlt: z.string().optional()
   })
 });
 

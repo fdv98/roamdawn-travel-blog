@@ -44,7 +44,7 @@ const articleClass = `prose article-${post.id}`;
     <figure class="mt-8 overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
       <img
         src={post.data.featuredImage}
-        alt={`Illustration for ${post.data.title}`}
+        alt={post.data.featuredImageAlt || post.data.title}
         width="1600"
         height="900"
         loading="eager"

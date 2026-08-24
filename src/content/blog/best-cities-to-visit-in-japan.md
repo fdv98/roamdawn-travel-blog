@@ -10,6 +10,7 @@ author: "RoamDawn Editorial Team"
 tags: ["Japan", "Cities", "Travel Planning", "Japan Itinerary"]
 draft: false
 featuredImage: "/images/japan-travel-hero.svg"
+featuredImageAlt: "Tokyo skyline at sunset in Japan"
 ---
 
 Planning a trip to Japan can be exciting—and surprisingly difficult. The country has huge modern cities, peaceful gardens, historic neighborhoods, mountain scenery, excellent food and four very different seasons. With so many choices, the hardest question is often simple: **which city should you visit?**

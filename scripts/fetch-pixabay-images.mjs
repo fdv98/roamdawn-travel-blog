@@ -6,13 +6,22 @@ const apiKey = process.env.PIXABAY_API_KEY;
 const allowNetwork = process.env.PIXABAY_FETCH_NEW_IMAGES === 'true';
 
 const root = new URL('../', import.meta.url).pathname;
-const outputDir = path.join(root, 'public', 'images', 'destinations');
+const outputDir = path.join(root, 'public', 'images', 'articles');
 const manifestPath = path.join(root, 'src', 'data', 'image-sources.json');
 
 // New Pixabay downloads are opt-in. Normal production builds do not call Pixabay.
-const queries = {
-  japan: ['Japan Tokyo travel', 'Kyoto Japan travel', 'Mount Fuji Japan'],
-};
+const articles = [
+  {
+    slug: 'best-time-to-visit-japan',
+    query: 'Japan cherry blossoms Mount Fuji travel',
+    alt: 'Cherry blossoms framing Mount Fuji in Japan',
+  },
+  {
+    slug: 'best-cities-to-visit-in-japan',
+    query: 'Tokyo Japan city skyline travel',
+    alt: 'Tokyo skyline at sunset in Japan',
+  },
+];
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -38,9 +47,8 @@ async function fetchWithRetry(url, label, { retries = 4, baseDelay = 1500 } = {}
       if (response.ok) return response;
 
       const retryable = response.status === 429 || response.status >= 500;
-      if (!retryable || attempt === retries) {
-        throw new Error(`${label}: HTTP ${response.status}`);
-      }
+      if (!retryable) throw new Error(`${label}: HTTP ${response.status}`);
+      if (attempt === retries) break;
 
       const retryAfter = Number(response.headers.get('retry-after'));
       const delay = Number.isFinite(retryAfter) && retryAfter > 0
@@ -51,6 +59,8 @@ async function fetchWithRetry(url, label, { retries = 4, baseDelay = 1500 } = {}
       await sleep(delay);
     } catch (error) {
       lastError = error;
+      // Authentication and validation failures cannot succeed by retrying.
+      if (/HTTP (?:4(?!29)\d|5\d\d)/.test(error.message) && !error.message.includes('HTTP 429')) break;
       if (attempt === retries) break;
       const delay = baseDelay * (2 ** attempt) + Math.floor(Math.random() * 500);
       console.warn(`${label}: ${error.message}; retrying in ${Math.round(delay / 100) / 10}s.`);
@@ -88,51 +98,76 @@ async function downloadWebp(imageUrl, target) {
     .toFile(target);
 }
 
+async function updateFeaturedImage({ slug, alt }, file) {
+  const articlePath = path.join(root, 'src', 'content', 'blog', `${slug}.md`);
+  const source = await fs.readFile(articlePath, 'utf8');
+  const withImage = source.replace(
+    /^(featuredImage:\s*)["']?[^\n"']+["']?$/m,
+    `$1"${file}"`,
+  );
+
+  if (withImage === source) {
+    throw new Error(`Could not find featuredImage frontmatter in ${articlePath}`);
+  }
+
+  const updated = withImage.replace(
+    /^(featuredImageAlt:\s*)["']?[^\n"']+["']?$/m,
+    `$1"${alt}"`,
+  );
+
+  await fs.writeFile(articlePath, updated);
+}
+
 if (!allowNetwork) {
   console.log('Pixabay fetch utility is offline. Set PIXABAY_FETCH_NEW_IMAGES=true to allow new downloads.');
   process.exit(0);
 }
 
 if (!apiKey) {
-  console.error('PIXABAY_FETCH_NEW_IMAGES=true but PIXABAY_API_KEY is missing. No images downloaded.');
-  process.exit(0);
+  throw new Error('PIXABAY_FETCH_NEW_IMAGES=true but PIXABAY_API_KEY is missing. No images downloaded.');
 }
 
 await fs.mkdir(outputDir, { recursive: true });
 const manifestPathExists = await exists(manifestPath);
 const existingManifest = manifestPathExists ? JSON.parse(await fs.readFile(manifestPath, 'utf8')) : [];
 const additions = [];
+const failures = [];
 
-for (const [destination, terms] of Object.entries(queries)) {
-  const destinationDir = path.join(outputDir, destination);
-  await fs.mkdir(destinationDir, { recursive: true });
+for (const article of articles) {
+  const filename = `${slugify(article.slug)}.webp`;
+  const target = path.join(outputDir, filename);
+  const file = `/images/articles/${filename}`;
 
-  for (const term of terms) {
-    const filename = `${slugify(term)}.webp`;
-    const target = path.join(destinationDir, filename);
-    const file = `/images/destinations/${destination}/${filename}`;
-
+  try {
     if (await exists(target)) {
       console.log(`Pixabay cached: ${file}`);
-      continue;
-    }
-
-    try {
-      const data = await search(term);
+    } else {
+      const data = await search(article.query);
       const image = data.hits?.[0];
       if (!image?.largeImageURL) {
-        console.warn(`No suitable Pixabay image found for: ${term}`);
+        console.warn(`No suitable Pixabay image found for: ${article.query}`);
         continue;
       }
 
       await downloadWebp(image.largeImageURL, target);
-      additions.push({ destination, query: term, file, pixabayPage: image.pageURL, author: image.user });
-      console.log(`Pixabay downloaded: ${term} -> ${file}`);
-    } catch (error) {
-      // Image acquisition is optional and must never make the build fail.
-      console.warn(`Pixabay skipped for ${term}: ${error.message}`);
+      additions.push({
+        article: article.slug,
+        query: article.query,
+        file,
+        pixabayPage: image.pageURL,
+        author: image.user,
+      });
+      console.log(`Pixabay downloaded: ${article.query} -> ${file}`);
     }
+
+    await updateFeaturedImage(article, file);
+  } catch (error) {
+    failures.push(`${article.slug}: ${error.message}`);
   }
+}
+
+if (failures.length > 0) {
+  throw new Error(`Pixabay image fetch failed. ${failures.join(' | ')}`);
 }
 
 const mergedManifest = [...existingManifest, ...additions].filter(

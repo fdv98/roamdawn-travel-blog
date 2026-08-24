@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
-const posts = (await getCollection('blog', { filter: ({ data }) => !data.draft }))
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => (b.data.publishDate.valueOf() - a.data.publishDate.valueOf()) || b.id.localeCompare(a.id));
 const priorityPost = posts.find((post) => post.id === 'best-time-to-visit-japan');
 const latestPosts = priorityPost

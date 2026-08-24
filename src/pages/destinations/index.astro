@@ -4,7 +4,7 @@ import DestinationCard from '../../components/DestinationCard.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 import { destinations } from '../../data/destinations';
-const posts = (await getCollection('blog', { filter: ({ data }) => !data.draft && data.category === 'Japan' }))
+const posts = (await getCollection('blog', ({ data }) => !data.draft && data.category === 'Japan'))
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 <BaseLayout

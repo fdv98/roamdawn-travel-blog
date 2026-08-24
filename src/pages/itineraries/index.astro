@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
-const posts = (await getCollection('blog', { filter: ({ data }) => !data.draft && data.tags.some((tag) => /itinerary|travel planning/i.test(tag)) }))
+const posts = (await getCollection('blog', ({ data }) => !data.draft && data.tags.some((tag) => /itinerary|travel planning/i.test(tag))))
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 <BaseLayout title="Japan Trip Planning Guides | RoamDawn" description="Plan a Japan trip with practical guides covering the best time to visit, city choices, seasons and realistic itineraries." breadcrumbs={[{ label: 'Itineraries', href: '/itineraries/' }]}>
