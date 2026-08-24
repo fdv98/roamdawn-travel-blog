@@ -1,9 +1,11 @@
 ---
-const {name,slug,description,image}=Astro.props;
+const { name, slug, description, image } = Astro.props;
 ---
-<a href={`/destinations/${slug}/`} class="group block overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-  <div class="aspect-[16/9] overflow-hidden bg-slate-100">
-    {image ? <img src={image} alt={`${name} travel destination`} width="1200" height="675" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" /> : <div class="grid h-full place-items-center bg-gradient-to-br from-sky-100 via-amber-50 to-emerald-100 text-4xl font-black text-slate-700" aria-hidden="true">{name}</div>}
+<a href={`/destinations/${slug}/`} class="group block overflow-hidden rounded-[1.35rem] border border-stone-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#168ac0]">
+  <div class="relative aspect-[16/10] overflow-hidden bg-slate-100">
+    {image ? <img src={image} alt={`${name} travel destination`} width="1200" height="750" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" /> : <div class="grid h-full place-items-center bg-gradient-to-br from-sky-100 via-amber-50 to-emerald-100 text-4xl font-black text-slate-700" aria-hidden="true">{name}</div>}
+    <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
+    <span class="absolute bottom-4 left-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#18232d]">Explore</span>
   </div>
-  <div class="p-5"><h3 class="text-2xl font-black">{name}</h3><p class="mt-2 text-sm leading-6 text-slate-600">{description}</p><span class="mt-4 inline-block font-bold text-[#168ac0]">Explore {name} →</span></div>
+  <div class="p-5 sm:p-6"><h3 class="text-2xl font-black tracking-tight text-[#18232d]">{name}</h3><p class="mt-2 text-sm leading-6 text-slate-600">{description}</p><span class="mt-4 inline-flex items-center gap-1 font-bold text-[#168ac0] transition group-hover:gap-2">Discover {name} <span aria-hidden="true">→</span></span></div>
 </a>
