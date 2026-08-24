@@ -1,13 +1,15 @@
 ---
-const {post,featured=false}=Astro.props;
-const fallback='/images/og-default.svg';
-const image=post.data.featuredImage || fallback;
+const { post, featured = false } = Astro.props;
+const fallback = '/images/og-default.svg';
+const image = post.data.featuredImage || fallback;
 ---
-<article class={`group overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg ${featured?'md:col-span-2':''}`}>
+<article class={`group overflow-hidden rounded-[1.35rem] border border-stone-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl ${featured ? 'md:col-span-2' : ''}`}>
   <a href={`/blog/${post.id}/`} class="focus-ring block">
-    <div class="aspect-[16/9] overflow-hidden bg-stone-100">
-      <img src={image} alt={post.data.title} width="1200" height="675" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" onerror={`this.onerror=null;this.src='${fallback}'`} />
+    <div class={`relative overflow-hidden bg-stone-100 ${featured ? 'aspect-[16/8]' : 'aspect-[16/9]'}`}>
+      <img src={image} alt={post.data.title} width="1200" height="675" loading="lazy" decoding="async" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" onerror={`this.onerror=null;this.src='${fallback}'`} />
+      <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true"></div>
+      <span class="absolute bottom-4 left-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#18232d]">{post.data.category}</span>
     </div>
-    <div class="p-5"><p class="text-xs font-bold uppercase tracking-wider text-[#168ac0]">{post.data.category}</p><h3 class="mt-2 text-xl font-black leading-tight">{post.data.title}</h3><p class="mt-2 text-sm leading-6 text-slate-600">{post.data.description}</p><p class="mt-4 text-xs text-slate-500">{post.data.readingTime} min read · {post.data.publishDate.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}</p></div>
+    <div class="p-5 sm:p-6"><p class="text-xs font-semibold uppercase tracking-wider text-[#168ac0]">{post.data.readingTime} min read</p><h3 class={`mt-2 font-black leading-tight text-[#18232d] ${featured ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>{post.data.title}</h3><p class="mt-2 text-sm leading-6 text-slate-600">{post.data.description}</p><p class="mt-4 text-xs text-slate-500">Published {post.data.publishDate.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}</p></div>
   </a>
 </article>
