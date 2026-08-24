@@ -22,6 +22,29 @@ const breadcrumbItems = [
   { label: post.data.title, href: `/blog/${post.id}/` },
 ];
 const articleClass = `prose article-${post.id}`;
+const articleImages: Record<string, { src: string; alt: string }[]> = {
+  'best-cities-to-visit-in-japan': [
+    {
+      src: '/images/japan-cities-tokyo-kyoto.svg',
+      alt: 'Travel illustration of Tokyo and Kyoto in Japan',
+    },
+    {
+      src: '/images/japan-cities-sapporo-kanazawa.svg',
+      alt: 'Travel illustration of Sapporo and Kanazawa in Japan',
+    },
+  ],
+  'best-time-to-visit-japan': [
+    {
+      src: '/images/japan-seasons-spring-autumn.svg',
+      alt: 'Illustration of spring cherry blossoms and autumn colors in Japan',
+    },
+    {
+      src: '/images/japan-seasons-winter-summer.svg',
+      alt: 'Illustration comparing winter and summer travel in Japan',
+    },
+  ],
+};
+const extraImages = articleImages[post.id] ?? [];
 ---
 <BaseLayout
   title={`${post.data.title} | RoamDawn`}
@@ -52,6 +75,24 @@ const articleClass = `prose article-${post.id}`;
         class="block aspect-[16/9] w-full object-cover"
       />
     </figure>
+
+    {extraImages.length > 0 && (
+      <section class="mt-6 grid gap-5 sm:grid-cols-2" aria-label="Travel visuals">
+        {extraImages.map((image, index) => (
+          <figure class="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
+            <img
+              src={image.src}
+              alt={image.alt}
+              width="1600"
+              height="900"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              class="block aspect-[16/9] w-full object-cover"
+            />
+          </figure>
+        ))}
+      </section>
+    )}
 
     <div class="mt-10 lg:grid lg:grid-cols-[minmax(0,1fr)_260px] lg:gap-12">
       <div class={articleClass}><Content /></div>
