@@ -17,4 +17,11 @@ This geography-first architecture follows common travel-search behavior and keep
 Cloudflare build command: `npm run build`
 Output directory: `dist`
 
+## Pixabay article images
+
+Set `PIXABAY_API_KEY` in your local environment, then run `npm run fetch:pixabay`.
+The utility downloads a separate optimized WebP photo for every configured article,
+updates its `featuredImage` frontmatter only after the download succeeds, and records
+the Pixabay source page and author in `src/data/image-sources.json`.
+
 No fake credentials, fake reviews, fake travel experiences or fabricated publisher IDs are included.

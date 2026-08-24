@@ -10,6 +10,7 @@ author: "RoamDawn Editorial Team"
 tags: ["Japan", "Travel Planning", "Seasons", "Weather", "Japan Itinerary"]
 draft: false
 featuredImage: "/images/japan-travel-hero.svg"
+featuredImageAlt: "Cherry blossoms framing Mount Fuji in Japan"
 ---
 
 If you are wondering about the **best time to visit Japan**, the short answer is: it depends on what you want from the trip. Spring and autumn are usually the easiest seasons for comfortable sightseeing, winter is excellent for snow and northern Japan, and summer offers lush scenery and seasonal events despite higher heat and humidity.

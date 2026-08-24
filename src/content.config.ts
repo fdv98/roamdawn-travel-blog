@@ -15,7 +15,8 @@ const blog = defineCollection({
     author: z.string().default('RoamDawn Editorial Team'),
     tags: z.array(z.string()),
     draft: z.boolean().default(false),
-    featuredImage: z.string()
+    featuredImage: z.string(),
+    featuredImageAlt: z.string().optional()
   })
 });
 
