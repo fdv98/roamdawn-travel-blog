@@ -9,7 +9,7 @@ readingTime: 16
 author: "RoamDawn Editorial Team"
 tags: ["Japan", "Cities", "Travel Planning", "Japan Itinerary"]
 draft: false
-featuredImage: "/images/destinations/japan/best-cities-to-visit-in-japan-japan-mount-fuji-travel.webp"
+featuredImage: "/images/destinations/japan/best-cities-to-visit-in-japan-japan-travel-landscape.webp"
 ---
 
 Planning a trip to Japan can be exciting—and surprisingly difficult. The country has huge modern cities, peaceful gardens, historic neighborhoods, mountain scenery, excellent food and four very different seasons. With so many choices, the hardest question is often simple: **which city should you visit?**
@@ -57,8 +57,8 @@ Use the links below to jump directly to the full explanation for each city:
 
 <h2 id="tokyo">1. Tokyo — Best City for First-Time Visitors</h2>
 
-<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-tokyo-japan-travel-city.webp -->
-![Tokyo city scene in Japan](/images/destinations/japan/best-cities-to-visit-in-japan-tokyo-japan-travel-city.webp)
+<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-tokyo-japan-skyline-travel.webp -->
+![Tokyo skyline in Japan](/images/destinations/japan/best-cities-to-visit-in-japan-tokyo-japan-skyline-travel.webp)
 
 If you are visiting Japan for the first time, **Tokyo is the best city to visit in Japan for variety**. It combines modern architecture, famous neighborhoods, museums, parks, shopping, observation decks and excellent public transportation.
 
@@ -89,8 +89,8 @@ Tokyo works especially well for first-time visitors because almost every travel 
 
 <h2 id="kyoto">2. Kyoto — Best for Traditional Scenery and Gardens</h2>
 
-<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-kyoto-japan-traditional-streets.webp -->
-![Traditional streets in Kyoto, Japan](/images/destinations/japan/best-cities-to-visit-in-japan-kyoto-japan-traditional-streets.webp)
+<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-kyoto-japan-traditional-street-travel.webp -->
+![Traditional street in Kyoto, Japan](/images/destinations/japan/best-cities-to-visit-in-japan-kyoto-japan-traditional-street-travel.webp)
 
 Kyoto is one of the **best cities in Japan to visit** if you want traditional architecture, beautiful gardens, historic streets, crafts and a slower sightseeing rhythm.
 
@@ -121,8 +121,8 @@ Plan for **three to four days** if you want to explore without rushing. Two days
 
 <h2 id="osaka">3. Osaka — Best for Food, Shopping and Family Attractions</h2>
 
-<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-osaka-japan-city-travel.webp -->
-![Osaka city in Japan](/images/destinations/japan/best-cities-to-visit-in-japan-osaka-japan-city-travel.webp)
+<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-osaka-japan-skyline-city-travel.webp -->
+![Osaka city skyline in Japan](/images/destinations/japan/best-cities-to-visit-in-japan-osaka-japan-skyline-city-travel.webp)
 
 Osaka is one of the **best cities to visit in Japan** when food, shopping and easy sightseeing are high on your list. It is also a practical base for exploring the wider Kansai region.
 
@@ -150,6 +150,9 @@ Osaka is particularly useful when your trip includes Kyoto and Nara. Its strong 
 
 <h2 id="hiroshima">4. Hiroshima — Best for History and Meaningful Sightseeing</h2>
 
+<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-hiroshima-japan-city-travel.webp -->
+![Hiroshima city in Japan](/images/destinations/japan/best-cities-to-visit-in-japan-hiroshima-japan-city-travel.webp)
+
 Hiroshima is a strong choice for travelers interested in modern history, museums and peaceful public spaces. The city has a different pace from Tokyo and Osaka, making it a good addition to a longer itinerary.
 
 ### Why visit Hiroshima?
@@ -173,6 +176,9 @@ Hiroshima can be explored thoughtfully rather than rushed. The city's museums an
 
 <h2 id="kanazawa">5. Kanazawa — Best for Gardens, Crafts and a Quieter Experience</h2>
 
+<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-kanazawa-japan-city-travel.webp -->
+![Kanazawa city in Japan](/images/destinations/japan/best-cities-to-visit-in-japan-kanazawa-japan-city-travel.webp)
+
 Kanazawa is an excellent alternative for travelers who want traditional Japanese scenery without the scale of Tokyo or the busiest parts of Kyoto.
 
 Its combination of gardens, historic neighborhoods, crafts, museums and food makes it one of the most rewarding additions to a longer Japan itinerary.
@@ -195,8 +201,8 @@ Its combination of gardens, historic neighborhoods, crafts, museums and food mak
 
 <h2 id="sapporo">6. Sapporo — Best City to Visit in Japan in Winter</h2>
 
-<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-sapporo-japan-winter-snow.webp -->
-![Snowy Sapporo in Hokkaido, Japan](/images/destinations/japan/best-cities-to-visit-in-japan-sapporo-japan-winter-snow.webp)
+<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-sapporo-japan-city-winter-travel.webp -->
+![Sapporo city in winter, Japan](/images/destinations/japan/best-cities-to-visit-in-japan-sapporo-japan-city-winter-travel.webp)
 
 If you are specifically searching for the **best cities to visit in Japan in winter**, Sapporo deserves a place near the top of your list.
 
@@ -222,6 +228,9 @@ Plan for **three to four days**. If winter scenery is the main reason for your v
 
 <h2 id="nara">7. Nara — Best for Parks, Nature and a Relaxed Day Trip</h2>
 
+<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-nara-japan-city-park-travel.webp -->
+![Nara Park area in Japan](/images/destinations/japan/best-cities-to-visit-in-japan-nara-japan-city-park-travel.webp)
+
 Nara is smaller and calmer than Japan's biggest cities, making it a natural choice for travelers who enjoy parks, open spaces, traditional streets and a slower pace.
 
 It is also one of the easiest additions to a Kyoto or Osaka itinerary.
@@ -243,6 +252,9 @@ It is also one of the easiest additions to a Kyoto or Osaka itinerary.
 
 <h2 id="fukuoka">8. Fukuoka — Best for Southern Japan</h2>
 
+<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-fukuoka-japan-city-travel.webp -->
+![Fukuoka city in Japan](/images/destinations/japan/best-cities-to-visit-in-japan-fukuoka-japan-city-travel.webp)
+
 Fukuoka is a useful choice if you want to explore Kyushu. It has a compact city center, parks, waterfront areas, shopping and a strong food culture.
 
 It also works well as a starting point for exploring other parts of the island.
@@ -263,6 +275,9 @@ Plan for **two to three days** for a first visit, with additional time if Fukuok
 **Best for:** food, parks, shopping and exploring southern Japan.
 
 <h2 id="nagoya">9. Nagoya — Best for Technology, History and Families</h2>
+
+<!-- pixabay-image:/images/destinations/japan/best-cities-to-visit-in-japan-nagoya-japan-city-travel.webp -->
+![Nagoya city in Japan](/images/destinations/japan/best-cities-to-visit-in-japan-nagoya-japan-city-travel.webp)
 
 Nagoya is often skipped by first-time visitors, but it can be a smart choice if you want museums, technology, history and family-friendly attractions.
 
