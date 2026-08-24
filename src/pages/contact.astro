@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const contactEndpoint = import.meta.env.CONTACT_ENDPOINT;
+const contactEmail = import.meta.env.CONTACT_EMAIL;
 ---
 <BaseLayout title="Contact RoamDawn" description="Contact the RoamDawn Editorial Team with corrections, questions and feedback.">
   <section class="container max-w-3xl py-14 md:py-16">
@@ -16,6 +17,12 @@ const contactEndpoint = import.meta.env.CONTACT_ENDPOINT;
         <label class="font-semibold text-[#17324d]">Message<textarea name="message" rows="7" required class="mt-2 w-full rounded-xl border border-slate-200 p-3 outline-none focus:border-[#168ac0] focus:ring-4 focus:ring-sky-100"></textarea></label>
         <button class="w-fit rounded-full bg-[#1596c2] px-6 py-3 font-bold text-white hover:bg-[#117fa5]">Send message</button>
       </form>
+    ) : contactEmail ? (
+      <div class="mt-8 rounded-2xl border border-sky-100 bg-white p-6 shadow-sm sm:p-8">
+        <h2 class="text-2xl font-black text-[#17324d]">Email the editorial team</h2>
+        <p class="mt-3 leading-7 text-slate-700">The contact form is not available right now. Send corrections, questions, or feedback directly by email.</p>
+        <a class="mt-5 inline-flex rounded-full bg-[#1596c2] px-6 py-3 font-bold text-white hover:bg-[#117fa5]" href={`mailto:${contactEmail}`}>Email RoamDawn</a>
+      </div>
     ) : (
       <div class="mt-8 rounded-2xl border border-amber-200 bg-[#fff8e8] p-6 text-slate-700 sm:p-8">
         <h2 class="text-2xl font-black text-[#17324d]">Contact form not configured yet</h2>

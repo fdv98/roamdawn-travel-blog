@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Astro build output and generated type declarations
+dist/
+.astro/
+
+# Local environment files (keep the committed example file)
+.env
+.env.*
+!.env.example
+
+# Local tooling and operating-system files
+.DS_Store
+coverage/
+*.log
