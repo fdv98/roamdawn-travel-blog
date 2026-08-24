@@ -4,84 +4,11 @@ import ArticleCard from '../components/ArticleCard.astro';
 import DestinationCard from '../components/DestinationCard.astro';
 import { getCollection } from 'astro:content';
 import { destinations } from '../data/destinations';
-
-const posts = (await getCollection('blog', { filter: ({ data }) => !data.draft }))
-  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
-const featured = destinations[0];
-const featuredPost = posts[0];
-const secondaryPosts = posts.slice(1, 4);
+const posts=(await getCollection('blog',{filter:({data})=>!data.draft})).sort((a,b)=>b.data.publishDate.valueOf()-a.data.publishDate.valueOf());
 ---
-
-<BaseLayout
-  title="RoamDawn — Travel Guides, Destinations & Adventure"
-  description="Practical travel guides, destination ideas and itineraries to help you plan better journeys around the world."
->
-  <section class="relative overflow-hidden bg-[#102a36] text-white">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(242,118,56,.28),transparent_32%),radial-gradient(circle_at_20%_90%,rgba(22,138,192,.3),transparent_35%)]" aria-hidden="true"></div>
-    <div class="container relative grid gap-10 py-14 md:grid-cols-[1fr_1.05fr] md:items-center md:py-20 lg:py-24">
-      <div class="max-w-2xl">
-        <p class="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-[.18em] text-white/85">Travel guides · Places · Itineraries</p>
-        <h1 class="mt-6 text-5xl font-black leading-[.98] tracking-tight sm:text-6xl lg:text-7xl">Go farther.<br /><span class="text-[#f6bd55]">Plan smarter.</span></h1>
-        <p class="mt-6 max-w-xl text-lg leading-8 text-white/75 sm:text-xl">Destination guides and practical travel advice for curious travelers who want to know where to go, when to go and how to make the most of the journey.</p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a class="rounded-full bg-[#f27638] px-6 py-3.5 font-bold text-white shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-[#ff8447]" href="/destinations/">Explore destinations</a>
-          <a class="rounded-full border border-white/25 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur transition hover:bg-white/15" href="/blog/">Read the guides</a>
-        </div>
-      </div>
-
-      <a href={`/destinations/${featured.slug}/`} class="group relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/10 p-2 shadow-2xl backdrop-blur-sm">
-        <div class="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-slate-800">
-          <img src={featured.image} alt={`${featured.name} travel destination`} width="1600" height="1200" loading="eager" decoding="async" class="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent"></div>
-          <div class="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-            <p class="text-xs font-bold uppercase tracking-[.18em] text-[#f6bd55]">Featured destination</p>
-            <h2 class="mt-2 text-4xl font-black">{featured.name}</h2>
-            <p class="mt-2 max-w-md text-sm leading-6 text-white/80">{featured.intro}</p>
-          </div>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <section class="border-b border-stone-200 bg-[#fffaf3]">
-    <div class="container grid gap-4 py-5 text-sm sm:grid-cols-3">
-      <div class="flex items-center gap-3"><span class="grid size-10 shrink-0 place-items-center rounded-full bg-[#dff3f7] text-[#168ac0]">01</span><div><b class="block">Destination-first</b><span class="text-slate-500">Start broad, then go deeper.</span></div></div>
-      <div class="flex items-center gap-3"><span class="grid size-10 shrink-0 place-items-center rounded-full bg-[#fff0df] text-[#d86b2f]">02</span><div><b class="block">Practical details</b><span class="text-slate-500">Routes, timing and planning.</span></div></div>
-      <div class="flex items-center gap-3"><span class="grid size-10 shrink-0 place-items-center rounded-full bg-[#e5f2ea] text-[#2f8f67]">03</span><div><b class="block">Evergreen advice</b><span class="text-slate-500">Useful beyond one season.</span></div></div>
-    </div>
-  </section>
-
-  <section class="container py-16 md:py-20">
-    <div class="flex items-end justify-between gap-6">
-      <div><p class="text-sm font-bold uppercase tracking-[.18em] text-[#168ac0]">Start exploring</p><h2 class="mt-2 text-4xl font-black tracking-tight text-[#18232d]">Where will you go?</h2></div>
-      <a href="/destinations/" class="hidden rounded-full border border-stone-300 px-4 py-2 text-sm font-bold sm:inline-flex hover:bg-white">View all →</a>
-    </div>
-    <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {destinations.slice(0, 6).map((destination) => <DestinationCard name={destination.name} slug={destination.slug} description={destination.intro} image={destination.image} />)}
-    </div>
-  </section>
-
-  {featuredPost && (
-    <section class="bg-white py-16 md:py-20">
-      <div class="container">
-        <div class="mb-8 flex items-end justify-between gap-5">
-          <div><p class="text-sm font-bold uppercase tracking-[.18em] text-[#f27638]">From the journal</p><h2 class="mt-2 text-4xl font-black tracking-tight text-[#18232d]">Featured travel guide</h2></div>
-          <a href="/blog/" class="hidden font-bold text-[#168ac0] sm:block">All guides →</a>
-        </div>
-        <div class="grid gap-8 lg:grid-cols-[1.25fr_.75fr]">
-          <ArticleCard post={featuredPost} featured />
-          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">{secondaryPosts.map((post) => <ArticleCard post={post} />)}</div>
-        </div>
-      </div>
-    </section>
-  )}
-
-  <section class="container py-16 md:py-20">
-    <div class="overflow-hidden rounded-[2rem] bg-[#18232d] px-7 py-10 text-white sm:px-10 md:px-14 md:py-14">
-      <div class="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
-        <div class="max-w-2xl"><p class="text-sm font-bold uppercase tracking-[.18em] text-[#f6bd55]">Plan with confidence</p><h2 class="mt-3 text-3xl font-black tracking-tight sm:text-4xl">A better trip starts with better information.</h2><p class="mt-4 leading-7 text-white/70">Use RoamDawn to compare destinations, build realistic routes and find practical guides before you book.</p></div>
-        <a href="/about/" class="inline-flex w-fit rounded-full bg-white px-5 py-3 font-bold text-[#18232d] transition hover:-translate-y-0.5">Our editorial approach →</a>
-      </div>
-    </div>
-  </section>
+<BaseLayout title="RoamDawn — Travel Guides, Destinations & Adventure" description="Practical travel guides, destination ideas and itineraries to help you plan better journeys around the world.">
+<section class="bg-[#f4fbfd] border-b border-sky-100"><div class="container grid gap-10 py-14 md:grid-cols-[1.05fr_.95fr] md:items-center md:py-20"><div><p class="font-bold uppercase tracking-[.18em] text-[#1596c2]">Travel guides & inspiration</p><h1 class="mt-4 max-w-4xl text-5xl font-black leading-[1.02] tracking-tight text-[#17324d] sm:text-7xl">Discover your next journey.</h1><p class="mt-6 max-w-2xl text-lg leading-8 text-slate-600">Practical destination guides, itineraries and travel planning advice to help you travel with confidence.</p><div class="mt-8 flex flex-wrap gap-3"><a class="rounded-full bg-[#1596c2] px-6 py-3 font-bold text-white shadow-sm hover:bg-[#117fa5]" href="/destinations/">Explore Destinations</a><a class="rounded-full border border-sky-200 bg-white px-6 py-3 font-bold text-[#17324d] hover:bg-sky-50" href="/blog/">Read Travel Guides</a></div></div><div class="relative overflow-hidden rounded-[2rem] border border-sky-100 bg-white p-7 shadow-sm"><div class="absolute right-0 top-0 h-24 w-24 rounded-bl-full bg-[#fff0c9]" aria-hidden="true"></div><p class="relative text-sm font-bold uppercase tracking-wider text-[#1596c2]">Plan smarter</p><h2 class="relative mt-3 text-3xl font-black text-[#17324d]">From inspiration to itinerary.</h2><div class="relative mt-7 grid gap-3 sm:grid-cols-2"><div class="rounded-2xl bg-[#f4fbfd] p-4"><b class="text-lg text-[#17324d]">01 · Discover</b><p class="mt-1 text-sm text-slate-600">Find destinations worth exploring.</p></div><div class="rounded-2xl bg-[#fff8e8] p-4"><b class="text-lg text-[#17324d]">02 · Compare</b><p class="mt-1 text-sm text-slate-600">Choose the right season and route.</p></div><div class="rounded-2xl bg-[#eef9f2] p-4"><b class="text-lg text-[#17324d]">03 · Plan</b><p class="mt-1 text-sm text-slate-600">Build a realistic travel itinerary.</p></div><div class="rounded-2xl bg-[#fff3ed] p-4"><b class="text-lg text-[#17324d]">04 · Go</b><p class="mt-1 text-sm text-slate-600">Travel prepared and enjoy the journey.</p></div></div></div></div></section>
+<section class="container py-16"><div class="flex items-end justify-between gap-4"><div><p class="font-bold text-[#1596c2]">Where to next?</p><h2 class="text-3xl font-black text-[#17324d]">Featured destinations</h2></div><a href="/destinations/" class="font-bold text-[#1596c2]">View all →</a></div><div class="mt-7 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{destinations.map(d=><DestinationCard name={d.name} slug={d.slug} description={d.intro} image={d.image}/>)}</div></section>
+<section class="bg-[#fffaf0] py-16"><div class="container"><p class="font-bold text-[#1596c2]">Fresh from the journal</p><h2 class="text-3xl font-black text-[#17324d]">Latest travel guides</h2><div class="mt-7 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{posts.slice(0,6).map(post=><ArticleCard post={post}/>)}</div></div></section>
+<section class="container py-16"><div class="rounded-3xl bg-[#17324d] p-8 text-white md:p-12"><div class="grid gap-8 md:grid-cols-2 md:items-end"><div><p class="font-bold text-[#ffd36a]">Travel with confidence</p><h2 class="mt-2 text-3xl font-black">Useful ideas for your next adventure.</h2><p class="mt-4 max-w-2xl text-white/75">RoamDawn connects destination hubs with practical city guides, itineraries and planning articles so you can decide what to do next.</p></div><a href="/about/" class="justify-self-start rounded-full bg-white px-5 py-3 font-bold text-[#17324d] hover:bg-[#fff8e8]">Our editorial approach</a></div></div></section>
 </BaseLayout>
