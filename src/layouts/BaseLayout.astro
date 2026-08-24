@@ -4,6 +4,17 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 
+type Breadcrumb = { label: string; href: string };
+type LayoutProps = {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  published?: string;
+  updated?: string;
+  breadcrumbs?: Breadcrumb[];
+};
+
 const {
   title,
   description,
@@ -12,7 +23,7 @@ const {
   published,
   updated,
   breadcrumbs = [],
-} = Astro.props;
+} = Astro.props as LayoutProps;
 
 const siteUrl = 'https://roamdawn.com';
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
@@ -105,7 +116,7 @@ const graph = [
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
     <meta name="twitter:image:alt" content={title} />
-    <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
   </head>
   <body>
     <a class="skip-link focus-ring" href="#main">Skip to content</a>

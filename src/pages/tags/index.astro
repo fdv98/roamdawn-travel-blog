@@ -1,5 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'; import { getCollection } from 'astro:content';
-const posts=await getCollection('blog',{filter:({data})=>!data.draft}); const tags=[...new Set(posts.flatMap(p=>p.data.tags))].sort();
+const posts=await getCollection('blog', ({ data }) => !data.draft); const tags=[...new Set(posts.flatMap(p=>p.data.tags))].sort();
 ---
 <BaseLayout title="Travel Topics | RoamDawn" description="Browse RoamDawn travel content by destination, city, nature, itinerary and planning topic."><section class="container py-14"><h1 class="text-5xl font-black">Explore by topic</h1><p class="mt-5 max-w-2xl text-slate-600">Find guides by the way you plan: destination, city, nature, itinerary or travel planning.</p><div class="mt-8 flex flex-wrap gap-3">{tags.map(tag=><a class="rounded-full border bg-white px-4 py-2 font-semibold" href={`/tags/${tag.toLowerCase().replace(/[^a-z0-9]+/g,'-')}/`}>{tag}</a>)}</div></section></BaseLayout>
