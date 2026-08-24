@@ -8,11 +8,35 @@ const allowNetwork = process.env.PIXABAY_FETCH_NEW_IMAGES === 'true';
 const root = new URL('../', import.meta.url).pathname;
 const outputDir = path.join(root, 'public', 'images', 'destinations');
 const manifestPath = path.join(root, 'src', 'data', 'image-sources.json');
+const contentDir = path.join(root, 'src', 'content', 'blog');
 
 // New Pixabay downloads are opt-in. Normal production builds do not call Pixabay.
-const queries = {
-  japan: ['Japan Tokyo travel', 'Kyoto Japan travel', 'Mount Fuji Japan'],
-};
+// Each article has a fixed image plan so repeated runs reuse local files.
+const articles = [
+  {
+    slug: 'best-cities-to-visit-in-japan',
+    destination: 'japan',
+    images: [
+      { role: 'hero', query: 'Japan Mount Fuji travel', alt: 'Mount Fuji and Japanese landscape' },
+      { heading: '## Which Japanese city should you choose?', query: 'Tokyo Japan travel skyline', alt: 'Tokyo skyline in Japan' },
+      { heading: '<h2 id="tokyo">1. Tokyo — Best City for First-Time Visitors</h2>', query: 'Tokyo Japan travel city', alt: 'Tokyo city scene in Japan' },
+      { heading: '<h2 id="kyoto">2. Kyoto — Best for Traditional Scenery and Gardens</h2>', query: 'Kyoto Japan traditional streets', alt: 'Traditional streets in Kyoto, Japan' },
+      { heading: '<h2 id="osaka">3. Osaka — Best for Food, Shopping and Family Attractions</h2>', query: 'Osaka Japan city travel', alt: 'Osaka city in Japan' },
+      { heading: '<h2 id="sapporo">6. Sapporo — Best City to Visit in Japan in Winter</h2>', query: 'Sapporo Japan winter snow', alt: 'Snowy Sapporo in Hokkaido, Japan' },
+    ],
+  },
+  {
+    slug: 'best-time-to-visit-japan',
+    destination: 'japan',
+    images: [
+      { role: 'hero', query: 'Japan autumn travel landscape', alt: 'Autumn landscape in Japan' },
+      { heading: '<h2 id="spring">Spring in Japan</h2>', query: 'Japan spring cherry blossom travel', alt: 'Spring scenery and cherry blossoms in Japan' },
+      { heading: '<h2 id="summer">Summer in Japan</h2>', query: 'Japan summer travel landscape', alt: 'Summer landscape in Japan' },
+      { heading: '<h2 id="autumn">Autumn in Japan</h2>', query: 'Japan autumn foliage travel', alt: 'Autumn foliage in Japan' },
+      { heading: '<h2 id="winter">Winter in Japan</h2>', query: 'Japan winter snow landscape', alt: 'Winter snow landscape in Japan' },
+    ],
+  },
+];
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -88,6 +112,43 @@ async function downloadWebp(imageUrl, target) {
     .toFile(target);
 }
 
+function insertImageAfterHeading(markdown, heading, imagePath, alt) {
+  if (markdown.includes(`<!-- pixabay-image:${imagePath} -->`)) return markdown;
+  const marker = `<!-- pixabay-image:${imagePath} -->\n![${alt}](${imagePath})`;
+  const index = markdown.indexOf(heading);
+  if (index === -1) {
+    console.warn(`Heading not found; skipped inline image insertion: ${heading}`);
+    return markdown;
+  }
+  const endOfHeading = index + heading.length;
+  return `${markdown.slice(0, endOfHeading)}\n\n${marker}${markdown.slice(endOfHeading)}`;
+}
+
+async function updateArticle(article, imageResults) {
+  const articlePath = path.join(contentDir, `${article.slug}.md`);
+  if (!(await exists(articlePath))) {
+    console.warn(`Article not found: ${articlePath}`);
+    return false;
+  }
+
+  let markdown = await fs.readFile(articlePath, 'utf8');
+  const hero = imageResults.find((item) => item.role === 'hero');
+
+  if (hero) {
+    markdown = markdown.replace(
+      /^featuredImage:\s*.*$/m,
+      `featuredImage: "${hero.file}"`,
+    );
+  }
+
+  for (const image of imageResults.filter((item) => item.heading)) {
+    markdown = insertImageAfterHeading(markdown, image.heading, image.file, image.alt);
+  }
+
+  await fs.writeFile(articlePath, markdown);
+  return true;
+}
+
 if (!allowNetwork) {
   console.log('Pixabay fetch utility is offline. Set PIXABAY_FETCH_NEW_IMAGES=true to allow new downloads.');
   process.exit(0);
@@ -103,36 +164,50 @@ const manifestPathExists = await exists(manifestPath);
 const existingManifest = manifestPathExists ? JSON.parse(await fs.readFile(manifestPath, 'utf8')) : [];
 const additions = [];
 
-for (const [destination, terms] of Object.entries(queries)) {
-  const destinationDir = path.join(outputDir, destination);
+for (const article of articles) {
+  const destinationDir = path.join(outputDir, article.destination);
   await fs.mkdir(destinationDir, { recursive: true });
+  const imageResults = [];
 
-  for (const term of terms) {
-    const filename = `${slugify(term)}.webp`;
+  for (const spec of article.images) {
+    const filename = `${article.slug}-${slugify(spec.query)}.webp`;
     const target = path.join(destinationDir, filename);
-    const file = `/images/destinations/${destination}/${filename}`;
+    const file = `/images/destinations/${article.destination}/${filename}`;
 
     if (await exists(target)) {
       console.log(`Pixabay cached: ${file}`);
+      imageResults.push({ ...spec, file });
       continue;
     }
 
     try {
-      const data = await search(term);
+      const data = await search(spec.query);
       const image = data.hits?.[0];
       if (!image?.largeImageURL) {
-        console.warn(`No suitable Pixabay image found for: ${term}`);
+        console.warn(`No suitable Pixabay image found for: ${spec.query}`);
         continue;
       }
 
       await downloadWebp(image.largeImageURL, target);
-      additions.push({ destination, query: term, file, pixabayPage: image.pageURL, author: image.user });
-      console.log(`Pixabay downloaded: ${term} -> ${file}`);
+      additions.push({
+        article: article.slug,
+        destination: article.destination,
+        role: spec.role || 'section',
+        query: spec.query,
+        file,
+        pixabayId: image.id,
+        pixabayPage: image.pageURL,
+        author: image.user,
+      });
+      imageResults.push({ ...spec, file });
+      console.log(`Pixabay downloaded: ${spec.query} -> ${file}`);
     } catch (error) {
       // Image acquisition is optional and must never make the build fail.
-      console.warn(`Pixabay skipped for ${term}: ${error.message}`);
+      console.warn(`Pixabay skipped for ${spec.query}: ${error.message}`);
     }
   }
+
+  await updateArticle(article, imageResults);
 }
 
 const mergedManifest = [...existingManifest, ...additions].filter(
