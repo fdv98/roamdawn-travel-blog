@@ -94,9 +94,7 @@ button { font: inherit; }
 .skip-link:focus { left: 1rem; }
 .focus-ring:focus-visible { outline: 3px solid rgba(239,116,64,.75); outline-offset: 3px; }
 
-@media (max-width: 900px) {
-  .prose { max-width: none; }
-}
+@media (max-width: 900px) { .prose { max-width: none; } }
 
 @media (max-width: 640px) {
   .container { width: min(100% - 24px, 1180px); }
@@ -132,9 +130,16 @@ button { font: inherit; }
   .prose table td { display: grid; grid-template-columns: 7.1rem minmax(0,1fr); gap: .7rem; align-items: start; padding: .38rem 0; border: 0; text-align: left !important; white-space: normal !important; }
   .prose table td + td { border-top: 1px solid #f0ebe4; }
   .prose table td::before { color: var(--rd-muted); font-size: .72rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
-  .prose table td:nth-child(1)::before { content: "Category"; }
-  .prose table td:nth-child(2)::before { content: "Best time"; }
-  .prose table td:nth-child(3)::before { content: "Why"; }
+  .prose table td:nth-child(1)::before { content: "Item"; }
+  .prose table td:nth-child(2)::before { content: "Value"; }
+  .prose table td:nth-child(3)::before { content: "Details"; }
+
+  .prose.article-best-time-to-visit-japan table td:nth-child(1)::before { content: "Travel goal"; }
+  .prose.article-best-time-to-visit-japan table td:nth-child(2)::before { content: "Best time"; }
+  .prose.article-best-time-to-visit-japan table td:nth-child(3)::before { content: "Why"; }
+  .prose.article-best-cities-to-visit-in-japan table td:nth-child(1)::before { content: "City"; }
+  .prose.article-best-cities-to-visit-in-japan table td:nth-child(2)::before { content: "Best for"; }
+  .prose.article-best-cities-to-visit-in-japan table td:nth-child(3)::before { content: "Stay"; }
 }
 
 @media (max-width: 390px) {
