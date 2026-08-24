@@ -47,9 +47,8 @@ async function fetchWithRetry(url, label, { retries = 4, baseDelay = 1500 } = {}
       if (response.ok) return response;
 
       const retryable = response.status === 429 || response.status >= 500;
-      if (!retryable || attempt === retries) {
-        throw new Error(`${label}: HTTP ${response.status}`);
-      }
+      if (!retryable) throw new Error(`${label}: HTTP ${response.status}`);
+      if (attempt === retries) break;
 
       const retryAfter = Number(response.headers.get('retry-after'));
       const delay = Number.isFinite(retryAfter) && retryAfter > 0
@@ -60,6 +59,8 @@ async function fetchWithRetry(url, label, { retries = 4, baseDelay = 1500 } = {}
       await sleep(delay);
     } catch (error) {
       lastError = error;
+      // Authentication and validation failures cannot succeed by retrying.
+      if (/HTTP (?:4(?!29)\d|5\d\d)/.test(error.message) && !error.message.includes('HTTP 429')) break;
       if (attempt === retries) break;
       const delay = baseDelay * (2 ** attempt) + Math.floor(Math.random() * 500);
       console.warn(`${label}: ${error.message}; retrying in ${Math.round(delay / 100) / 10}s.`);
@@ -123,14 +124,14 @@ if (!allowNetwork) {
 }
 
 if (!apiKey) {
-  console.error('PIXABAY_FETCH_NEW_IMAGES=true but PIXABAY_API_KEY is missing. No images downloaded.');
-  process.exit(0);
+  throw new Error('PIXABAY_FETCH_NEW_IMAGES=true but PIXABAY_API_KEY is missing. No images downloaded.');
 }
 
 await fs.mkdir(outputDir, { recursive: true });
 const manifestPathExists = await exists(manifestPath);
 const existingManifest = manifestPathExists ? JSON.parse(await fs.readFile(manifestPath, 'utf8')) : [];
 const additions = [];
+const failures = [];
 
 for (const article of articles) {
   const filename = `${slugify(article.slug)}.webp`;
@@ -161,9 +162,12 @@ for (const article of articles) {
 
     await updateFeaturedImage(article, file);
   } catch (error) {
-    // Image acquisition is optional and must never make the build fail.
-    console.warn(`Pixabay skipped for ${article.slug}: ${error.message}`);
+    failures.push(`${article.slug}: ${error.message}`);
   }
+}
+
+if (failures.length > 0) {
+  throw new Error(`Pixabay image fetch failed. ${failures.join(' | ')}`);
 }
 
 const mergedManifest = [...existingManifest, ...additions].filter(

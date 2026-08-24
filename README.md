@@ -19,9 +19,14 @@ Output directory: `dist`
 
 ## Pixabay article images
 
-Set `PIXABAY_API_KEY` in your local environment, then run `npm run fetch:pixabay`.
-The utility downloads a separate optimized WebP photo for every configured article,
-updates its `featuredImage` frontmatter only after the download succeeds, and records
-the Pixabay source page and author in `src/data/image-sources.json`.
+Article images are fetched only by the manual **Fetch Pixabay article images** GitHub
+Actions workflow. Run it from **Actions → Fetch Pixabay article images → Run workflow**
+when you explicitly want new images. It receives `PIXABAY_API_KEY` only from GitHub
+Secrets, downloads missing images, and commits the resulting WebP files and metadata.
+
+`npm run build` and Cloudflare Pages builds never contact Pixabay. Existing files in
+`public/images/articles/` are reused, so a normal build or deployment cannot download
+or replace an image. The local `npm run fetch:pixabay` command remains available only
+for an explicit, developer-initiated fetch with `PIXABAY_API_KEY` set in the shell.
 
 No fake credentials, fake reviews, fake travel experiences or fabricated publisher IDs are included.

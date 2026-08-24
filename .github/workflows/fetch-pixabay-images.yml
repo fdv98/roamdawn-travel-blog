@@ -1,0 +1,50 @@
+name: Fetch Pixabay article images
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Why new article images are needed (recorded in the workflow run only)'
+        required: false
+        type: string
+
+# This workflow is intentionally manual. The normal quality and Cloudflare builds
+# must never contact Pixabay.
+permissions:
+  contents: write
+
+concurrency:
+  group: pixabay-image-fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch-images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --no-audit
+
+      - name: Fetch only article images not already in the repository
+        run: npm run fetch:pixabay
+        env:
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+
+      - name: Commit downloaded images and article metadata
+        run: |
+          if git diff --quiet; then
+            echo "No new Pixabay images were needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- public/images/articles src/content/blog src/data
+          git commit -m "feat: add Pixabay article images"
+          git push
