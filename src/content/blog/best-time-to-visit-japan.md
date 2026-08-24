@@ -9,7 +9,7 @@ readingTime: 14
 author: "RoamDawn Editorial Team"
 tags: ["Japan", "Travel Planning", "Seasons", "Weather", "Japan Itinerary"]
 draft: false
-featuredImage: "/images/destinations/japan/best-cities-to-visit-in-japan-japan-mount-fuji-travel.webp"
+featuredImage: "/images/destinations/japan/best-time-to-visit-japan-japan-autumn-travel-landscape.webp"
 ---
 
 If you are wondering about the **best time to visit Japan**, the short answer is: it depends on what you want from the trip. Spring
@@ -30,8 +30,14 @@ If you are also deciding **which cities to include**, see our guide to the [**10
 | **Best overall** | October–November | Comfortable sightseeing weather and autumn scenery |
 | **Cherry blossoms** | Late March–April in many central areas | Spring scenery and mild conditions |
 | **Green landscapes** | May–June | Fresh greenery before peak summer heat |
-| **Winter scenery** | December–February | Snow in northern and mountain regions |
-| **Autumn leaves** | October–November, depending on region | Colorful parks, gardens and mountains |
+| **Winter
+
+<!-- pixabay-image:/images/destinations/japan/best-time-to-visit-japan-japan-winter-snow-landscape.webp -->
+![Winter snow landscape in Japan](/images/destinations/japan/best-time-to-visit-japan-japan-winter-snow-landscape.webp) scenery** | December–February | Snow in northern and mountain regions |
+| **Autumn
+
+<!-- pixabay-image:/images/destinations/japan/best-time-to-visit-japan-japan-autumn-foliage-travel.webp -->
+![Autumn foliage in Japan](/images/destinations/japan/best-time-to-visit-japan-japan-autumn-foliage-travel.webp) leaves** | October–November, depending on region | Colorful parks, gardens and mountains |
 | **Tokyo sightseeing** | March–May or October–November | Good conditions for walking and city exploration |
 | **Lower seasonal demand** | Varies by destination | Outside major holiday and peak foliage periods |
 
