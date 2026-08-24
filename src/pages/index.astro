@@ -5,52 +5,201 @@ import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog', { filter: ({ data }) => !data.draft }))
   .sort((a, b) => (b.data.publishDate.valueOf() - a.data.publishDate.valueOf()) || b.id.localeCompare(a.id));
+
 const featuredPost = posts.find((post) => post.id === 'best-cities-to-visit-in-japan') || posts[0];
-const latestPosts = posts.filter((post) => post.id !== featuredPost?.id).slice(0, 3);
+const sliderPosts = posts.slice(0, 4);
+const latestPosts = posts.filter((post) => post.id !== featuredPost?.id).slice(0, 6);
+const popularPosts = posts.slice(0, 4);
+
+const imageFor = (post) => {
+  const special: Record<string, string> = {
+    'best-cities-to-visit-in-japan': '/images/destinations/japan/best-cities-to-visit-in-japan-tokyo-japan-travel-skyline.webp',
+    'best-time-to-visit-japan': '/images/destinations/japan/best-time-to-visit-japan-japan-autumn-travel-landscape.webp',
+  };
+  return special[post.id] || post.data.featuredImage || '/images/og-default.svg';
+};
+
 const destinations = [
-  { name: 'Japan', label: 'Seasonal guides', href: '/destinations/japan/', image: '/images/japan-travel-hero.svg' },
+  { name: 'Japan', label: 'Cities, seasons & culture', href: '/destinations/japan/', image: '/images/japan-travel-hero.svg' },
   { name: 'Northern Lights', label: 'Aurora planning', href: '/blog/best-time-to-visit-northern-lights/', image: '/images/destinations/northern-lights/northern-lights-guide.svg' },
 ];
 ---
-<BaseLayout title="RoamDawn — Travel Guides, Destinations & Adventure" description="Practical travel guides, destination ideas and itineraries to help you plan better journeys around the world.">
+<BaseLayout title="RoamDawn — Travel Magazine, Guides & Inspiration" description="RoamDawn is a modern travel magazine with destination guides, practical travel tips, seasonal advice and inspiring ideas for your next journey.">
   <main>
-    <section class="relative overflow-hidden border-b border-sky-100 bg-[#eef9fb]">
-      <div class="container grid gap-10 py-10 sm:py-14 lg:grid-cols-[1.02fr_.98fr] lg:items-center lg:py-20">
-        <div class="max-w-2xl">
-          <p class="text-sm font-extrabold uppercase tracking-[.2em] text-[#1388ad]">Travel better · go further</p>
-          <h1 class="mt-4 text-5xl font-black leading-[.98] tracking-[-.045em] text-[#152b3b] sm:text-6xl lg:text-[5.4rem]">Plan trips worth remembering.</h1>
-          <p class="mt-6 max-w-xl text-lg leading-8 text-slate-600 sm:text-xl">Destination guides, seasonal advice and practical trip-planning ideas — without the noise.</p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a href="/blog/" class="rounded-full bg-[#118fba] px-6 py-3.5 font-bold text-white shadow-lg shadow-sky-900/10 transition hover:-translate-y-0.5 hover:bg-[#0d7da4]">Explore travel guides</a>
-            <a href="/destinations/japan/" class="rounded-full border border-slate-200 bg-white px-6 py-3.5 font-bold text-[#193142] transition hover:border-sky-200">Explore Japan</a>
+    <!-- Magazine masthead + hero slider -->
+    <section class="magazine-hero" aria-labelledby="magazine-heading">
+      <div class="container">
+        <div class="magazine-kicker"><span>ROAMDAWN</span><i></i><span>TRAVEL MAGAZINE</span></div>
+        <div class="hero-slider" data-slider tabindex="0" aria-roledescription="carousel" aria-label="Featured travel stories">
+          <div class="slides">
+            {sliderPosts.map((post, index) => (
+              <article class={`slide ${index === 0 ? 'is-active' : ''}`} data-slide aria-hidden={index === 0 ? 'false' : 'true'}>
+                <img src={imageFor(post)} alt={post.data.title} width="1400" height="820" loading={index === 0 ? 'eager' : 'lazy'} />
+                <div class="slide-shade"></div>
+                <div class="slide-content">
+                  <p class="slide-category">{post.data.category} · {post.data.readingTime} min read</p>
+                  <h1 id={index === 0 ? 'magazine-heading' : undefined}>{post.data.title}</h1>
+                  <p>{post.data.description}</p>
+                  <a class="magazine-button" href={`/blog/${post.id}/`}>Read the story <span>→</span></a>
+                </div>
+                <div class="slide-number">0{index + 1}</div>
+              </article>
+            ))}
           </div>
-          <div class="mt-9 flex flex-wrap gap-6 text-sm font-semibold text-slate-500"><span>✓ Practical planning</span><span>✓ Seasonal guides</span><span>✓ Destination ideas</span></div>
-        </div>
-        <div class="relative min-h-[360px] overflow-hidden rounded-[2rem] bg-[#15364a] shadow-2xl shadow-slate-900/10">
-          <img src="/images/japan-travel-hero.svg" alt="Mountain landscape representing travel and adventure" width="1200" height="675" class="absolute inset-0 h-full w-full object-cover opacity-90" />
-          <div class="absolute inset-0 bg-gradient-to-t from-[#071e2b]/90 via-[#071e2b]/10 to-transparent"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8"><p class="text-xs font-extrabold uppercase tracking-[.18em] text-[#8ce8f4]">Start here</p><h2 class="mt-2 text-3xl font-black text-white sm:text-4xl">Know when to go. Know where to go.</h2><p class="mt-3 max-w-lg text-sm leading-6 text-white/75">Build your trip around the season, the destination and the experiences that matter to you.</p></div>
+          <div class="slider-controls">
+            <button type="button" data-prev aria-label="Previous featured story">←</button>
+            <div class="slider-dots" aria-label="Featured stories navigation">
+              {sliderPosts.map((_, index) => <button type="button" data-dot={index} class={index === 0 ? 'is-active' : ''} aria-label={`Go to story ${index + 1}`}></button>)}
+            </div>
+            <button type="button" data-next aria-label="Next featured story">→</button>
+          </div>
         </div>
       </div>
     </section>
 
-    {featuredPost && <section class="container py-12 sm:py-16" aria-labelledby="featured-guide">
-      <div class="mb-6 flex items-end justify-between gap-4"><div><p class="text-sm font-extrabold uppercase tracking-[.18em] text-[#1388ad]">Editor's pick</p><h2 id="featured-guide" class="mt-1 text-3xl font-black tracking-tight text-[#152b3b] sm:text-4xl">A guide to start with</h2></div><a href="/blog/" class="hidden font-bold text-[#1388ad] sm:block">All guides →</a></div>
-      <ArticleCard post={featuredPost} featured={true} />
-    </section>}
+    <!-- Category rail -->
+    <nav class="category-rail" aria-label="Travel magazine sections">
+      <div class="container category-inner">
+        <a href="/blog/">All stories</a>
+        <a href="/destinations/">Destinations</a>
+        <a href="/blog/?category=Travel%20Tips">Travel tips</a>
+        <a href="/itineraries/">Itineraries</a>
+        <a href="/tags/">Travel inspiration</a>
+        <a class="category-more" href="/search/">Search stories <span>⌕</span></a>
+      </div>
+    </nav>
 
-    <section class="border-y border-stone-200 bg-[#fbf8f2]" aria-labelledby="latest-guides">
-      <div class="container py-12 sm:py-16">
-        <div class="flex items-end justify-between gap-4"><div><p class="text-sm font-extrabold uppercase tracking-[.18em] text-[#1388ad]">Fresh from RoamDawn</p><h2 id="latest-guides" class="mt-1 text-3xl font-black tracking-tight text-[#152b3b] sm:text-4xl">Latest travel guides</h2></div><a href="/blog/" class="font-bold text-[#1388ad]">View all →</a></div>
-        <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">{latestPosts.map((post) => <ArticleCard post={post} />)}</div>
+    <!-- Lead story + side stories -->
+    <section class="container magazine-section" aria-labelledby="editors-heading">
+      <div class="section-label"><span>EDITOR'S DESK</span><a href="/blog/">View all stories →</a></div>
+      <div class="magazine-grid">
+        {featuredPost && <article class="lead-story">
+          <a href={`/blog/${featuredPost.id}/`} class="story-image">
+            <img src={imageFor(featuredPost)} alt={featuredPost.data.title} width="1400" height="900" loading="eager" />
+            <span>{featuredPost.data.category}</span>
+          </a>
+          <div class="lead-copy">
+            <p class="story-meta">FEATURED STORY · {featuredPost.data.readingTime} MIN READ</p>
+            <h2 id="editors-heading"><a href={`/blog/${featuredPost.id}/`}>{featuredPost.data.title}</a></h2>
+            <p>{featuredPost.data.description}</p>
+            <a class="story-link" href={`/blog/${featuredPost.id}/`}>Continue reading <span>→</span></a>
+          </div>
+        </article>}
+
+        <div class="side-stories">
+          {popularPosts.filter((post) => post.id !== featuredPost?.id).slice(0, 3).map((post) => (
+            <article class="side-story">
+              <a href={`/blog/${post.id}/`} class="side-image"><img src={imageFor(post)} alt={post.data.title} width="700" height="500" loading="lazy" /></a>
+              <div><p class="story-meta">{post.data.category}</p><h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3><p class="side-description">{post.data.description}</p></div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
 
-    <section class="container py-12 sm:py-16" aria-labelledby="destinations-heading">
-      <div><p class="text-sm font-extrabold uppercase tracking-[.18em] text-[#1388ad]">Choose your next escape</p><h2 id="destinations-heading" class="mt-1 text-3xl font-black tracking-tight text-[#152b3b] sm:text-4xl">Explore by destination</h2></div>
-      <div class="mt-8 grid gap-6 md:grid-cols-2">{destinations.map((destination) => <a href={destination.href} class="group relative min-h-[260px] overflow-hidden rounded-[1.75rem] bg-[#15364a] shadow-sm transition hover:-translate-y-1 hover:shadow-xl"><img src={destination.image} alt={destination.name} width="1200" height="675" class="absolute inset-0 h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-105" loading="lazy" /><div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent"></div><div class="absolute bottom-0 p-7"><p class="text-xs font-extrabold uppercase tracking-[.18em] text-[#9beaf2]">{destination.label}</p><h3 class="mt-2 text-3xl font-black text-white">{destination.name}</h3><span class="mt-3 inline-block font-bold text-white/90">Explore guide →</span></div></a>)}</div>
+    <!-- Latest magazine cards -->
+    <section class="latest-band" aria-labelledby="latest-heading">
+      <div class="container magazine-section">
+        <div class="section-label"><span>LATEST STORIES</span><a href="/blog/">More from RoamDawn →</a></div>
+        <div class="latest-layout">
+          <div class="latest-main">
+            {latestPosts.slice(0, 4).map((post) => <ArticleCard post={post} />)}
+          </div>
+          <aside class="magazine-aside">
+            <p class="aside-kicker">THE TRAVEL EDIT</p>
+            <h2 id="latest-heading">Ideas for the road ahead.</h2>
+            <p>Thoughtful destination inspiration, seasonal planning and practical advice for travelers who want to make every trip count.</p>
+            <a href="/blog/" class="aside-button">Explore the magazine →</a>
+          </aside>
+        </div>
+      </div>
     </section>
 
-    <section class="container pb-16 sm:pb-20"><div class="relative overflow-hidden rounded-[2rem] bg-[#17384b] px-7 py-10 text-white sm:px-12 sm:py-12"><div class="absolute -right-16 -top-20 h-48 w-48 rounded-full bg-[#f7b955]/20"></div><div class="relative max-w-2xl"><p class="text-sm font-extrabold uppercase tracking-[.18em] text-[#8ce8f4]">Travel planning, simplified</p><h2 class="mt-3 text-3xl font-black sm:text-4xl">Find the right season, destination and route.</h2><p class="mt-4 leading-7 text-white/70">RoamDawn focuses on useful travel information you can actually use when building your next trip.</p><a href="/blog/" class="mt-7 inline-flex rounded-full bg-white px-6 py-3 font-bold text-[#17384b] transition hover:bg-sky-50">Browse all guides →</a></div></div></section>
+    <!-- Destinations -->
+    <section class="container magazine-section" aria-labelledby="destinations-heading">
+      <div class="section-label"><span>DESTINATION FILES</span><a href="/destinations/">Browse destinations →</a></div>
+      <h2 id="destinations-heading" class="display-heading">Where will you go next?</h2>
+      <div class="destination-grid">
+        {destinations.map((destination) => <a href={destination.href} class="destination-card">
+          <img src={destination.image} alt={destination.name} width="1200" height="700" loading="lazy" />
+          <div class="destination-overlay"></div>
+          <div class="destination-copy"><p>{destination.label}</p><h3>{destination.name}</h3><span>Open destination file →</span></div>
+        </a>)}
+      </div>
+    </section>
+
+    <!-- Practical travel strip -->
+    <section class="container magazine-section">
+      <div class="tips-panel">
+        <div><p class="section-label plain">SMART TRAVEL</p><h2>Plan with confidence.</h2><p>Use our guides to choose the right season, build a realistic itinerary and discover places worth your time.</p></div>
+        <div class="tip-links"><a href="/itineraries/"><strong>Itineraries</strong><span>Build your route →</span></a><a href="/blog/"><strong>Travel Tips</strong><span>Plan smarter →</span></a><a href="/search/"><strong>Search</strong><span>Find a story →</span></a></div>
+      </div>
+    </section>
+
+    <section class="container newsletter-box" aria-labelledby="newsletter-heading">
+      <div><p class="section-label plain">ROAMDAWN NOTES</p><h2 id="newsletter-heading">More inspiration for your next escape.</h2><p>Discover new guides and travel ideas as the magazine grows.</p></div>
+      <a href="/contact/" class="magazine-button dark">Stay in touch <span>→</span></a>
+    </section>
   </main>
 </BaseLayout>
+
+<script>
+  const slider = document.querySelector('[data-slider]');
+  if (slider) {
+    const slides = Array.from(slider.querySelectorAll('[data-slide]'));
+    const dots = Array.from(slider.querySelectorAll('[data-dot]'));
+    let current = 0;
+    let timer;
+    const show = (index) => {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('is-active', i === current);
+        slide.setAttribute('aria-hidden', i === current ? 'false' : 'true');
+      });
+      dots.forEach((dot, i) => dot.classList.toggle('is-active', i === current));
+    };
+    const start = () => { clearInterval(timer); timer = setInterval(() => show(current + 1), 6500); };
+    slider.querySelector('[data-prev]')?.addEventListener('click', () => { show(current - 1); start(); });
+    slider.querySelector('[data-next]')?.addEventListener('click', () => { show(current + 1); start(); });
+    dots.forEach((dot) => dot.addEventListener('click', () => { show(Number(dot.dataset.dot)); start(); }));
+    slider.addEventListener('mouseenter', () => clearInterval(timer));
+    slider.addEventListener('mouseleave', start);
+    slider.addEventListener('focusin', () => clearInterval(timer));
+    slider.addEventListener('focusout', start);
+    start();
+  }
+</script>
+
+<style>
+  .magazine-hero{background:#f5f1e8;padding:18px 0 34px;border-bottom:1px solid #ddd6c9}
+  .magazine-kicker{display:flex;align-items:center;gap:12px;padding:6px 0 14px;color:#315c52;font-size:.72rem;font-weight:900;letter-spacing:.2em}
+  .magazine-kicker i{display:block;width:36px;height:1px;background:#d17a52}
+  .hero-slider{position:relative;overflow:hidden;border-radius:24px;background:#163d36;box-shadow:0 18px 55px rgba(22,61,54,.16)}
+  .slides{position:relative;min-height:560px}
+  .slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .55s ease;display:flex;align-items:flex-end}
+  .slide.is-active{position:relative;opacity:1;visibility:visible}
+  .slide>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .slide-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,35,31,.9) 0%,rgba(11,35,31,.58) 43%,rgba(11,35,31,.08) 78%),linear-gradient(0deg,rgba(8,24,21,.82),transparent 55%)}
+  .slide-content{position:relative;z-index:2;width:min(720px,75%);padding:72px 58px 84px;color:#fff}
+  .slide-category,.story-meta{font-size:.68rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#e5a37f}
+  .slide h1{margin:13px 0 16px;font-size:clamp(2.8rem,5.6vw,5.7rem);line-height:.96;letter-spacing:-.055em;font-weight:950}
+  .slide-content>p:not(.slide-category){max-width:590px;font-size:1.05rem;line-height:1.7;color:rgba(255,255,255,.8)}
+  .magazine-button{display:inline-flex;align-items:center;gap:12px;margin-top:26px;padding:13px 18px;border-radius:999px;background:#e79a73;color:#173d36;font-size:.86rem;font-weight:900;transition:.25s ease}
+  .magazine-button:hover{transform:translateY(-2px);background:#f2b18f}.magazine-button span{font-size:1.1rem}
+  .magazine-button.dark{background:#173d36;color:#fff}.magazine-button.dark:hover{background:#245c4f}
+  .slide-number{position:absolute;right:28px;top:28px;z-index:3;color:rgba(255,255,255,.72);font-size:.75rem;font-weight:900;letter-spacing:.18em}
+  .slider-controls{position:absolute;right:28px;bottom:24px;z-index:5;display:flex;align-items:center;gap:10px}
+  .slider-controls>button{width:42px;height:42px;border:1px solid rgba(255,255,255,.3);border-radius:50%;background:rgba(0,0,0,.18);color:#fff;font-size:1.1rem;cursor:pointer;backdrop-filter:blur(5px)}
+  .slider-controls>button:hover{background:#e79a73;color:#173d36}
+  .slider-dots{display:flex;gap:6px;margin:0 4px}.slider-dots button{width:20px;height:3px;border:0;padding:0;background:rgba(255,255,255,.35);cursor:pointer}.slider-dots button.is-active{background:#e79a73;width:32px}
+  .category-rail{border-bottom:1px solid #ddd6c9;background:#fff}.category-inner{display:flex;gap:26px;align-items:center;overflow:auto;white-space:nowrap;padding-top:14px;padding-bottom:14px}.category-inner a{font-size:.76rem;font-weight:800;color:#42534f}.category-inner a:hover{color:#c46f4c}.category-inner .category-more{margin-left:auto;color:#315c52}
+  .magazine-section{padding-top:68px;padding-bottom:68px}.section-label{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #cfc8bc;padding-top:11px;margin-bottom:26px;font-size:.69rem;font-weight:900;letter-spacing:.18em;color:#315c52}.section-label a{font-size:.74rem;letter-spacing:0;text-transform:none;color:#b76c4e}.section-label.plain{border:0;padding:0;margin:0 0 12px}
+  .magazine-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(330px,.85fr);gap:42px}.lead-story{min-width:0}.story-image{position:relative;display:block;overflow:hidden;aspect-ratio:1.55;border-radius:20px;background:#eee}.story-image img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}.story-image:hover img{transform:scale(1.035)}.story-image>span{position:absolute;left:18px;bottom:18px;padding:7px 10px;border-radius:999px;background:#fff;color:#173d36;font-size:.68rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em}.lead-copy{padding:22px 4px 0}.lead-copy h2{margin:10px 0;font-size:clamp(2rem,3.5vw,3.35rem);line-height:1.03;letter-spacing:-.04em;font-weight:950;color:#173d36}.lead-copy h2 a:hover{color:#c76f4d}.lead-copy>p:not(.story-meta){max-width:720px;color:#68726f;line-height:1.75}.story-link{display:inline-block;margin-top:16px;font-size:.8rem;font-weight:900;color:#b76c4e}.side-stories{border-top:1px solid #cfc8bc}.side-story{display:grid;grid-template-columns:132px 1fr;gap:16px;padding:18px 0;border-bottom:1px solid #ddd6c9}.side-image{display:block;overflow:hidden;border-radius:12px;aspect-ratio:1}.side-image img{width:100%;height:100%;object-fit:cover;transition:.5s}.side-image:hover img{transform:scale(1.05)}.side-story h3{margin:5px 0;font-size:1.12rem;line-height:1.18;font-weight:900;color:#173d36}.side-story h3 a:hover{color:#c76f4d}.side-description{display:none;font-size:.78rem;color:#747d7a;line-height:1.5}
+  .latest-band{background:#f5f1e8;border-top:1px solid #ddd6c9;border-bottom:1px solid #ddd6c9}.latest-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(270px,.55fr);gap:34px;align-items:start}.latest-main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.latest-main article{border-color:#ded8ce}.magazine-aside{position:sticky;top:24px;padding:30px;background:#173d36;color:#fff;border-radius:18px}.aside-kicker{font-size:.68rem;letter-spacing:.18em;font-weight:900;color:#e7a17f}.magazine-aside h2{margin:12px 0;font-size:2rem;line-height:1.02;font-weight:950}.magazine-aside>p:not(.aside-kicker){color:rgba(255,255,255,.7);line-height:1.7;font-size:.88rem}.aside-button{display:inline-block;margin-top:20px;color:#e9a17d;font-size:.8rem;font-weight:900}
+  .display-heading{margin:-6px 0 26px;font-size:clamp(2.3rem,4vw,4rem);line-height:1;letter-spacing:-.045em;color:#173d36;font-weight:950}.destination-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.destination-card{position:relative;min-height:360px;overflow:hidden;border-radius:20px;background:#173d36}.destination-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}.destination-card:hover img{transform:scale(1.04)}.destination-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,31,26,.86),transparent 70%)}.destination-copy{position:absolute;left:28px;right:28px;bottom:26px;color:#fff}.destination-copy p{font-size:.68rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#e7a17f}.destination-copy h3{margin:5px 0 7px;font-size:2.4rem;font-weight:950;letter-spacing:-.04em}.destination-copy span{font-size:.78rem;font-weight:800}
+  .tips-panel{display:grid;grid-template-columns:1fr 1.1fr;gap:36px;padding:38px;border:1px solid #d9d2c7;border-radius:20px;background:#fff}.tips-panel h2{margin:0 0 10px;font-size:2.3rem;line-height:1;font-weight:950;color:#173d36}.tips-panel p:not(.section-label){color:#6b7571;line-height:1.7}.tip-links{display:grid;grid-template-columns:repeat(3,1fr);border-left:1px solid #ddd6c9}.tip-links a{display:flex;flex-direction:column;justify-content:center;gap:7px;padding:12px 20px;border-right:1px solid #ddd6c9;color:#173d36}.tip-links a:hover{background:#f5f1e8}.tip-links strong{font-size:.9rem}.tip-links span{font-size:.72rem;color:#b76c4e;font-weight:800}
+  .newsletter-box{display:flex;justify-content:space-between;align-items:center;gap:30px;padding-top:0;padding-bottom:80px}.newsletter-box h2{margin:0 0 8px;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:950;color:#173d36}.newsletter-box p:not(.section-label){margin:0;color:#727b77}
+  @media (max-width:900px){.slide-content{width:90%;padding:55px 30px 82px}.magazine-grid,.latest-layout,.tips-panel{grid-template-columns:1fr}.latest-main{grid-template-columns:repeat(2,minmax(0,1fr))}.magazine-aside{position:static}.tip-links{border-left:0;border-top:1px solid #ddd6c9}.tip-links a{padding:18px 12px}.newsletter-box{align-items:flex-start;flex-direction:column}}
+  @media (max-width:640px){.magazine-hero{padding-top:8px}.slides{min-height:530px}.slide-shade{background:linear-gradient(0deg,rgba(8,28,24,.92),rgba(8,28,24,.18) 75%)}.slide-content{width:100%;padding:30px 22px 78px}.slide h1{font-size:2.55rem}.slide-content>p:not(.slide-category){font-size:.9rem;line-height:1.55}.slider-controls{right:16px;bottom:16px}.slider-controls>button{width:38px;height:38px}.category-inner{gap:18px}.category-inner .category-more{margin-left:0}.magazine-section{padding-top:48px;padding-bottom:48px}.magazine-grid{gap:28px}.lead-copy h2{font-size:2rem}.side-story{grid-template-columns:100px 1fr}.side-description{display:none}.latest-main{grid-template-columns:1fr}.destination-grid{grid-template-columns:1fr}.destination-card{min-height:300px}.tips-panel{padding:25px}.tip-links{grid-template-columns:1fr}.tip-links a{border-right:0;border-bottom:1px solid #ddd6c9}.newsletter-box{padding-bottom:55px}}
+  @media (prefers-reduced-motion:reduce){.slide,.slide img,.story-image img,.side-image img,.destination-card img{transition:none}.slider-controls{display:none}}
+</style>
