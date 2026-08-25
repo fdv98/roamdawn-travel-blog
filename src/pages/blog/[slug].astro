@@ -14,38 +14,19 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const destination = destinations.find((d) => d.name === post.data.category);
 const related = (await getCollection('blog', ({ data }) => !data.draft && data.category === post.data.category))
-  .filter((p) => p.id !== post.id)
-  .slice(0, 3);
+  .filter((p) => p.id !== post.id).slice(0, 3);
 const breadcrumbItems = [
   { label: 'Travel Guides', href: '/blog/' },
   ...(destination ? [{ label: destination.name, href: `/destinations/${destination.slug}/` }] : []),
 ];
 const articleClass = `prose article-${post.id}`;
-
 const cityImages: Record<string, { src: string; alt: string }> = {
-  'best-cities-to-visit-in-japan': {
-    src: '/images/destinations/japan/best-cities-to-visit-in-japan-tokyo-japan-travel-skyline.webp',
-    alt: 'Tokyo city skyline in Japan',
-  },
-  'best-time-to-visit-japan': {
-    src: '/images/destinations/japan/best-time-to-visit-japan-featured.svg',
-    alt: 'Mount Fuji and spring flowers in Japan',
-  },
+  'best-cities-to-visit-in-japan': { src: '/images/destinations/japan/best-cities-to-visit-in-japan-tokyo-japan-travel-skyline.webp', alt: 'Tokyo city skyline in Japan' },
+  'best-time-to-visit-japan': { src: '/images/destinations/japan/best-time-to-visit-japan-featured.svg', alt: 'Mount Fuji and spring flowers in Japan' },
 };
-const articleImage = cityImages[post.id] ?? {
-  src: post.data.featuredImage,
-  alt: `Illustration for ${post.data.title}`,
-};
+const articleImage = cityImages[post.id] ?? { src: post.data.featuredImage, alt: `Illustration for ${post.data.title}` };
 ---
-<BaseLayout
-  title={`${post.data.title} | RoamDawn`}
-  description={post.data.description}
-  image={articleImage.src}
-  type="article"
-  published={post.data.publishDate.toISOString()}
-  updated={(post.data.updatedDate || post.data.publishDate).toISOString()}
-  breadcrumbs={breadcrumbItems}
->
+<BaseLayout title={`${post.data.title} | RoamDawn`} description={post.data.description} image={articleImage.src} type="article" published={post.data.publishDate.toISOString()} updated={(post.data.updatedDate || post.data.publishDate).toISOString()} breadcrumbs={breadcrumbItems}>
   <article class="container article-page py-10 md:py-12">
     <Breadcrumbs items={breadcrumbItems} />
     <header class="article-header">
@@ -54,16 +35,11 @@ const articleImage = cityImages[post.id] ?? {
       <p class="article-description">{post.data.description}</p>
       <div class="article-meta">{post.data.author} · {post.data.readingTime} min read · Updated {post.data.updatedDate?.toLocaleDateString('en-US') || post.data.publishDate.toLocaleDateString('en-US')}</div>
     </header>
-
-    <figure class="article-hero-image">
-      <img src={articleImage.src} alt={articleImage.alt} width="1600" height="900" loading="eager" decoding="async" />
-    </figure>
-
+    <figure class="article-hero-image"><img src={articleImage.src} alt={articleImage.alt} width="1600" height="900" loading="eager" decoding="async" /></figure>
     <div class="article-layout">
       <div class={articleClass}><Content /></div>
       <aside class="article-aside"><div class="aside-card"><b>About this guide</b><p>RoamDawn guides focus on practical planning. Verify time-sensitive details with official sources before travel.</p><a href="/disclaimer/">Travel disclaimer →</a></div></aside>
     </div>
-
     {related.length > 0 && <section class="related" aria-labelledby="related-guides"><h2 id="related-guides">More {post.data.category} guides</h2><div class="related-grid">{related.map((item) => <ArticleCard post={item} />)}</div></section>}
   </article>
 </BaseLayout>
@@ -71,61 +47,51 @@ const articleImage = cityImages[post.id] ?? {
 <style is:global>
   .article-page { color: #26343d; background: #fff; }
   .article-header { max-width: 760px; }
-  .article-category { margin: 0; color: #287c8b; font: 700 .7rem/1.4 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; }
+  .article-category { margin: 0; color: #287c8b; font: 600 .68rem/1.4 Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
 
-  /* Clean sans-serif typography: smaller, softer and easier to scan. */
+  /* Soft sans-serif typography: compact headings and comfortable reading width. */
   .article-header h1 {
-    margin: .6rem 0 .9rem;
-    max-width: 740px;
+    margin: .55rem 0 .8rem;
+    max-width: 720px;
     font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: clamp(1.8rem, 3.1vw, 2.65rem) !important;
-    font-weight: 700 !important;
-    letter-spacing: -.028em;
-    line-height: 1.15 !important;
-    color: #26343d !important;
+    font-size: clamp(1.7rem, 2.8vw, 2.35rem) !important;
+    font-weight: 650 !important;
+    letter-spacing: -.018em;
+    line-height: 1.18 !important;
+    color: #2b3940 !important;
   }
-
-  .article-description { max-width: 700px; margin: 0; font: 400 .98rem/1.7 Inter, ui-sans-serif, system-ui, sans-serif; color: #69767d; }
-  .article-meta { margin-top: 12px; font: 400 .76rem/1.5 Inter, ui-sans-serif, system-ui, sans-serif; color: #7f8a90; }
-
-  .article-hero-image { width: min(100%, 780px); aspect-ratio: 16 / 9; margin: 28px 0 0; overflow: hidden; border: 0; border-radius: 0; background: #f4f6f7; box-shadow: none; }
+  .article-description { max-width: 680px; margin: 0; font: 400 .96rem/1.7 Inter, ui-sans-serif, system-ui, sans-serif; color: #6d797f; }
+  .article-meta { margin-top: 11px; font: 400 .74rem/1.5 Inter, ui-sans-serif, system-ui, sans-serif; color: #858f94; }
+  .article-hero-image { width: min(100%, 780px); aspect-ratio: 16 / 9; margin: 26px 0 0; overflow: hidden; border: 0; border-radius: 0; background: #f4f6f7; box-shadow: none; }
   .article-hero-image img { display: block; width: 100%; height: 100%; object-fit: cover; border: 0; border-radius: 0; box-shadow: none; }
-
-  .article-layout { display: grid; grid-template-columns: minmax(0, 760px) 240px; gap: 48px; align-items: start; margin-top: 36px; }
-  .article-page .prose { max-width: 760px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: .99rem; line-height: 1.82; color: #3e4b53; }
-  .article-page .prose p { margin: 0 0 1.2rem; }
-  .article-page .prose h2 { margin: 2.45rem 0 .8rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(1.35rem, 2.2vw, 1.72rem); font-weight: 700; line-height: 1.32; letter-spacing: -.018em; color: #26343d; }
-  .article-page .prose h3 { margin: 1.8rem 0 .6rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.16rem; font-weight: 700; line-height: 1.4; color: #314149; }
-  .article-page .prose ul, .article-page .prose ol { margin: 1rem 0 1.45rem; padding-left: 1.35rem; }
-  .article-page .prose li { margin: .42rem 0; }
-  .article-page .prose strong { color: #34434b; font-weight: 700; }
-  .article-page .prose a { color: #167fa9; text-decoration-color: rgba(22,127,169,.3); }
-  .article-page .prose blockquote { margin: 2rem 0; padding: 1rem 1.1rem; border-left: 3px solid #ef7440; background: #f7fafb; }
-
+  .article-layout { display: grid; grid-template-columns: minmax(0, 760px) 240px; gap: 48px; align-items: start; margin-top: 34px; }
+  .article-page .prose { max-width: 760px; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: .98rem; line-height: 1.82; color: #424f56; }
+  .article-page .prose p { margin: 0 0 1.15rem; }
+  .article-page .prose h2 { margin: 2.35rem 0 .75rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: clamp(1.28rem, 2vw, 1.58rem); font-weight: 650; line-height: 1.34; letter-spacing: -.012em; color: #2d3b42; }
+  .article-page .prose h3 { margin: 1.7rem 0 .55rem; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.1rem; font-weight: 650; line-height: 1.42; color: #34434a; }
+  .article-page .prose ul, .article-page .prose ol { margin: 1rem 0 1.4rem; padding-left: 1.3rem; }
+  .article-page .prose li { margin: .4rem 0; }
+  .article-page .prose strong { color: #38474e; font-weight: 650; }
+  .article-page .prose a { color: #167fa9; text-decoration-color: rgba(22,127,169,.25); }
+  .article-page .prose blockquote { margin: 1.8rem 0; padding: .9rem 1.05rem; border-left: 3px solid #ef7440; background: #f7fafb; }
   .article-aside { position: sticky; top: 24px; }
   .aside-card { padding: 18px; border: 1px solid #e3e8ea; background: #fff; }
-  .aside-card b { color: #2a3941; font-size: .86rem; }
-  .aside-card p { margin: 8px 0 0; color: #68747b; font-size: .76rem; line-height: 1.65; }
-  .aside-card a { display: inline-block; margin-top: 12px; color: #287c8b; font-size: .76rem; font-weight: 700; }
-
-  .related { margin-top: 58px; padding-top: 30px; border-top: 1px solid #e5e8e9; }
-  .related h2 { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.55rem; font-weight: 700; color: #26343d; }
+  .aside-card b { color: #2f3d44; font-size: .84rem; }
+  .aside-card p { margin: 8px 0 0; color: #68747b; font-size: .75rem; line-height: 1.65; }
+  .aside-card a { display: inline-block; margin-top: 12px; color: #287c8b; font-size: .75rem; font-weight: 650; }
+  .related { margin-top: 55px; padding-top: 28px; border-top: 1px solid #e5e8e9; }
+  .related h2 { margin: 0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 1.45rem; font-weight: 650; color: #2d3b42; }
   .related-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 20px; }
-
-  @media (max-width: 900px) {
-    .article-layout { grid-template-columns: 1fr; gap: 28px; }
-    .article-aside { position: static; }
-  }
-
+  @media (max-width: 900px) { .article-layout { grid-template-columns: 1fr; gap: 28px; } .article-aside { position: static; } }
   @media (max-width: 640px) {
     .article-page { padding-top: 1.25rem !important; }
-    .article-header h1 { font-size: 1.85rem !important; line-height: 1.18 !important; letter-spacing: -.02em; }
-    .article-description { font-size: .95rem; line-height: 1.68; }
-    .article-meta { font-size: .73rem; }
-    .article-hero-image { width: 100%; margin-top: 22px; }
-    .article-page .prose { font-size: .96rem; line-height: 1.78; }
-    .article-page .prose h2 { margin-top: 2rem; font-size: 1.38rem; }
-    .article-page .prose h3 { margin-top: 1.5rem; font-size: 1.12rem; }
+    .article-header h1 { font-size: 1.72rem !important; line-height: 1.2 !important; letter-spacing: -.012em; }
+    .article-description { font-size: .94rem; line-height: 1.68; }
+    .article-meta { font-size: .72rem; }
+    .article-hero-image { width: 100%; margin-top: 20px; }
+    .article-page .prose { font-size: .95rem; line-height: 1.78; }
+    .article-page .prose h2 { margin-top: 1.9rem; font-size: 1.3rem; }
+    .article-page .prose h3 { margin-top: 1.45rem; font-size: 1.08rem; }
     .related-grid { grid-template-columns: 1fr; }
   }
 </style>
