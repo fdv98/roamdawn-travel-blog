@@ -48,7 +48,8 @@
 </script>
 
 <style>
-  .site-header { background: #fff; }
+  .site-header { position: relative; z-index: 10; background: #fff; border: 0; margin: 0; padding: 0; }
+  .site-header::before, .site-header::after { display: none !important; content: none !important; }
   .header-inner { width: min(1120px, calc(100% - 52px)); min-height: 76px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
   .logo { color: #202b30; text-decoration: none; font-size: 1.65rem; font-weight: 800; letter-spacing: -.06em; }
   .logo span { color: #202b30; }
