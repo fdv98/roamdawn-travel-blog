@@ -107,7 +107,7 @@ const graph = [
     <meta name="twitter:image:alt" content={title} />
     <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
   </head>
-  <body>
+  <body class:list={{ 'article-page': isArticle, 'home-page': isHome }}>
     <a class="skip-link focus-ring" href="#main">Skip to content</a>
     <Header />
     <main id="main"><slot /></main>
