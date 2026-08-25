@@ -60,7 +60,7 @@ const articleImage = cityImages[post.id] ?? {
         src={articleImage.src}
         alt={articleImage.alt}
         width="1600"
-        height="1600"
+        height="900"
         loading="eager"
         decoding="async"
         class="block w-full object-cover"
@@ -111,10 +111,10 @@ const articleImage = cityImages[post.id] ?? {
     color: #7b878d !important;
   }
 
-  /* Article hero: match the simple square image treatment used on the homepage. */
+  /* Article hero: match the homepage image proportions with a clean 16:9 treatment. */
   .article-page .article-hero-image {
     width: min(100%, 780px);
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 16 / 9;
     margin-left: 0;
     margin-right: 0;
     overflow: hidden;
@@ -128,7 +128,7 @@ const articleImage = cityImages[post.id] ?? {
     display: block;
     width: 100%;
     height: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
     border: 0;
     border-radius: 0;
