@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const contactEndpoint = import.meta.env.CONTACT_ENDPOINT;
-const contactEmail = import.meta.env.CONTACT_EMAIL;
+const contactEmail = import.meta.env.CONTACT_EMAIL || 'contact@roamdawn.info';
 ---
 <BaseLayout title="Contact RoamDawn" description="Contact the RoamDawn Editorial Team with corrections, questions and feedback.">
   <section class="contact-page container max-w-3xl py-12 md:py-16">
@@ -9,7 +9,7 @@ const contactEmail = import.meta.env.CONTACT_EMAIL;
     <h1>Contact RoamDawn</h1>
     <p class="intro">Have a correction, question or suggestion? Send us a message using the form below. We read every genuine message and use feedback to improve our travel guides.</p>
 
-    <form id="contact-form" action={contactEndpoint || undefined} method="post" class="contact-form">
+    <form id="contact-form" action={contactEndpoint || `mailto:${contactEmail}`} method={contactEndpoint ? 'post' : 'post'} class="contact-form">
       <div class="field-grid">
         <label>Name<input name="name" required autocomplete="name" /></label>
         <label>Email<input name="email" type="email" required autocomplete="email" /></label>
@@ -20,26 +20,24 @@ const contactEmail = import.meta.env.CONTACT_EMAIL;
       <p id="contact-status" class="status" aria-live="polite"></p>
     </form>
 
-    {contactEmail && <p class="email-note">Prefer email? <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>}
-
-    {!contactEndpoint && (
-      <div class="notice">
-        <strong>Message delivery is not connected yet.</strong>
-        <p>The form is ready on the page, but a secure form endpoint has not been configured in the hosting environment. Add <code>CONTACT_ENDPOINT</code> to enable direct form submissions. A visible email link can also be provided with <code>CONTACT_EMAIL</code>.</p>
-      </div>
-    )}
+    <p class="email-note">Prefer email? <a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
+    <p class="delivery-note">Messages can be sent directly to our contact email. If a secure form endpoint is configured later, the form will use that endpoint automatically.</p>
   </section>
 </BaseLayout>
 
-<script is:inline define:vars={{ hasEndpoint: Boolean(contactEndpoint) }}>
+<script is:inline define:vars={{ hasEndpoint: Boolean(contactEndpoint), email: contactEmail }}>
   const form = document.querySelector('#contact-form');
   const status = document.querySelector('#contact-status');
 
   form?.addEventListener('submit', (event) => {
     if (hasEndpoint) return;
     event.preventDefault();
+    const data = new FormData(form);
+    const subject = encodeURIComponent(String(data.get('subject') || 'RoamDawn contact message'));
+    const body = encodeURIComponent(`Name: ${data.get('name') || ''}\nEmail: ${data.get('email') || ''}\n\n${data.get('message') || ''}`);
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
     if (status) {
-      status.textContent = 'The form is displayed correctly, but message delivery is not connected yet.';
+      status.textContent = 'Your email app will open with the message prepared for RoamDawn.';
       status.classList.add('visible');
     }
   });
@@ -57,14 +55,11 @@ const contactEmail = import.meta.env.CONTACT_EMAIL;
   textarea { min-height: 180px; resize: vertical; }
   button { width: fit-content; border: 0; border-radius: 999px; padding: 12px 20px; background: #287c8b; color: #fff; font-size: .9rem; font-weight: 700; cursor: pointer; }
   button:hover { background: #216d79; }
-  .status { display: none; margin: -6px 0 0; color: #9a5710; font-size: .85rem; line-height: 1.6; }
+  .status { display: none; margin: -6px 0 0; color: #287c8b; font-size: .85rem; line-height: 1.6; }
   .status.visible { display: block; }
   .email-note { margin: 18px 0 0; color: #68747b; font-size: .9rem; }
   .email-note a { color: #287c8b; font-weight: 700; }
-  .notice { margin-top: 22px; padding: 18px 20px; border-left: 3px solid #287c8b; background: #f7fafb; color: #5d6970; font-size: .86rem; line-height: 1.7; }
-  .notice strong { color: #24353d; }
-  .notice p { margin: 6px 0 0; }
-  code { padding: .1em .35em; background: #fff; border: 1px solid #e4e7e8; }
+  .delivery-note { margin: 8px 0 0; color: #8a9499; font-size: .78rem; line-height: 1.6; }
   .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
   @media (max-width: 620px) { .contact-page { padding-top: 28px; padding-bottom: 55px; } .contact-form { padding: 20px; } .field-grid { grid-template-columns: 1fr; } h1 { font-size: 2.35rem; } }
 </style>
