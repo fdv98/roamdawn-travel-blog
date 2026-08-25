@@ -48,22 +48,22 @@
 </script>
 
 <style>
-  .site-header { background: #fff; border-bottom: 1px solid #e5e7e8; }
-  .header-inner { width: min(1120px, calc(100% - 32px)); min-height: 72px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-  .logo { color: #18262c; text-decoration: none; font-size: 1.65rem; font-weight: 800; letter-spacing: -.06em; }
-  .logo span { color: #18262c; }
-  .logo b { color: #197a91; font-weight: 800; }
+  .site-header { background: #fff; }
+  .header-inner { width: min(1120px, calc(100% - 52px)); min-height: 76px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .logo { color: #202b30; text-decoration: none; font-size: 1.65rem; font-weight: 800; letter-spacing: -.06em; }
+  .logo span { color: #202b30; }
+  .logo b { color: #287c8b; font-weight: 800; }
   .desktop-nav { display: flex; align-items: center; gap: 27px; }
   .desktop-nav a { color: #36434a; font-size: .82rem; font-weight: 600; text-decoration: none; }
-  .desktop-nav a:hover { color: #197a91; }
-  .desktop-nav .search-link { padding-left: 8px; color: #197a91; }
-  .menu-button { display: none; border: 1px solid #d9dfe1; background: #fff; color: #26343a; border-radius: 5px; padding: 8px 11px; font-size: .8rem; font-weight: 700; }
-  .mobile-nav { border-top: 1px solid #e5e7e8; background: #fff; }
-  .mobile-nav nav { width: min(1120px, calc(100% - 32px)); margin: 0 auto; display: grid; }
+  .desktop-nav a:hover { color: #287c8b; }
+  .desktop-nav .search-link { padding-left: 8px; color: #287c8b; }
+  .menu-button { display: none; border: 0; background: transparent; color: #26343a; padding: 8px 0; font-size: .8rem; font-weight: 700; }
+  .mobile-nav { background: #fff; border-top: 1px solid #eee; }
+  .mobile-nav nav { width: calc(100% - 28px); margin: 0 auto; display: grid; }
   .mobile-nav a { padding: 14px 0; border-bottom: 1px solid #eef0f1; color: #26343a; text-decoration: none; font-size: .9rem; font-weight: 600; }
   .mobile-nav a:last-child { border-bottom: 0; }
   @media (max-width: 760px) {
-    .header-inner { min-height: 64px; width: calc(100% - 24px); }
+    .header-inner { min-height: 64px; width: calc(100% - 28px); }
     .desktop-nav { display: none; }
     .menu-button { display: block; }
   }
