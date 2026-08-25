@@ -5,14 +5,6 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog', { filter: ({ data }) => !data.draft }))
   .sort((a, b) => (b.data.publishDate.valueOf() - a.data.publishDate.valueOf()) || b.id.localeCompare(a.id));
 
-const findPost = (id) => posts.find((post) => post.id === id);
-const featuredPost = findPost('best-time-to-visit-japan') || posts[0];
-const cityPost = findPost('best-cities-to-visit-in-japan');
-const northernPost = findPost('best-time-to-visit-northern-lights');
-const sliderPosts = [featuredPost, cityPost, northernPost, ...posts].filter((post, index, list) => post && list.findIndex((item) => item?.id === post.id) === index).slice(0, 4);
-const editorPosts = [cityPost, northernPost, ...posts].filter((post, index, list) => post && post.id !== featuredPost?.id && list.findIndex((item) => item?.id === post.id) === index).slice(0, 3);
-const latestPosts = posts.filter((post) => post.id !== featuredPost?.id).slice(0, 6);
-
 const imageFor = (post) => {
   const special: Record<string, string> = {
     'best-cities-to-visit-in-japan': '/images/destinations/japan/best-cities-to-visit-in-japan-tokyo-japan-travel-skyline.webp',
@@ -21,106 +13,103 @@ const imageFor = (post) => {
   return special[post.id] || post.data.featuredImage || '/images/og-default.svg';
 };
 
-const destinations = [
-  { name: 'Japan', label: 'Cities, seasons & culture', href: '/destinations/japan/', image: '/images/japan-travel-hero.svg' },
-  { name: 'Northern Lights', label: 'Aurora planning', href: '/blog/best-time-to-visit-northern-lights/', image: '/images/destinations/northern-lights/northern-lights-guide.svg' },
-];
+const featured = posts[0];
+const latest = posts.slice(1, 7);
 ---
-<BaseLayout title="RoamDawn — Travel Magazine, Guides & Inspiration" description="RoamDawn is a modern travel magazine with destination guides, practical travel tips, seasonal advice and inspiring ideas for your next journey.">
-  <section class="magazine-hero" aria-labelledby="magazine-heading">
-    <div class="container">
-      <div class="hero-slider" data-slider tabindex="0" aria-roledescription="carousel" aria-label="Featured travel stories">
-        <div class="slides">
-          {sliderPosts.map((post, index) => (
-            <article class={`slide ${index === 0 ? 'is-active' : ''}`} data-slide aria-hidden={index === 0 ? 'false' : 'true'}>
-              <img src={imageFor(post)} alt={post.data.title} width="1600" height="900" loading={index === 0 ? 'eager' : 'lazy'} />
-              <div class="slide-shade"></div>
-              <div class="slide-content">
-                <p class="slide-category">{post.data.category} · Featured guide</p>
-                <h1 id={index === 0 ? 'magazine-heading' : undefined}>{post.data.title}</h1>
-                <p>{post.data.description}</p>
-                <a class="magazine-button" href={`/blog/${post.id}/`}>Read the guide <span>→</span></a>
-              </div>
-            </article>
-          ))}
-        </div>
-        <div class="slider-controls">
-          <button type="button" data-prev aria-label="Previous featured story">‹</button>
-          <div class="slider-dots" aria-label="Featured stories navigation">
-            {sliderPosts.map((_, index) => <button type="button" data-dot={index} class={index === 0 ? 'is-active' : ''} aria-label={`Go to story ${index + 1}`}></button>)}
+
+<BaseLayout title="RoamDawn — Travel Guides & Stories" description="Practical travel guides, destination ideas and stories to help you plan your next trip.">
+  <section class="home">
+    <div class="home-container">
+      {featured && (
+        <article class="featured">
+          <a class="featured-image" href={`/blog/${featured.id}/`}>
+            <img src={imageFor(featured)} alt={featured.data.title} width="1400" height="800" loading="eager" />
+          </a>
+          <div class="featured-content">
+            <p class="label">{featured.data.category} · {featured.data.readingTime} min read</p>
+            <h1><a href={`/blog/${featured.id}/`}>{featured.data.title}</a></h1>
+            <p class="description">{featured.data.description}</p>
+            <a class="read-link" href={`/blog/${featured.id}/`}>Read the story →</a>
           </div>
-          <button type="button" data-next aria-label="Next featured story">›</button>
-        </div>
+        </article>
+      )}
+
+      <div class="section-heading">
+        <h2>Latest stories</h2>
+        <a href="/blog/">View all →</a>
       </div>
-    </div>
-  </section>
 
-  <div class="category-rail" aria-label="Travel magazine sections">
-    <div class="container category-inner">
-      <a href="/blog/">Stories</a><a href="/destinations/">Destinations</a><a href="/itineraries/">Travel Guides</a><a href="/tags/travel-planning/">Travel Tips</a><a href="/tags/">Inspiration</a><a class="category-more" href="/search/">Search stories →</a>
-    </div>
-  </div>
-
-  <section class="container magazine-section" aria-labelledby="editors-heading">
-    <div class="section-label"><span>EDITOR'S SELECTION</span><a href="/blog/">View all →</a></div>
-    <h2 class="section-title" id="editors-heading">Handpicked reads for you</h2>
-    <div class="editor-grid">
-      {editorPosts[0] && <article class="editor-lead">
-        <a href={`/blog/${editorPosts[0].id}/`} class="editor-image"><img src={imageFor(editorPosts[0])} alt={editorPosts[0].data.title} width="1100" height="800" loading="lazy" /></a>
-        <div class="editor-copy"><p class="story-meta">{editorPosts[0].data.category} · Travel guide</p><h3><a href={`/blog/${editorPosts[0].id}/`}>{editorPosts[0].data.title}</a></h3><p>{editorPosts[0].data.description}</p><a class="story-link" href={`/blog/${editorPosts[0].id}/`}>Read more →</a></div>
-      </article>}
-      <div class="editor-side">
-        {editorPosts.slice(1).map((post) => <article class="mini-story"><a href={`/blog/${post.id}/`}><img src={imageFor(post)} alt={post.data.title} width="600" height="360" loading="lazy" /></a><div><p class="story-meta">{post.data.category} · Travel guide</p><h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3><p>{post.data.description}</p><span>Read more →</span></div></article>)}
+      <div class="post-grid">
+        {latest.map((post) => (
+          <article class="post">
+            <a class="post-image" href={`/blog/${post.id}/`}>
+              <img src={imageFor(post)} alt={post.data.title} width="800" height="520" loading="lazy" />
+            </a>
+            <div class="post-body">
+              <p class="label">{post.data.category} · {post.data.readingTime} min read</p>
+              <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+              <p>{post.data.description}</p>
+              <a class="read-link" href={`/blog/${post.id}/`}>Read more →</a>
+            </div>
+          </article>
+        ))}
       </div>
-    </div>
-  </section>
 
-  <section class="latest-band" aria-labelledby="latest-heading">
-    <div class="container magazine-section">
-      <div class="section-label"><span>LATEST TRAVEL GUIDES</span><a href="/blog/">View all guides →</a></div>
-      <h2 class="section-title" id="latest-heading">New stories & useful guides</h2>
-      <div class="latest-grid">
-        {latestPosts.map((post) => <article class="latest-card"><a href={`/blog/${post.id}/`} class="latest-image"><img src={imageFor(post)} alt={post.data.title} width="800" height="500" loading="lazy" /></a><div class="latest-copy"><p class="story-meta">{post.data.category} · {post.data.readingTime} min read</p><h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3><p>{post.data.description}</p><a class="story-link" href={`/blog/${post.id}/`}>Read guide →</a></div></article>)}
-      </div>
+      <section class="simple-links" aria-label="Explore RoamDawn">
+        <a href="/destinations/"><strong>Destinations</strong><span>Explore places and travel ideas →</span></a>
+        <a href="/itineraries/"><strong>Itineraries</strong><span>Simple trip planning and routes →</span></a>
+        <a href="/search/"><strong>Search</strong><span>Find a travel story →</span></a>
+      </section>
     </div>
-  </section>
-
-  <section class="container magazine-section" aria-labelledby="destinations-heading">
-    <div class="section-label"><span>EXPLORE DESTINATIONS</span><a href="/destinations/">Browse all →</a></div>
-    <h2 class="section-title" id="destinations-heading">Where do you want to go next?</h2>
-    <div class="destination-grid">
-      {destinations.map((destination) => <a href={destination.href} class="destination-card"><img src={destination.image} alt={destination.name} width="1000" height="650" loading="lazy" /><div class="destination-overlay"></div><div class="destination-copy"><p>{destination.label}</p><h3>{destination.name}</h3><span>Explore →</span></div></a>)}
-    </div>
-  </section>
-
-  <section class="container magazine-section final-section">
-    <div class="tips-panel"><div><p class="story-meta">PLAN SMARTER</p><h2>Travel with more confidence.</h2><p>Use RoamDawn for practical destination guides, seasonal planning and realistic ideas for your next journey.</p></div><div class="tip-links"><a href="/itineraries/"><strong>Itineraries</strong><span>Build your route →</span></a><a href="/tags/travel-planning/"><strong>Travel Tips</strong><span>Plan smarter →</span></a><a href="/search/"><strong>Search</strong><span>Find a story →</span></a></div></div>
   </section>
 </BaseLayout>
 
-<script>
-  const slider = document.querySelector('[data-slider]');
-  if (slider) {
-    const slides = Array.from(slider.querySelectorAll('[data-slide]'));
-    const dots = Array.from(slider.querySelectorAll('[data-dot]'));
-    let current = 0;
-    let timer;
-    const show = (index) => { current = (index + slides.length) % slides.length; slides.forEach((slide, i) => { slide.classList.toggle('is-active', i === current); slide.setAttribute('aria-hidden', i === current ? 'false' : 'true'); }); dots.forEach((dot, i) => dot.classList.toggle('is-active', i === current)); };
-    const start = () => { clearInterval(timer); timer = setInterval(() => show(current + 1), 6500); };
-    slider.querySelector('[data-prev]')?.addEventListener('click', () => { show(current - 1); start(); });
-    slider.querySelector('[data-next]')?.addEventListener('click', () => { show(current + 1); start(); });
-    dots.forEach((dot) => dot.addEventListener('click', () => { show(Number(dot.dataset.dot)); start(); }));
-    let startX = 0;
-    slider.addEventListener('touchstart', (event) => { startX = event.touches[0].clientX; clearInterval(timer); }, { passive: true });
-    slider.addEventListener('touchend', (event) => { const delta = event.changedTouches[0].clientX - startX; if (Math.abs(delta) > 45) show(current + (delta < 0 ? 1 : -1)); start(); }, { passive: true });
-    slider.addEventListener('mouseenter', () => clearInterval(timer)); slider.addEventListener('mouseleave', start); slider.addEventListener('focusin', () => clearInterval(timer)); slider.addEventListener('focusout', start); start();
-  }
-</script>
-
 <style>
-  .magazine-hero{background:#f6f2ea;padding:22px 0 28px;border-bottom:1px solid #ddd7cc}.hero-slider{position:relative;overflow:hidden;border-radius:22px;background:#173d36;box-shadow:0 18px 50px rgba(20,55,50,.13)}.slides{position:relative;min-height:555px}.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .5s ease;display:flex;align-items:flex-end}.slide.is-active{position:relative;opacity:1;visibility:visible}.slide>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.slide-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,28,25,.84) 0%,rgba(8,28,25,.5) 44%,rgba(8,28,25,.08) 80%),linear-gradient(0deg,rgba(8,28,25,.65),transparent 55%)}.slide-content{position:relative;z-index:2;width:min(720px,75%);padding:72px 58px 82px;color:#fff}.slide-category,.story-meta{margin:0;color:#df9672;font-size:.67rem;font-weight:900;letter-spacing:.17em;text-transform:uppercase}.slide h1{margin:12px 0 16px;font-size:clamp(2.7rem,5.2vw,5.25rem);line-height:.96;letter-spacing:-.055em;font-weight:950}.slide-content>p:not(.slide-category){max-width:590px;color:rgba(255,255,255,.82);font-size:1rem;line-height:1.65}.magazine-button{display:inline-flex;align-items:center;gap:11px;margin-top:24px;padding:13px 18px;border-radius:999px;background:#fff;color:#173d36;font-size:.82rem;font-weight:900}.magazine-button:hover{background:#e7a07d}.slider-controls{position:absolute;right:24px;bottom:22px;z-index:4;display:flex;align-items:center;gap:9px}.slider-controls>button{width:42px;height:42px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(0,0,0,.2);color:#fff;font-size:1.35rem;cursor:pointer}.slider-controls>button:hover{background:#fff;color:#173d36}.slider-dots{display:flex;gap:5px;align-items:center}.slider-dots button{width:8px;height:8px;border:0;border-radius:50%;padding:0;background:rgba(255,255,255,.55);cursor:pointer}.slider-dots button.is-active{width:25px;border-radius:8px;background:#fff}.category-rail{background:#fff;border-bottom:1px solid #ddd7cc}.category-inner{display:flex;gap:27px;align-items:center;overflow:auto;white-space:nowrap;padding-top:14px;padding-bottom:14px}.category-inner a{font-size:.76rem;font-weight:800;color:#354847}.category-inner a:hover{color:#148eae}.category-more{margin-left:auto!important;color:#b96d4e!important}.magazine-section{padding-top:62px;padding-bottom:62px}.section-label{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #cfc8bd;padding-top:10px;margin-bottom:12px;color:#315c52;font-size:.67rem;font-weight:900;letter-spacing:.18em}.section-label a{color:#b96d4e;font-size:.74rem;letter-spacing:0}.section-title{margin:0 0 24px;color:#173d36;font-size:clamp(2.15rem,4vw,3.55rem);line-height:.98;letter-spacing:-.045em;font-weight:950}.editor-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(360px,.9fr);gap:34px}.editor-lead{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);border:1px solid #ddd8ce;background:#fff}.editor-image{display:block;min-height:470px;overflow:hidden}.editor-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.editor-image:hover img{transform:scale(1.035)}.editor-copy{padding:28px}.editor-copy h3{margin:10px 0;font-size:clamp(1.7rem,3vw,2.55rem);line-height:1.02;letter-spacing:-.035em;color:#173d36}.editor-copy h3 a:hover,.latest-copy h3 a:hover,.mini-story h3 a:hover{color:#b96d4e}.editor-copy>p:not(.story-meta),.mini-story>div>p:not(.story-meta),.latest-copy>p:not(.story-meta){color:#6d7773;font-size:.84rem;line-height:1.65}.story-link,.mini-story span{display:inline-block;margin-top:14px;color:#b96d4e;font-size:.76rem;font-weight:900}.editor-side{border-top:1px solid #cfc8bd}.mini-story{display:grid;grid-template-columns:145px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid #ddd8ce}.mini-story img{width:145px;height:105px;object-fit:cover}.mini-story h3{margin:5px 0;font-size:1.15rem;line-height:1.15;color:#173d36}.mini-story>div>p:not(.story-meta){margin:0;display:none}.latest-band{background:#f6f2ea;border-top:1px solid #ddd7cc;border-bottom:1px solid #ddd7cc}.latest-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.latest-card{background:#fff;border:1px solid #ddd8ce;min-width:0}.latest-image{display:block;aspect-ratio:1.45;overflow:hidden}.latest-image img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.latest-image:hover img{transform:scale(1.035)}.latest-copy{padding:18px 18px 21px}.latest-copy h3{margin:8px 0;font-size:1.35rem;line-height:1.08;color:#173d36}.destination-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.destination-card{position:relative;display:block;min-height:360px;overflow:hidden;border-radius:20px;background:#173d36}.destination-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s}.destination-card:hover img{transform:scale(1.04)}.destination-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,31,26,.88),transparent 68%)}.destination-copy{position:absolute;left:28px;right:28px;bottom:24px;color:#fff}.destination-copy p{margin:0;color:#e7a07d;font-size:.66rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase}.destination-copy h3{margin:5px 0;font-size:2.55rem;line-height:1;letter-spacing:-.04em;font-weight:950}.destination-copy span{font-size:.76rem;font-weight:900}.final-section{padding-top:0}.tips-panel{display:grid;grid-template-columns:1fr 1.1fr;gap:34px;padding:36px;border:1px solid #ddd8ce;background:#edf8f8}.tips-panel h2{margin:8px 0;font-size:2.35rem;line-height:1;letter-spacing:-.04em;color:#173d36}.tips-panel>div>p:not(.story-meta){max-width:560px;margin:0;color:#667471;line-height:1.65}.tip-links{display:grid;grid-template-columns:repeat(3,1fr);border-left:1px solid #d5e1df}.tip-links a{display:flex;flex-direction:column;justify-content:center;gap:7px;padding:14px 20px;border-right:1px solid #d5e1df;color:#173d36}.tip-links a:hover{background:#fff}.tip-links strong{font-size:.86rem}.tip-links span{color:#b96d4e;font-size:.7rem;font-weight:900}
-  @media(max-width:1000px){.desktop-nav{gap:18px}.slide-content{width:88%;padding:58px 38px 82px}.editor-grid{grid-template-columns:1fr}.editor-lead{grid-template-columns:1.1fr .9fr}.latest-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tips-panel{grid-template-columns:1fr}}
-  @media(max-width:700px){.magazine-hero{padding:10px 0 18px}.slides{min-height:520px}.slide-shade{background:linear-gradient(0deg,rgba(8,28,25,.9),rgba(8,28,25,.1) 75%)}.slide-content{width:100%;padding:30px 22px 76px}.slide h1{font-size:2.45rem}.slide-content>p:not(.slide-category){font-size:.88rem;line-height:1.55}.slider-controls{right:14px;bottom:14px}.slider-controls>button{width:38px;height:38px}.category-inner{gap:18px}.category-more{margin-left:0!important}.magazine-section{padding-top:48px;padding-bottom:48px}.section-title{font-size:2.25rem}.editor-lead{display:block}.editor-image{min-height:300px}.editor-copy{padding:21px}.editor-copy h3{font-size:1.9rem}.mini-story{grid-template-columns:105px 1fr}.mini-story img{width:105px;height:90px}.latest-grid{grid-template-columns:1fr}.destination-grid{grid-template-columns:1fr}.destination-card{min-height:290px}.tips-panel{padding:25px}.tip-links{grid-template-columns:1fr;border-left:0;border-top:1px solid #d5e1df;margin-top:8px}.tip-links a{border-right:0;border-bottom:1px solid #d5e1df;padding:16px 5px}.tip-links a:last-child{border-bottom:0}}
-  @media(max-width:420px){.container{width:min(100% - 24px,1200px)}.slide h1{font-size:2.15rem}.slide-content{padding-left:18px;padding-right:18px}.section-label{font-size:.61rem}.section-label a{font-size:.69rem}.destination-copy h3{font-size:2.1rem}}
-  @media(prefers-reduced-motion:reduce){.slide,.editor-image img,.latest-image img,.destination-card img{transition:none}.slider-controls{display:none}}
+  .home { background: #fff; color: #1d292f; }
+  .home-container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 42px 0 80px; }
+  .featured { display: grid; grid-template-columns: 1.35fr 1fr; border-bottom: 1px solid #e5e7e8; padding-bottom: 48px; }
+  .featured-image { display: block; aspect-ratio: 1.55; overflow: hidden; background: #eee; }
+  .featured-image img, .post-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .featured-content { display: flex; flex-direction: column; justify-content: center; padding: 34px 0 34px 42px; }
+  .label { margin: 0 0 10px; color: #197a91; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.4; }
+  .featured h1 { margin: 0 0 16px; font-size: clamp(2.25rem, 4.4vw, 4rem); line-height: 1.05; letter-spacing: -.04em; }
+  .featured h1 a, .post h3 a { color: #18262c; text-decoration: none; }
+  .featured h1 a:hover, .post h3 a:hover { color: #197a91; }
+  .description { max-width: 560px; margin: 0; color: #657078; font-size: 1rem; line-height: 1.7; }
+  .read-link { display: inline-block; margin-top: 20px; color: #197a91; font-size: .86rem; font-weight: 700; text-decoration: none; }
+  .read-link:hover { text-decoration: underline; }
+  .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 54px 0 22px; border-bottom: 1px solid #e5e7e8; }
+  .section-heading h2 { margin: 0; font-size: 2rem; letter-spacing: -.03em; }
+  .section-heading a { color: #197a91; font-size: .85rem; font-weight: 700; text-decoration: none; }
+  .post-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px 24px; padding-top: 28px; }
+  .post { min-width: 0; }
+  .post-image { display: block; aspect-ratio: 1.5; overflow: hidden; background: #eee; }
+  .post-body { padding-top: 17px; }
+  .post h3 { margin: 0 0 9px; font-size: 1.38rem; line-height: 1.18; }
+  .post-body > p:not(.label) { margin: 0; color: #69747b; font-size: .9rem; line-height: 1.6; }
+  .post .read-link { margin-top: 13px; font-size: .8rem; }
+  .simple-links { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 60px; border-top: 1px solid #e5e7e8; border-bottom: 1px solid #e5e7e8; }
+  .simple-links a { display: flex; flex-direction: column; gap: 5px; padding: 24px 20px; color: #18262c; text-decoration: none; border-right: 1px solid #e5e7e8; }
+  .simple-links a:last-child { border-right: 0; }
+  .simple-links a:hover { background: #f8fafb; }
+  .simple-links strong { font-size: .95rem; }
+  .simple-links span { color: #6c767c; font-size: .78rem; }
+  @media (max-width: 800px) {
+    .home-container { padding-top: 28px; }
+    .featured { grid-template-columns: 1fr; }
+    .featured-content { padding: 24px 0 0; }
+    .post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .home-container { width: calc(100% - 24px); padding: 20px 0 55px; }
+    .featured h1 { font-size: 2.1rem; }
+    .featured-content { padding-top: 20px; }
+    .section-heading { padding-top: 42px; }
+    .section-heading h2 { font-size: 1.6rem; }
+    .post-grid { grid-template-columns: 1fr; gap: 38px; }
+    .post h3 { font-size: 1.3rem; }
+    .simple-links { grid-template-columns: 1fr; margin-top: 45px; }
+    .simple-links a { border-right: 0; border-bottom: 1px solid #e5e7e8; }
+    .simple-links a:last-child { border-bottom: 0; }
+  }
 </style>
