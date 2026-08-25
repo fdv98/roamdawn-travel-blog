@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Cookie Policy | RoamDawn" description="RoamDawn does not use cookies for analytics, advertising or user tracking.">
+  <main class="cookies-page container max-w-3xl py-12 md:py-16">
+    <p class="eyebrow">Privacy</p>
+    <h1>Cookie Policy</h1>
+    <p class="lead">RoamDawn does not use cookies to track visitors.</p>
+
+    <section>
+      <h2>No tracking cookies</h2>
+      <p>RoamDawn does not currently use analytics cookies, advertising cookies, social tracking cookies or other cookies for behavioral tracking.</p>
+    </section>
+
+    <section>
+      <h2>Essential browser storage</h2>
+      <p>The site may use ordinary browser storage only when a feature requires it, such as remembering a temporary interface preference. This storage is not used to build advertising or tracking profiles.</p>
+    </section>
+
+    <section>
+      <h2>Third-party services</h2>
+      <p>External services may have their own privacy and cookie practices when you visit their websites. Review the relevant provider's policy before using an external service or affiliate link.</p>
+    </section>
+
+    <section>
+      <h2>Questions</h2>
+      <p>For questions about privacy or cookies, please use our <a href="/contact/">Contact page</a>.</p>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .cookies-page { color: #26343d; }
+  .eyebrow { margin: 0; color: #287c8b; font-size: .72rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+  h1 { margin: .65rem 0 1rem; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2.35rem, 6vw, 3.5rem); line-height: 1.1; letter-spacing: -.03em; color: #182b35; }
+  .lead { margin: 0 0 38px; color: #68747b; font-size: 1.08rem; line-height: 1.75; }
+  section { padding: 28px 0; border-top: 1px solid #e4e8e9; }
+  h2 { margin: 0 0 10px; font-family: Georgia, 'Times New Roman', serif; font-size: 1.55rem; line-height: 1.3; color: #21343d; }
+  p { margin: 0; color: #68747b; font-size: 1rem; line-height: 1.8; }
+  a { color: #287c8b; font-weight: 700; }
+</style>
