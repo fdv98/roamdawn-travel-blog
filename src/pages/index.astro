@@ -12,104 +12,50 @@ const imageFor = (post) => {
   };
   return special[post.id] || post.data.featuredImage || '/images/og-default.svg';
 };
-
-const featured = posts[0];
-const latest = posts.slice(1, 7);
 ---
 
 <BaseLayout title="RoamDawn — Travel Guides & Stories" description="Practical travel guides, destination ideas and stories to help you plan your next trip.">
-  <section class="home">
+  <main class="home">
     <div class="home-container">
-      {featured && (
-        <article class="featured">
-          <a class="featured-image" href={`/blog/${featured.id}/`}>
-            <img src={imageFor(featured)} alt={featured.data.title} width="1400" height="800" loading="eager" />
-          </a>
-          <div class="featured-content">
-            <p class="label">{featured.data.category} · {featured.data.readingTime} min read</p>
-            <h1><a href={`/blog/${featured.id}/`}>{featured.data.title}</a></h1>
-            <p class="description">{featured.data.description}</p>
-            <a class="read-link" href={`/blog/${featured.id}/`}>Read the story →</a>
-          </div>
-        </article>
-      )}
-
-      <div class="section-heading">
-        <h2>Latest stories</h2>
-        <a href="/blog/">View all →</a>
-      </div>
-
       <div class="post-grid">
-        {latest.map((post) => (
+        {posts.map((post) => (
           <article class="post">
             <a class="post-image" href={`/blog/${post.id}/`}>
-              <img src={imageFor(post)} alt={post.data.title} width="800" height="520" loading="lazy" />
+              <img src={imageFor(post)} alt={post.data.title} width="900" height="580" loading="lazy" />
             </a>
             <div class="post-body">
               <p class="label">{post.data.category} · {post.data.readingTime} min read</p>
-              <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
-              <p>{post.data.description}</p>
+              <h2><a href={`/blog/${post.id}/`}>{post.data.title}</a></h2>
+              <p class="description">{post.data.description}</p>
               <a class="read-link" href={`/blog/${post.id}/`}>Read more →</a>
             </div>
           </article>
         ))}
       </div>
-
-      <section class="simple-links" aria-label="Explore RoamDawn">
-        <a href="/destinations/"><strong>Destinations</strong><span>Explore places and travel ideas →</span></a>
-        <a href="/itineraries/"><strong>Itineraries</strong><span>Simple trip planning and routes →</span></a>
-        <a href="/search/"><strong>Search</strong><span>Find a travel story →</span></a>
-      </section>
     </div>
-  </section>
+  </main>
 </BaseLayout>
 
 <style>
   .home { background: #fff; color: #1d292f; }
-  .home-container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 42px 0 80px; }
-  .featured { display: grid; grid-template-columns: 1.35fr 1fr; border-bottom: 1px solid #e5e7e8; padding-bottom: 48px; }
-  .featured-image { display: block; aspect-ratio: 1.55; overflow: hidden; background: #eee; }
-  .featured-image img, .post-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .featured-content { display: flex; flex-direction: column; justify-content: center; padding: 34px 0 34px 42px; }
-  .label { margin: 0 0 10px; color: #197a91; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; line-height: 1.4; }
-  .featured h1 { margin: 0 0 16px; font-size: clamp(2.25rem, 4.4vw, 4rem); line-height: 1.05; letter-spacing: -.04em; }
-  .featured h1 a, .post h3 a { color: #18262c; text-decoration: none; }
-  .featured h1 a:hover, .post h3 a:hover { color: #197a91; }
-  .description { max-width: 560px; margin: 0; color: #657078; font-size: 1rem; line-height: 1.7; }
-  .read-link { display: inline-block; margin-top: 20px; color: #197a91; font-size: .86rem; font-weight: 700; text-decoration: none; }
-  .read-link:hover { text-decoration: underline; }
-  .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 54px 0 22px; border-bottom: 1px solid #e5e7e8; }
-  .section-heading h2 { margin: 0; font-size: 2rem; letter-spacing: -.03em; }
-  .section-heading a { color: #197a91; font-size: .85rem; font-weight: 700; text-decoration: none; }
-  .post-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px 24px; padding-top: 28px; }
+  .home-container { width: min(1120px, calc(100% - 52px)); margin: 0 auto; padding: 44px 0 80px; }
+  .post-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 38px; row-gap: 54px; }
   .post { min-width: 0; }
-  .post-image { display: block; aspect-ratio: 1.5; overflow: hidden; background: #eee; }
-  .post-body { padding-top: 17px; }
-  .post h3 { margin: 0 0 9px; font-size: 1.38rem; line-height: 1.18; }
-  .post-body > p:not(.label) { margin: 0; color: #69747b; font-size: .9rem; line-height: 1.6; }
-  .post .read-link { margin-top: 13px; font-size: .8rem; }
-  .simple-links { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 60px; border-top: 1px solid #e5e7e8; border-bottom: 1px solid #e5e7e8; }
-  .simple-links a { display: flex; flex-direction: column; gap: 5px; padding: 24px 20px; color: #18262c; text-decoration: none; border-right: 1px solid #e5e7e8; }
-  .simple-links a:last-child { border-right: 0; }
-  .simple-links a:hover { background: #f8fafb; }
-  .simple-links strong { font-size: .95rem; }
-  .simple-links span { color: #6c767c; font-size: .78rem; }
-  @media (max-width: 800px) {
-    .home-container { padding-top: 28px; }
-    .featured { grid-template-columns: 1fr; }
-    .featured-content { padding: 24px 0 0; }
-    .post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 560px) {
-    .home-container { width: calc(100% - 24px); padding: 20px 0 55px; }
-    .featured h1 { font-size: 2.1rem; }
-    .featured-content { padding-top: 20px; }
-    .section-heading { padding-top: 42px; }
-    .section-heading h2 { font-size: 1.6rem; }
-    .post-grid { grid-template-columns: 1fr; gap: 38px; }
-    .post h3 { font-size: 1.3rem; }
-    .simple-links { grid-template-columns: 1fr; margin-top: 45px; }
-    .simple-links a { border-right: 0; border-bottom: 1px solid #e5e7e8; }
-    .simple-links a:last-child { border-bottom: 0; }
+  .post-image { display: block; width: 100%; aspect-ratio: 1.56; overflow: hidden; background: #eee; }
+  .post-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .post-body { padding-top: 20px; }
+  .label { margin: 0 0 14px; color: #287c8b; font-size: .74rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; line-height: 1.4; }
+  .post h2 { margin: 0 0 17px; font-size: clamp(1.75rem, 2.6vw, 2.25rem); font-weight: 400; line-height: 1.16; letter-spacing: -.035em; }
+  .post h2 a { color: #202b30; text-decoration: none; }
+  .post h2 a:hover { color: #287c8b; }
+  .description { margin: 0; max-width: 540px; color: #788186; font-size: 1rem; line-height: 1.75; }
+  .read-link { display: inline-block; margin-top: 17px; color: #287c8b; font-size: .86rem; font-weight: 700; text-decoration: none; }
+  .read-link:hover { text-decoration: underline; }
+
+  @media (max-width: 700px) {
+    .home-container { width: calc(100% - 28px); padding: 28px 0 55px; }
+    .post-grid { grid-template-columns: 1fr; row-gap: 44px; }
+    .post h2 { font-size: 1.65rem; }
+    .description { font-size: .94rem; }
   }
 </style>
