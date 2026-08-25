@@ -19,7 +19,6 @@
 }
 html { scroll-behavior: smooth; background: var(--rd-sand); }
 body { margin: 0; min-width: 320px; background: radial-gradient(circle at 8% 4%, rgba(22,127,169,.055), transparent 25rem), var(--rd-sand); color: var(--rd-ink); }
-/* Article pages use the same clean white canvas as the homepage. */
 body.article-page { background: #fff; }
 ::selection { background: rgba(239,116,64,.2); }
 h1,h2,h3,h4 { font-family: Poppins, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: -0.035em; color: var(--rd-ink); }
@@ -29,7 +28,6 @@ a:hover { text-decoration: none; }
 button,a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; }
 .container { width: min(1180px, calc(100% - 32px)); margin-inline: auto; }
-
 .prose { max-width: 860px; font-size: 1.08rem; color: #33424d; }
 .prose h2 { margin-top: 2.7rem; margin-bottom: .9rem; font-size: 1.9rem; line-height: 1.2; }
 .prose h3 { margin-top: 1.8rem; margin-bottom: .6rem; font-size: 1.35rem; line-height: 1.3; }
@@ -46,13 +44,15 @@ button { font: inherit; }
 .prose .not-prose a.text-\[\#17324d\] { color: #17324d !important; }
 .prose .not-prose p { margin: .75rem 0; }
 .prose .not-prose h3 { margin-top: .5rem; }
-.prose table { width: 100%; margin: 2rem 0; border: 1px solid var(--rd-line); border-radius: 1rem; border-spacing: 0; border-collapse: separate; overflow: hidden; background: var(--rd-paper); font-size: .94rem; line-height: 1.45; box-shadow: 0 6px 22px rgba(23,35,45,.045); table-layout: fixed; }
-.prose thead { background: #eef8fb; }
-.prose th { padding: .9rem .85rem; color: var(--rd-ink); font-size: .78rem; font-weight: 800; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--rd-line); }
-.prose td { padding: .85rem; vertical-align: top; border-bottom: 1px solid #eee8df; overflow-wrap: anywhere; word-break: normal; }
+
+/* Compact, responsive article tables. */
+.prose table { width: min(100%, 700px); margin: 1.8rem 0; border: 1px solid var(--rd-line); border-radius: .65rem; border-spacing: 0; border-collapse: separate; overflow: hidden; background: #fff; font-size: .84rem; line-height: 1.4; box-shadow: 0 3px 12px rgba(23,35,45,.035); table-layout: fixed; }
+.prose thead { background: #f4f8f9; }
+.prose th { padding: .65rem .7rem; color: #304048; font-size: .72rem; font-weight: 700; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--rd-line); }
+.prose td { padding: .62rem .7rem; vertical-align: top; border-bottom: 1px solid #eee8df; overflow-wrap: anywhere; word-break: normal; }
 .prose tbody tr:last-child td { border-bottom: 0; }
-.prose tbody tr:nth-child(even) { background: #fffaf4; }
-.prose tbody tr:hover { background: #f5fbfd; }
+.prose tbody tr:nth-child(even) { background: #fcfdfd; }
+.prose tbody tr:hover { background: #f7fbfc; }
 .prose th:nth-child(1), .prose td:nth-child(1) { width: 28%; }
 .prose th:nth-child(2), .prose td:nth-child(2) { width: 34%; }
 .prose th:nth-child(3), .prose td:nth-child(3) { width: 38%; }
@@ -65,50 +65,10 @@ button { font: inherit; }
 .skip-link:focus { left: 1rem; }
 .focus-ring:focus-visible { outline: 3px solid rgba(239,116,64,.75); outline-offset: 3px; }
 
-/* Homepage magazine polish */
-.magazine-hero { padding-top: 10px !important; padding-bottom: 26px !important; }
-.magazine-kicker { max-width: 1180px; margin-inline: auto; padding: 4px 0 10px !important; font-size: .64rem !important; letter-spacing: .16em !important; opacity: .82; }
-.hero-slider { border-radius: 18px !important; box-shadow: 0 14px 38px rgba(22,61,54,.13) !important; }
-.slide-content { max-width: 660px; }
-.category-inner { scrollbar-width: none; }
-.category-inner::-webkit-scrollbar { display: none; }
-
 @media (max-width: 900px) { .prose { max-width: none; } }
 
 @media (max-width: 640px) {
   .container { width: calc(100% - 24px); }
-  .magazine-hero { padding-top: 4px !important; padding-bottom: 18px !important; }
-  .magazine-kicker { padding: 2px 0 8px !important; font-size: .56rem !important; gap: 8px !important; }
-  .magazine-kicker i { width: 20px !important; }
-  .hero-slider { border-radius: 14px !important; box-shadow: 0 10px 28px rgba(22,61,54,.11) !important; }
-  .slides { min-height: 500px !important; }
-  .slide-content { padding: 28px 20px 74px !important; width: 100% !important; }
-  .slide h1 { font-size: clamp(2.05rem, 10vw, 2.65rem) !important; line-height: 1.02 !important; max-width: 92%; }
-  .slide-category { font-size: .58rem !important; letter-spacing: .13em !important; }
-  .slide-content>p:not(.slide-category) { font-size: .86rem !important; max-width: 94%; line-height: 1.55 !important; }
-  .magazine-button { margin-top: 18px !important; padding: 11px 15px !important; font-size: .78rem !important; }
-  .slide-number { top: 16px !important; right: 16px !important; font-size: .62rem !important; }
-  .slider-controls { right: 12px !important; bottom: 12px !important; }
-  .slider-controls>button { width: 36px !important; height: 36px !important; }
-  .category-rail { overflow: hidden; }
-  .category-inner { gap: 16px !important; padding: 11px 0 !important; }
-  .category-inner a { font-size: .68rem !important; }
-  .magazine-section { padding-top: 44px !important; padding-bottom: 44px !important; }
-  .section-label { margin-bottom: 20px !important; font-size: .6rem !important; }
-  .display-heading { font-size: 2.15rem !important; }
-  .destination-copy { left: 20px !important; right: 20px !important; bottom: 20px !important; }
-  .destination-copy h3 { font-size: 2rem !important; }
-  .tips-panel { padding: 22px !important; }
-}
-
-@media (max-width: 390px) {
-  .container { width: calc(100% - 20px); }
-  .slides { min-height: 470px !important; }
-  .slide h1 { font-size: 1.95rem !important; }
-  .slide-content>p:not(.slide-category) { font-size: .82rem !important; }
-}
-
-@media (max-width: 640px) {
   .prose { font-size: 1rem; line-height: 1.75; }
   .prose h2 { margin-top: 2.35rem; font-size: 1.55rem; line-height: 1.25; }
   .prose h3 { margin-top: 1.55rem; font-size: 1.18rem; line-height: 1.35; }
@@ -134,6 +94,7 @@ button { font: inherit; }
 }
 
 @media (max-width: 390px) {
+  .container { width: calc(100% - 20px); }
   .prose { font-size: .98rem; }
   .prose h2 { font-size: 1.45rem; }
   .prose table td { grid-template-columns: minmax(5.5rem,36%) minmax(0,1fr); gap: .55rem; }
